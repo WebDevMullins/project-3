@@ -1,28 +1,22 @@
 name: Code Quality checks
+
 on:
   pull_request:
-    branches: [main]
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  push:
+
 jobs:
   prettier:
     name: Prettier
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        node-version: [18]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: npm/action-setup@v2
+      - uses: actions/setup-node@v3
         with:
-          version: 8
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - name: Install dependencies
-        run: npm install -D
+          node-version: 16
       - name: Check formatting with Prettier
-        run: npm prettier:check:ci
+        run: npx prettier:check:ci
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+        with:
+          commit_message: "Prettier: format files"
