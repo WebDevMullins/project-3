@@ -1,0 +1,25 @@
+{
+	"name": "project-3",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server/server.js",
+	"scripts": {
+		"start": "node server/server.js",
+		"develop": "concurrently \"cd server && npm run start\" \"cd client && npm run dev\"",
+		"install": "cd server && npm i && cd ../client && npm i",
+		"seed": "cd server && npm run seed",
+		"build": "cd client && npm run build",
+		"render-build": "npm install && npm run build",
+		"prettier:format": "prettier --write \"**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
+		"prettier:check:ci": "prettier --check \"**/*.{ts,tsx,js,md,mdx,css,yaml}\""
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"prettier": "@webdevmullins/prettier-config",
+	"devDependencies": {
+		"@webdevmullins/prettier-config": "^0.0.1",
+		"concurrently": "^8.2.2",
+		"prettier": "^3.2.4"
+	}
+}
