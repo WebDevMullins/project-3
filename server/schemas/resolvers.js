@@ -3,8 +3,8 @@ const { signToken, AuthenticationError } = require('../utils/auth')
 
 const resolvers = {
 	Query: {
-		users: async () => {
-			return await User.find({})
+		user: async (_, { _id }) => {
+			return await User.findById(_id)
 		}
 	},
 	Mutation: {
@@ -14,7 +14,6 @@ const resolvers = {
 
 			return { token, user }
 		},
-
 		login: async (parent, { email, password }) => {
 			const user = await User.findOne({ email })
 
@@ -31,6 +30,17 @@ const resolvers = {
 			const token = signToken(user)
 
 			return { token, user }
+		},
+		updateCredits: async (_, { _id, credits }) => {
+			const user = await User.findByIdAndUpdate(_id, { credits }, { new: true })
+			if (!user) {
+				throw new Error('User not found')
+			}
+			// If statement to ensure no negative creidts
+			if (credits < 0) {
+				throw new Error('Invalid credit amount')
+			}
+			return user
 		}
 	}
 }
