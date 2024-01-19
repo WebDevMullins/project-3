@@ -1,4 +1,4 @@
-import AuthForm from '../components/AuthFormModal'
+import AuthForm from '../components/AuthForm'
 
 const Home = () => {
 	return (
