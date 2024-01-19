@@ -23,6 +23,7 @@ const userSchema = new Schema({
 
 	credits: {
 		type: Number,
+    default: 0,
 	},
 
 	icons: [
