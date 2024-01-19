@@ -24,10 +24,10 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: npm i -D prettier @webdevmullins/prettier-config
+        run: npm i prettier @webdevmullins/prettier-config
 
       - name: Check formatting with Prettier
-        run: npm run prettier:check:ci
+        run: npm run prettier:format
 
       - name: Auto-commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
