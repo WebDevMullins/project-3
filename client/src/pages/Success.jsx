@@ -1,8 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const CancelPage = () => {
+const SuccessPage = () => {
 	const navigate = useNavigate()
+
 	const handleReturnHome = () => {
 		navigate('/') // Redirect to home page
 	}
@@ -14,7 +15,8 @@ const CancelPage = () => {
 		justifyContent: 'center',
 		height: '100vh',
 		textAlign: 'center',
-		backgroundColor: '#f2f2f2',
+		// Light green background for success
+		backgroundColor: '#e8f5e9',
 		color: '#333',
 		fontFamily: 'Arial, sans-serif'
 	}
@@ -24,7 +26,8 @@ const CancelPage = () => {
 		padding: '10px 20px',
 		fontSize: '16px',
 		color: '#fff',
-		backgroundColor: '#007bff',
+		// Green button for success
+		backgroundColor: '#4caf50',
 		border: 'none',
 		borderRadius: '5px',
 		cursor: 'pointer'
@@ -32,8 +35,8 @@ const CancelPage = () => {
 
 	return (
 		<div style={pageStyle}>
-			<h1>Order Canceled</h1>
-			<p>Your order has been successfully canceled.</p>
+			<h1>Order Successful</h1>
+			<p>Your order has been placed successfully.</p>
 			<button
 				style={buttonStyle}
 				onClick={handleReturnHome}>
@@ -43,4 +46,4 @@ const CancelPage = () => {
 	)
 }
 
-export default CancelPage
+export default SuccessPage
