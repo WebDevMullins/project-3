@@ -11,7 +11,6 @@
 		"build": "cd client && npm run build",
 		"render-build": "npm install && npm run build",
 		"prettier:format": "prettier --write \"**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
-		"prettier:check:ci": "prettier --check \"**/*.{ts,tsx,js,md,mdx,css,yaml}\""
 	},
 	"keywords": [],
 	"author": "",
