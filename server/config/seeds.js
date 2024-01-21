@@ -3,7 +3,7 @@ const { User } = require('../models')
 const cleanDB = require('./cleanDB')
 
 db.once('open', async () => {
-	await cleanDB('User', 'users');
+	await cleanDB('User', 'users')
 
 	await User.create({
 		username: 'pamwham16',
@@ -17,7 +17,7 @@ db.once('open', async () => {
 		password: 'password12345'
 	})
 
-	console.log('users seeded');
+	console.log('users seeded')
 
 	process.exit()
 })

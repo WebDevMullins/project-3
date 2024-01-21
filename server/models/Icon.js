@@ -1,19 +1,18 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 const iconSchema = new Schema({
+	createdAt: {
+		type: Schema.Types.Date,
+		default: Date.now()
+	},
 
-    createdAt: {
-        type: Schema.Types.Date,
-        default: Date.now(),
-    },
+	userId: {
+		type: Schema.Types.ObjectId,
+		required: true,
+		ref: 'user'
+	}
+})
 
-    userId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'user',
-    }
-});
+const Icon = model('Icon', iconSchema)
 
-const Icon = model('Icon', iconSchema);
-
-module.exports = Icon;
+module.exports = Icon
