@@ -4,6 +4,9 @@ import {
 	InMemoryCache,
 	createHttpLink
 } from '@apollo/client'
+import React, { useState, useEffect } from 'react'
+import './App.css'
+
 import { setContext } from '@apollo/client/link/context'
 import { NextUIProvider } from '@nextui-org/react'
 import { Outlet, useNavigate } from 'react-router-dom'
@@ -34,6 +37,7 @@ const client = new ApolloClient({
 
 function App() {
 	const navigate = useNavigate()
+
 	return (
 		<ApolloProvider client={client}>
 			<Provider store={store}>

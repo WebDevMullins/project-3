@@ -1,8 +1,9 @@
-const express = require("express")
+const express = require('express')
 const { ApolloServer } = require('@apollo/server')
 const { expressMiddleware } = require('@apollo/server/express4')
 const path = require('path')
 const { authMiddleware } = require('./utils/auth')
+const stripeRoutes = require('./stripe')
 
 const { typeDefs, resolvers } = require('./schemas')
 const db = require('./config/connection')
@@ -23,6 +24,9 @@ const startApolloServer = async () => {
 
 	// Serve up static assets
 	app.use('/images', express.static(path.join(__dirname, '../client/images')))
+
+	// Stripe routes
+	app.use(stripeRoutes)
 
 	app.use(
 		'/graphql',

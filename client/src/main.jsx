@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 // import NoMatch from './pages/NoMatch'
 import Signup from './pages/Signup'
+import Checkout from './pages/Checkout'
 
 const router = createBrowserRouter([
 	{
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
 			{
 				path: '/signup',
 				element: <Signup />
+			},
+			{
+				path: '/checkout',
+				element: <Checkout />
 			}
 		]
 	}
