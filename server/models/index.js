@@ -1,4 +1,4 @@
-const User = require('./User');
-const Icon = require('./Icon');
+const User = require('./User')
+const Icon = require('./Icon')
 
-module.exports = { User, Icon };
+module.exports = { User, Icon }
