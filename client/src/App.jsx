@@ -11,7 +11,9 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './redux/store'
 
-import Nav from './components/Nav'
+import Layout from '@components/Layout'
+import Nav from '@components/Nav'
+import StarsCanvas from '@components/StarBackground'
 
 const httpLink = createHttpLink({
 	uri: '/graphql'
@@ -38,8 +40,11 @@ function App() {
 		<ApolloProvider client={client}>
 			<Provider store={store}>
 				<NextUIProvider navigate={navigate}>
+					<StarsCanvas />
 					<Nav />
-					<Outlet />
+					<Layout>
+						<Outlet />
+					</Layout>
 				</NextUIProvider>
 			</Provider>
 		</ApolloProvider>
