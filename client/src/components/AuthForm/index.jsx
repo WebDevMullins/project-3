@@ -42,16 +42,18 @@ const AuthForm = () => {
 			) : (
 				<>
 					{/* Signup and Login Buttons */}
-					<Button
-						onPress={openSignup}
-						color='primary'>
-						Sign Up
-					</Button>
-					<Button
-						onClick={openLogin}
-						color='primary'>
-						Log In
-					</Button>
+					<div className='flex gap-2'>
+						<Button
+							onPress={openSignup}
+							color='primary'>
+							Sign Up
+						</Button>
+						<Button
+							onClick={openLogin}
+							color='primary'>
+							Log In
+						</Button>
+					</div>
 
 					{/* Signup Modal */}
 					<SignupForm
