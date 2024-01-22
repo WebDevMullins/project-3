@@ -1,4 +1,4 @@
 const User = require('./User')
-const Credit = require('./Credit')
+const Icon = require('./Icon')
 
-module.exports = { User }
+module.exports = { User, Icon }

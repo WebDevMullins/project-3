@@ -5,14 +5,14 @@ import './index.css'
 import App from './App.jsx'
 import Home from './pages/Home'
 import Login from './pages/Login'
-// import NoMatch from './pages/NoMatch'
+import NoMatch from './pages/NoMatch'
 import Signup from './pages/Signup'
 
 const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <App />,
-		// error: <NoMatch />,
+		error: <NoMatch />,
 		children: [
 			{
 				index: true,
