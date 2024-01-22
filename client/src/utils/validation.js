@@ -10,7 +10,10 @@ const signupSchema = z.object({
 		.min(2, 'Last name must be at least 2 characters')
 		.max(20, 'Last name must be less than 20 characters'),
 	email: z.string().email('Invalid email address'),
-	password: z.string().min(8, 'Password must be at least 8 characters')
+	password: z
+		.string()
+		.min(8, 'Password must be at least 8 characters')
+		.max(20, 'Password must be no more than 20 characters')
 })
 
 const loginSchema = z.object({

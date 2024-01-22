@@ -1,7 +1,8 @@
-import { Button, useDisclosure } from '@nextui-org/react'
-
 import LoginForm from '@components/LoginForm'
 import SignupForm from '@components/SignupForm'
+import Auth from '@utils/auth'
+
+import { Button, useDisclosure } from '@nextui-org/react'
 
 const AuthForm = () => {
 	// Hooks for controlling the visibility of Signup and Login modals
@@ -31,33 +32,42 @@ const AuthForm = () => {
 
 	return (
 		<>
-			{/* Signup Button */}
-			<Button
-				onPress={openSignup}
-				color='primary'>
-				Sign Up
-			</Button>
+			{/* Logout Button */}
+			{Auth.loggedIn() ? (
+				<Button
+					onClick={Auth.logout}
+					color='primary'>
+					Log Out
+				</Button>
+			) : (
+				<>
+					{/* Signup and Login Buttons */}
+					<Button
+						onPress={openSignup}
+						color='primary'>
+						Sign Up
+					</Button>
+					<Button
+						onClick={openLogin}
+						color='primary'>
+						Log In
+					</Button>
 
-			{/* Signup Modal */}
-			<SignupForm
-				isOpen={signupOpen}
-				onOpenChange={onSignupOpenChange}
-				openLoginModal={openLoginModal}
-			/>
+					{/* Signup Modal */}
+					<SignupForm
+						isOpen={signupOpen}
+						onOpenChange={onSignupOpenChange}
+						openLoginModal={openLoginModal}
+					/>
 
-			{/* Login Button */}
-			<Button
-				onClick={openLogin}
-				color='primary'>
-				Log In
-			</Button>
-
-			{/* Login Modal */}
-			<LoginForm
-				isOpen={loginOpen}
-				onOpenChange={onLoginOpenChange}
-				openSignupModal={openSignupModal}
-			/>
+					{/* Login Modal */}
+					<LoginForm
+						isOpen={loginOpen}
+						onOpenChange={onLoginOpenChange}
+						openSignupModal={openSignupModal}
+					/>
+				</>
+			)}
 		</>
 	)
 }
