@@ -1,3 +1,6 @@
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import {
 	Button,
 	Input,
@@ -8,18 +11,27 @@ import {
 	ModalFooter,
 	ModalHeader
 } from '@nextui-org/react'
-
 import { LockKeyholeIcon, MailIcon } from 'lucide-react'
+import { signupSchema } from '@utils/validation'
 
 const SignupForm = ({
 	isOpen,
 	onOpenChange,
-	openLoginModal,
-	register,
-	errors,
-	handleSubmit,
-	onSubmit
+	openLoginModal
 }) => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		reset
+	} = useForm({ mode: 'onBlur', resolver: zodResolver(signupSchema) })
+
+	const onSubmit = async (data) => {
+		console.log('Signup data:', data)
+		console.log('signup errors:', errors)
+		reset()
+	}
+
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -34,7 +46,6 @@ const SignupForm = ({
 								<div className='flex gap-2'>
 									<Input
 										autoFocus
-										isRequired
 										type='text'
 										label='First Name'
 										placeholder='Enter your first name'
@@ -44,7 +55,6 @@ const SignupForm = ({
 										{...register('firstName')}
 									/>
 									<Input
-										isRequired
 										type='text'
 										label='Last Name'
 										placeholder='Enter your last name'

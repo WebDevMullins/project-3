@@ -1,3 +1,6 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+
 import {
 	Button,
 	Input,
@@ -8,18 +11,22 @@ import {
 	ModalFooter,
 	ModalHeader
 } from '@nextui-org/react'
-
+import { loginSchema } from '@utils/validation'
 import { LockKeyholeIcon, MailIcon } from 'lucide-react'
 
-const LoginForm = ({
-	isOpen,
-	onOpenChange,
-	openSignupModal,
-	register,
-	errors,
-	handleSubmit,
-	onSubmit
-}) => {
+const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		reset
+	} = useForm({ mode: 'onBlur', resolver: zodResolver(loginSchema) })
+
+	const onSubmit = async (data) => {
+		console.log('Signup data:', data)
+		console.log('signup errors:', errors)
+		reset()
+	}
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -39,8 +46,8 @@ const LoginForm = ({
 									label='Email'
 									placeholder='Enter your email'
 									variant='bordered'
-									// isInvalid={errors.email?.message}
-									// errorMessage={errors.email?.message}
+									isInvalid={errors.email?.message}
+									errorMessage={errors.email?.message}
 									{...register('email')}
 								/>
 								<Input
@@ -51,8 +58,8 @@ const LoginForm = ({
 									placeholder='Enter your password'
 									type='password'
 									variant='bordered'
-									isInvalid={errors?.password?.message}
-									errorMessage={errors?.password?.message}
+									isInvalid={errors.password?.message}									
+									errorMessage={errors.password?.message}
 									{...register('password')}
 								/>
 							</ModalBody>
