@@ -6,6 +6,14 @@ const typeDefs = `
     lastName: String!
     email: String!
     credits: Int
+    icons: [Icon]
+  }
+
+  type Icon {
+    _id: ID!
+    createdAt: String!
+    userId: ID!
+    prompt: String!
   }
 
   type Auth {

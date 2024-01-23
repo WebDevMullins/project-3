@@ -10,6 +10,10 @@ const iconSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		required: true,
 		ref: 'user'
+	},
+	prompt: {
+		type: String,
+		required: true
 	}
 })
 
