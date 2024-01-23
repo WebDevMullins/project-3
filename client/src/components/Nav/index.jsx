@@ -20,10 +20,8 @@ function Nav() {
 		'Collection',
 		'About',
 		'Contact',
-		'Deployments',
-		'My Settings',
-		'Team Settings',
-		'Help & Feedback'
+		'Help & Feedback',
+		'Our Team'
 	]
 
 	return (
@@ -51,7 +49,7 @@ function Nav() {
 				<NavbarItem>
 					<Link
 						color='foreground'
-						href='#'
+						href='/about'
 						aria-current='page'>
 						About
 					</Link>
@@ -59,7 +57,7 @@ function Nav() {
 				<NavbarItem>
 					<Link
 						color='foreground'
-						href='#'>
+						href='/generate'>
 						Generate
 					</Link>
 				</NavbarItem>
