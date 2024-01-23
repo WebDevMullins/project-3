@@ -1,0 +1,37 @@
+name: Prettier
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  prettier:
+    name: Prettier
+
+    runs-on: ubuntu-latest
+
+    permissions: write-all
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.PAT }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci -D
+
+      - name: Check formatting with Prettier
+        run: npm run prettier:format
+
+      - name: Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Format code with Prettier

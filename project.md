@@ -1,6 +1,7 @@
 # Project Goals and Tasks
 
 ## User Story
+
 AS a prospective business owner
 I WANT to have an easy, accessible, and effective way to generate a customizable and appealing logo
 SO my business can have effective branding
@@ -14,6 +15,7 @@ I should see a carousel of previously created logos
 (The user should need to pay for credits to create and save a logo)
 
 ## Technologies
+
 DALL-E (OpenAI)
 ReactJS
 MongoDB
