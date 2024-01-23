@@ -1,5 +1,6 @@
 const { User } = require('../models')
 const { signToken, AuthenticationError } = require('../utils/auth')
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 const resolvers = {
 	Query: {
@@ -41,6 +42,23 @@ const resolvers = {
 				throw new Error('Invalid credit amount')
 			}
 			return user
+		},
+		createCheckoutSession: async (_, { lineItems }) => {
+			try {
+				const session = await stripe.checkout.sessions.create({
+					line_items: lineItems,
+					mode: 'payment',
+					success_url: `http://localhost:3000/success`,
+					cancel_url: `http://localhost:3000/cancel`
+				})
+
+				return {
+					id: session.id,
+					url: session.url
+				}
+			} catch (error) {
+				throw new Error(error.message)
+			}
 		}
 	}
 }
