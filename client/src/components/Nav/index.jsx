@@ -48,7 +48,7 @@ function Nav() {
 						Home
 					</Link>
 				</NavbarItem>
-				<NavbarItem isActive>
+				<NavbarItem>
 					<Link
 						color='foreground'
 						href='#'
