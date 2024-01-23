@@ -24,9 +24,7 @@ function Nav() {
 		'My Settings',
 		'Team Settings',
 		'Help & Feedback',
-		'Log Out'
 	]
-
 
 	return (
 		<Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -43,7 +41,7 @@ function Nav() {
 			<NavbarContent
 				className='hidden sm:flex gap-4'
 				justify='center'>
-				<NavbarItem >
+				<NavbarItem>
 					<Link
 						color='foreground'
 						href='/'>
@@ -67,22 +65,16 @@ function Nav() {
 			</NavbarContent>
 			<NavbarContent justify='end'>
 				<NavbarItem className='hidden md:flex'>
-					<AuthForm/>
+					<AuthForm />
 				</NavbarItem>
 			</NavbarContent>
 			<NavbarMenu>
 				{menuItems.map((item, index) => (
 					<NavbarMenuItem key={`${item}-${index}`}>
 						<Link
-							color={
-								index === 2
-									? 'primary'
-									: index === menuItems.length - 1
-										? 'danger'
-										: 'foreground'
-							}
+							color={index === menuItems.length - 1 ? 'danger' : 'foreground'}
 							className='w-full'
-							href='#'
+							href={index === 0 ? '/' : `${item.toLowerCase()}`}
 							size='lg'>
 							{item}
 						</Link>
