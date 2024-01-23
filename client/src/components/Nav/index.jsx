@@ -50,6 +50,7 @@ function Nav() {
 				</NavbarItem>
 				<NavbarItem isActive>
 					<Link
+						color='foreground'
 						href='#'
 						aria-current='page'>
 						About
@@ -72,7 +73,7 @@ function Nav() {
 				{menuItems.map((item, index) => (
 					<NavbarMenuItem key={`${item}-${index}`}>
 						<Link
-							color={index === menuItems.length - 1 ? 'danger' : 'foreground'}
+							color={'foreground'}
 							className='w-full'
 							href={index === 0 ? '/' : `${item.toLowerCase()}`}
 							size='lg'>
