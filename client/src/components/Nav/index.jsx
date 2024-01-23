@@ -20,13 +20,9 @@ function Nav() {
 		'Collection',
 		'About',
 		'Contact',
-		'Deployments',
-		'My Settings',
-		'Team Settings',
 		'Help & Feedback',
-		'Log Out'
+		'Our Team'
 	]
-
 
 	return (
 		<Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -43,16 +39,17 @@ function Nav() {
 			<NavbarContent
 				className='hidden sm:flex gap-4'
 				justify='center'>
-				<NavbarItem >
+				<NavbarItem>
 					<Link
 						color='foreground'
 						href='/'>
 						Home
 					</Link>
 				</NavbarItem>
-				<NavbarItem isActive>
+				<NavbarItem>
 					<Link
-						href='#'
+						color='foreground'
+						href='/about'
 						aria-current='page'>
 						About
 					</Link>
@@ -60,29 +57,23 @@ function Nav() {
 				<NavbarItem>
 					<Link
 						color='foreground'
-						href='#'>
+						href='/generate'>
 						Generate
 					</Link>
 				</NavbarItem>
 			</NavbarContent>
 			<NavbarContent justify='end'>
 				<NavbarItem className='hidden md:flex'>
-					<AuthForm/>
+					<AuthForm />
 				</NavbarItem>
 			</NavbarContent>
 			<NavbarMenu>
 				{menuItems.map((item, index) => (
 					<NavbarMenuItem key={`${item}-${index}`}>
 						<Link
-							color={
-								index === 2
-									? 'primary'
-									: index === menuItems.length - 1
-										? 'danger'
-										: 'foreground'
-							}
+							color={'foreground'}
 							className='w-full'
-							href='#'
+							href={index === 0 ? '/' : `${item.toLowerCase()}`}
 							size='lg'>
 							{item}
 						</Link>
