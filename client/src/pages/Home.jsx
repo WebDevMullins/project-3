@@ -1,12 +1,7 @@
-import AuthForm from '@components/AuthForm'
+import HeroSection from '../components/HeroSection'
 
 const Home = () => {
-	return (
-		<div className='container'>
-			<h1>Home</h1>
-			<AuthForm />
-		</div>
-	)
+	return <HeroSection />
 }
 
 export default Home
