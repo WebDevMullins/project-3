@@ -23,7 +23,7 @@ function Nav() {
 		'Deployments',
 		'My Settings',
 		'Team Settings',
-		'Help & Feedback',
+		'Help & Feedback'
 	]
 
 	return (
