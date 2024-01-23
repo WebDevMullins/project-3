@@ -1,5 +1,3 @@
-import { createInterface } from "readline/promises"
-
 import {
     S3Client,
     PutObjectCommand,
@@ -31,25 +29,27 @@ export async function main() {
     await s3Client.send(
         new PutObjectCommand({
             Bucket: bucketName,
-            Key: 'my-third-object.txt',
+            Key: 'my-fifth-object.txt',
             Body: "Hello JavaScript SDK!"
         })
     )
 
-    // const { Body } = await s3Client.send(
-    //     new GetObjectCommand({
-    //         Bucket: bucketName,
-    //         Key: 'my-first-object.txt'
-    //     })
-    // )
+    await s3Client.send(
+        new DeleteObjectCommand({ 
+            Bucket: bucketName, 
+            Key: 'my-fourth-object.txt' 
+        })
+    )
+
+    const { Body } = await s3Client.send(
+        new GetObjectCommand({
+            Bucket: bucketName,
+            Key: 'my-fifth-object.txt'
+        })
+    )
+
+    console.log(await Body.transformToString());
 }
 
 main()
 
-// https://www.youtube.com/watch?v=eQAIojcArRY
-
-// https://696866497606.signin.aws.amazon.com/console
-
-// awsAdmin
-// project3#123
-// project3#123BCS2024
