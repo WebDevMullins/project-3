@@ -5,7 +5,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const resolvers = {
 	Query: {
 		user: async (_, { _id }) => {
-			return await User.findById(_id)
+			return await User.findById(_id).populate('icons')
 		}
 	},
 	Mutation: {
