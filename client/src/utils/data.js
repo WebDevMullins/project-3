@@ -1,3 +1,5 @@
+const count = ['1', '2', '3', '4', '5']
+
 const presetColors = ['#cd9323', '#1a53d8', '#9a2151', '#0d6416', '#8d2808']
 
 const styles = [
@@ -27,4 +29,4 @@ const styles = [
 	'woodcut'
 ]
 
-export {presetColors, styles}
+export { count, presetColors, styles }

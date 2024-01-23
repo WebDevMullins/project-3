@@ -1,4 +1,4 @@
-import { presetColors, styles } from '@/utils/data'
+import { count, presetColors, styles } from '@/utils/data'
 import { generateSchema } from '@/utils/validation'
 import { ColorPicker } from '@components/ColorPicker'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -61,6 +61,24 @@ const Generate = () => {
 									key={style}
 									value={style}>
 									{style}
+								</SelectItem>
+							))}
+						</Select>
+					</div>
+					<div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+						<Select
+							variant='bordered'
+							label='Select number to generate'
+							className='max-w-xs'
+							isInvalid={errors.count?.message}
+							errorMessage={errors.count?.message}
+							{...register('count')}>
+							{count.map((count) => (
+								<SelectItem
+									key={count}
+									value={count}
+									textValue={`${count}`}>
+									{count}
 								</SelectItem>
 							))}
 						</Select>
