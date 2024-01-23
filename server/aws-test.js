@@ -1,4 +1,6 @@
-import {
+// this is just a file I use for testing
+
+const {
     S3Client,
     PutObjectCommand,
     CreateBucketCommand,
@@ -6,9 +8,9 @@ import {
     DeleteBucketCommand,
     paginateListObjectsV2,
     GetObjectCommand, 
-} from "@aws-sdk/client-s3"
+} = require('@aws-sdk/client-s3')
 
-import dotenv from 'dotenv'
+const dotenv = require('dotenv')
 
 dotenv.config()
 
@@ -17,7 +19,7 @@ const secretAccessKey=process.env.SECRET_ACCESS_KEY
 const bucketName=process.env.BUCKET_NAME
 const bucketRegion=process.env.BUCKET_REGION
 
-export async function main() {
+async function main() {
     const s3Client = new S3Client({
         credentials: {
             accessKeyId: accessKey,
@@ -29,27 +31,28 @@ export async function main() {
     await s3Client.send(
         new PutObjectCommand({
             Bucket: bucketName,
-            Key: 'my-fifth-object.txt',
+            Key: 'my-ninth-object.txt',
             Body: "Hello JavaScript SDK!"
         })
     )
 
-    await s3Client.send(
-        new DeleteObjectCommand({ 
-            Bucket: bucketName, 
-            Key: 'my-fourth-object.txt' 
-        })
-    )
+    // await s3Client.send(
+    //     new DeleteObjectCommand({ 
+    //         Bucket: bucketName, 
+    //         Key: 'my-seventh-object.txt' 
+    //     })
+    // )
 
-    const { Body } = await s3Client.send(
-        new GetObjectCommand({
-            Bucket: bucketName,
-            Key: 'my-fifth-object.txt'
-        })
-    )
+    // const { Body } = await s3Client.send(
+    //     new GetObjectCommand({
+    //         Bucket: bucketName,
+    //         Key: 'my-eigth-object.txt'
+    //     })
+    // )
 
-    console.log(await Body.transformToString());
+    // console.log(Body);
 }
 
 main()
+
 

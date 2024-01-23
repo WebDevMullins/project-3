@@ -1,10 +1,7 @@
 import {
     S3Client,
     PutObjectCommand,
-    CreateBucketCommand,
     DeleteObjectCommand,
-    DeleteBucketCommand,
-    paginateListObjectsV2,
     GetObjectCommand, 
 } from "@aws-sdk/client-s3"
 
@@ -27,7 +24,6 @@ const s3Client = new S3Client({
 
 module.exports = {
     addObject: async function(fileName) {
-
         await s3Client.send(
             new PutObjectCommand({
                 Bucket: bucketName,
@@ -44,48 +40,7 @@ module.exports = {
             })
         )
     },
-    getObject: async function(fileName) {
-        const { Body } =  await s3Client.send(
-            new GetObjectCommand({
-                Bucket: bucketName,
-                Key: fileName
-            })
-        )
+    generateObjectUrl: async function(fileName) {
+        return `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`
     }
 }
-
-// export async function main() {
-//     const s3Client = new S3Client({
-//         credentials: {
-//             accessKeyId: accessKey,
-//             secretAccessKey: secretAccessKey
-//         },
-//         region: bucketRegion
-//     })
-
-//     await s3Client.send(
-//         new PutObjectCommand({
-//             Bucket: bucketName,
-//             Key: 'my-sixth-object.txt',
-//             Body: "Hello JavaScript SDK!"
-//         })
-//     )
-
-//     await s3Client.send(
-//         new DeleteObjectCommand({ 
-//             Bucket: bucketName, 
-//             Key: 'my-fifth-object.txt' 
-//         })
-//     )
-
-//     const { Body } = await s3Client.send(
-//         new GetObjectCommand({
-//             Bucket: bucketName,
-//             Key: 'my-sixth-object.txt'
-//         })
-//     )
-
-//     console.log(await Body.transformToString());
-// }
-
-main()
