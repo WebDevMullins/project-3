@@ -16,11 +16,15 @@ import {
 	ModalFooter,
 	ModalHeader
 } from '@nextui-org/react'
-import { LockKeyholeIcon, MailIcon } from 'lucide-react'
+import { EyeIcon, EyeOffIcon, MailIcon } from 'lucide-react'
 
 const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 	const [addUser, { error }] = useMutation(ADD_USER)
 	const [email, setEmail] = useState('')
+	const [isVisable, setIsVisable] = useState(false)
+
+	const toggleVisibility = () => setIsVisable(!isVisable)
+
 	const {
 		register,
 		handleSubmit,
@@ -95,12 +99,21 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 								<Input
 									size='lg'
 									endContent={
-										<LockKeyholeIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+										<button
+											className='focus:outline-none'
+											type='button'
+											onClick={toggleVisibility}>
+											{isVisable ? (
+												<EyeOffIcon className='text-2xl text-default-400 pointer-events-none' />
+											) : (
+												<EyeIcon className='text-2xl text-default-400 pointer-events-none' />
+											)}
+										</button>
 									}
 									label='Password'
 									labelPlacement='outside'
 									placeholder='Enter your password'
-									type='password'
+									type={isVisable ? 'text' : 'password'}
 									variant='bordered'
 									isInvalid={errors.password?.message}
 									errorMessage={errors.password?.message}
