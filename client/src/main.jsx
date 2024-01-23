@@ -7,6 +7,9 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import NoMatch from './pages/NoMatch'
 import Signup from './pages/Signup'
+import Checkout from './pages/Checkout'
+import Cancel from './pages/Cancel'
+import Success from './pages/Success'
 
 const router = createBrowserRouter([
 	{
@@ -30,6 +33,17 @@ const router = createBrowserRouter([
 				path: '/generate',
 				element: <Generate />
 			},
+				path: '/checkout',
+				element: <Checkout />
+			},
+			{
+				path: '/cancel',
+				element: <Cancel />
+			},
+			{
+				path: '/success',
+				element: <Success />
+			}
 		]
 	}
 ])
