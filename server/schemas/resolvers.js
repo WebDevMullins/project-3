@@ -6,7 +6,7 @@ const { generateImage } = require('../utils/helpers')
 const resolvers = {
 	Query: {
 		user: async (_, { _id }) => {
-			return await User.findById(_id)
+			return await User.findById(_id).populate('icons')
 		}
 	},
 	Mutation: {
