@@ -76,6 +76,13 @@ function Nav() {
 						Credits
 					</Link>
 				</NavbarItem>
+				<NavbarItem>
+					<Link
+						color='foreground'
+						href='/team'>
+						Our Team
+					</Link>
+				</NavbarItem>
 			</NavbarContent>
 			<NavbarContent justify='end'>
 				<NavbarItem className='hidden md:flex'>
