@@ -1,10 +1,11 @@
 const { User } = require('../models')
 const { signToken, AuthenticationError } = require('../utils/auth')
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 const resolvers = {
 	Query: {
-		users: async () => {
-			return await User.find({})
+		user: async (_, { _id }) => {
+			return await User.findById(_id)
 		}
 	},
 	Mutation: {
@@ -14,7 +15,6 @@ const resolvers = {
 
 			return { token, user }
 		},
-
 		login: async (parent, { email, password }) => {
 			const user = await User.findOne({ email })
 
@@ -31,6 +31,34 @@ const resolvers = {
 			const token = signToken(user)
 
 			return { token, user }
+		},
+		updateCredits: async (_, { _id, credits }) => {
+			const user = await User.findByIdAndUpdate(_id, { credits }, { new: true })
+			if (!user) {
+				throw new Error('User not found')
+			}
+			// If statement to ensure no negative creidts
+			if (credits < 0) {
+				throw new Error('Invalid credit amount')
+			}
+			return user
+		},
+		createCheckoutSession: async (_, { lineItems }) => {
+			try {
+				const session = await stripe.checkout.sessions.create({
+					line_items: lineItems,
+					mode: 'payment',
+					success_url: `http://localhost:3000/success`,
+					cancel_url: `http://localhost:3000/cancel`
+				})
+
+				return {
+					id: session.id,
+					url: session.url
+				}
+			} catch (error) {
+				throw new Error(error.message)
+			}
 		}
 	}
 }

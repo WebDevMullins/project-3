@@ -10,8 +10,7 @@
 		"seed": "cd server && npm run seed",
 		"build": "cd client && npm run build",
 		"render-build": "npm install && npm run build",
-		"prettier:format": "prettier --write \"**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
-		"prettier:check:ci": "prettier --check \"**/*.{ts,tsx,js,md,mdx,css,yaml}\""
+		"prettier:format": "prettier --write \"**/*.{ts,tsx,js,md,mdx,css,yaml}\""
 	},
 	"keywords": [],
 	"author": "",
@@ -21,5 +20,6 @@
 		"@webdevmullins/prettier-config": "^0.0.1",
 		"concurrently": "^8.2.2",
 		"prettier": "^3.2.4"
-	}
+	},
+	"dependencies": {}
 }
