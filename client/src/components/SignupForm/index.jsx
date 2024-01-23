@@ -56,9 +56,11 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 							<ModalBody>
 								<div className='flex gap-2'>
 									<Input
+										size='lg'
 										autoFocus
 										type='text'
 										label='First Name'
+										labelPlacement='outside'
 										placeholder='Enter your first name'
 										variant='bordered'
 										isInvalid={errors.firstName?.message}
@@ -66,8 +68,10 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 										{...register('firstName')}
 									/>
 									<Input
+										size='lg'
 										type='text'
 										label='Last Name'
+										labelPlacement='outside'
 										placeholder='Enter your last name'
 										variant='bordered'
 										isInvalid={errors.lastName?.message}
@@ -76,10 +80,12 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 									/>
 								</div>
 								<Input
+									size='lg'
 									endContent={
 										<MailIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
 									label='Email'
+									labelPlacement='outside'
 									placeholder='Enter your email'
 									variant='bordered'
 									isInvalid={errors.email?.message}
@@ -87,10 +93,12 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 									{...register('email')}
 								/>
 								<Input
+									size='lg'
 									endContent={
 										<LockKeyholeIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
 									label='Password'
+									labelPlacement='outside'
 									placeholder='Enter your password'
 									type='password'
 									variant='bordered'
