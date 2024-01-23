@@ -5,7 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import Home from './pages/Home'
 import Login from './pages/Login'
-import NoMatch from './pages/NoMatch'
+// import NoMatch from './pages/NoMatch'
 import Signup from './pages/Signup'
 import Checkout from './pages/Checkout'
 import Cancel from './pages/Cancel'
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <App />,
-		error: <NoMatch />,
+		// error: <NoMatch />,
 		children: [
 			{
 				index: true,
@@ -33,6 +33,7 @@ const router = createBrowserRouter([
 				path: '/generate',
 				element: <Generate />
 			},
+			{
 				path: '/checkout',
 				element: <Checkout />
 			},
