@@ -1,11 +1,10 @@
-import {
+const {
     S3Client,
     PutObjectCommand,
-    DeleteObjectCommand,
-    GetObjectCommand, 
-} from "@aws-sdk/client-s3"
+    DeleteObjectCommand
+} = require('@aws-sdk/client-s3')
 
-import dotenv from 'dotenv'
+const dotenv = require('dotenv')
 
 dotenv.config()
 
