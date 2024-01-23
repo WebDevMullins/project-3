@@ -1,4 +1,3 @@
-// import Auth from '../../utils/auth'
 import React from 'react'
 import {
 	Navbar,
@@ -11,15 +10,16 @@ import {
 	Link,
 	Button
 } from '@nextui-org/react'
+import AuthForm from '../AuthForm'
 
 function Nav() {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 	const menuItems = [
-		'Profile',
-		'Dashboard',
-		'Activity',
-		'Analytics',
-		'System',
+		'Home',
+		'Generate',
+		'Collection',
+		'About',
+		'Contact',
 		'Deployments',
 		'My Settings',
 		'Team Settings',
@@ -27,36 +27,6 @@ function Nav() {
 		'Log Out'
 	]
 
-	// function showNavigation() {
-	// 	if (Auth.loggedIn()) {
-	// 		return (
-	// 			<ul className='flex-row'>
-	// 				<li className='mx-1'>
-	// 					<Link to='/orderHistory'>Order History</Link>
-	// 				</li>
-	// 				<li className='mx-1'>
-	// 					{/* this is not using the Link component to logout or user and then refresh the application to the start */}
-	// 					<a
-	// 						href='/'
-	// 						onClick={() => Auth.logout()}>
-	// 						Logout
-	// 					</a>
-	// 				</li>
-	// 			</ul>
-	// 		)
-	// 	} else {
-	// 		return (
-	// 			<ul className='flex-row'>
-	// 				<li className='mx-1'>
-	// 					<Link to='/signup'>Signup</Link>
-	// 				</li>
-	// 				<li className='mx-1'>
-	// 					<Link to='/login'>Login</Link>
-	// 				</li>
-	// 			</ul>
-	// 		)
-	// 	}
-	// }
 
 	return (
 		<Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -66,47 +36,38 @@ function Nav() {
 					className='sm:hidden'
 				/>
 				<NavbarBrand>
-					<p className='font-bold text-inherit'>ACME</p>
+					<p className='font-bold text-inherit'>A.I.conic</p>
 				</NavbarBrand>
 			</NavbarContent>
 
 			<NavbarContent
 				className='hidden sm:flex gap-4'
 				justify='center'>
-				<NavbarItem>
+				<NavbarItem >
 					<Link
 						color='foreground'
-						href='#'>
-						Features
+						href='/'>
+						Home
 					</Link>
 				</NavbarItem>
 				<NavbarItem isActive>
 					<Link
 						href='#'
 						aria-current='page'>
-						Customers
+						About
 					</Link>
 				</NavbarItem>
 				<NavbarItem>
 					<Link
 						color='foreground'
 						href='#'>
-						Integrations
+						Generate
 					</Link>
 				</NavbarItem>
 			</NavbarContent>
 			<NavbarContent justify='end'>
-				<NavbarItem className='hidden lg:flex'>
-					<Link href='#'>Login</Link>
-				</NavbarItem>
-				<NavbarItem>
-					<Button
-						as={Link}
-						color='primary'
-						href='#'
-						variant='flat'>
-						Sign Up
-					</Button>
+				<NavbarItem className='hidden md:flex'>
+					<AuthForm/>
 				</NavbarItem>
 			</NavbarContent>
 			<NavbarMenu>
@@ -128,7 +89,6 @@ function Nav() {
 					</NavbarMenuItem>
 				))}
 			</NavbarMenu>
-			{/* <Nav>{showNavigation()}</Nav> */}
 		</Navbar>
 	)
 }
