@@ -4,27 +4,26 @@ function Team() {
 			<div class='py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6'>
 				<div class='mx-auto mb-8 max-w-screen-sm lg:mb-16'>
 					<h2 class='mb-4 text-4xl tracking-tight font-extrabold text-white'>
-						Our team
+						Our Team
 					</h2>
 					<p class='font-light text-gray-500 sm:text-xl dark:text-gray-400'>
-						Explore the whole collection of open-source web components and
-						elements built with the utility classes from Tailwind
+						Introducing the talented team behind A.I.conic
 					</p>
 				</div>
 				<div class='grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 '>
 					<div class='text-center text-gray-500 dark:text-gray-400 '>
 						<img
 							class='mx-auto mb-4 w-36 h-36 rounded-full'
-							src='https://avatars.githubusercontent.com/u/99524749?v=4'
-							alt='Clay Avatar'
+							src='https://avatars.githubusercontent.com/u/6474546?v=4'
+							alt='Brandon Avatar'
 						/>
 						<h3 class='mb-1 text-2xl font-bold tracking-tight text-white'>
-							<a href='#'>Clay Guerrero</a>
+							<p>Brandon Mullins</p>
 						</h3>
 						<div className='flex flex-row justify-evenly '>
 							<div className='flex w-48 justify-around'>
 								<p>Frontend Developer</p>
-								<a href='#'>
+								<a href='https://github.com/WebDevMullins'>
 									<svg
 										class='w-6 h-6'
 										fill='white'
@@ -47,12 +46,12 @@ function Team() {
 							alt='Clay Avatar'
 						/>
 						<h3 class='mb-1 text-2xl font-bold tracking-tight text-white'>
-							<a href='#'>Clay Guerrero</a>
+							<p>Clayton Guerrero</p>
 						</h3>
 						<div className='flex flex-row justify-evenly'>
 							<div className='flex w-48 justify-around'>
 								<p>Frontend Developer</p>
-								<a href='#'>
+								<a href='https://github.com/clayguerrero'>
 									<svg
 										class='w-6 h-6'
 										fill='white'
@@ -71,16 +70,16 @@ function Team() {
 					<div class='text-center text-gray-500 dark:text-gray-400'>
 						<img
 							class='mx-auto mb-4 w-36 h-36 rounded-full'
-							src='https://avatars.githubusercontent.com/u/99524749?v=4'
-							alt='Clay Avatar'
+							src='https://avatars.githubusercontent.com/u/116127829?v=4'
+							alt='Andrew Avatar'
 						/>
 						<h3 class='mb-1 text-2xl font-bold tracking-tight text-white'>
-							<a href='#'>Clay Guerrero</a>
+							<p>Andrew Tullos</p>
 						</h3>
 						<div className='flex flex-row justify-evenly '>
 							<div className='flex w-48 justify-around'>
 								<p>Frontend Developer</p>
-								<a href='#'>
+								<a href='https://github.com/AndrewTullos'>
 									<svg
 										class='w-6 h-6'
 										fill='white'
@@ -101,15 +100,15 @@ function Team() {
 					<div class='text-center text-gray-500 dark:text-gray-400 max-w-48 justify-self-center '>
 						<img
 							class='mx-auto mb-4 w-36 h-36 rounded-full'
-							src='https://avatars.githubusercontent.com/u/99524749?v=4'
-							alt='Clay Avatar'
+							src='https://avatars.githubusercontent.com/u/139809496?v=4'
+							alt='Austin Avatar'
 						/>
 						<h3 class='mb-1 text-2xl font-bold tracking-tight text-white'>
-							<a href='#'>Clay Guerrero</a>
+							<p>Austin Mann</p>
 						</h3>
 						<div className='flex flex-row justify-evenly w-48'>
-							<p>Frontend Developer</p>
-							<a href='#'>
+							<p>Backend Developer</p>
+							<a href='https://github.com/ammann64'>
 								<svg
 									class='w-6 h-6'
 									fill='white'
@@ -127,15 +126,15 @@ function Team() {
 					<div class='text-center text-gray-500 dark:text-gray-400 max-w-48 justify-self-center mt-8 md:mt-0'>
 						<img
 							class='mx-auto mb-4 w-36 h-36 rounded-full'
-							src='https://avatars.githubusercontent.com/u/99524749?v=4'
-							alt='Clay Avatar'
+							src='https://avatars.githubusercontent.com/u/139658551?v=4'
+							alt='Trini Avatar'
 						/>
 						<h3 class='mb-1 text-2xl font-bold tracking-tight text-white'>
-							<a href='#'>Clay Guerrero</a>
+							<p>Trinidad Gayton</p>
 						</h3>
 						<div className='flex flex-row justify-evenly w-48'>
-							<p>Frontend Developer</p>
-							<a href='#'>
+							<p>Backend Developer</p>
+							<a href='https://github.com/tgaytan'>
 								<svg
 									class='w-6 h-6'
 									fill='white'
