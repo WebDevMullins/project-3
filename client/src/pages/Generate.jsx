@@ -1,11 +1,15 @@
 import { count, presetColors, styles } from '@/utils/data'
 import { generateSchema } from '@/utils/validation'
+import { useMutation } from '@apollo/client'
 import { ColorPicker } from '@components/ColorPicker'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
+import { CREATE_ICON } from '@utils/mutations'
 import { Controller, useForm } from 'react-hook-form'
 
 const Generate = () => {
+	const [createIcon, { loading, error, data }] = useMutation(CREATE_ICON)
+
 	const {
 		control,
 		register,
@@ -18,8 +22,25 @@ const Generate = () => {
 	})
 
 	const onSubmit = async (data) => {
-		console.log(data)
-		reset()
+		try {
+			const response = await createIcon({
+				variables: {
+					input: {
+						prompt: data.prompt,
+						style: data.style,
+						color: data.color,
+						count: data.count
+					}
+				}
+			})
+
+			console.log(response.data.createIcon)
+			console.log(response)
+			reset()
+		} catch (error) {
+			console.error('Error creating icon', error.message)
+			// throw new Error(error)
+		}
 	}
 
 	return (
