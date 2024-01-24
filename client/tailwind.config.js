@@ -8,7 +8,11 @@ export default {
 		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
 	],
 	theme: {
-		extend: {}
+		extend: {
+			backdropBlur: {
+				xs: '1px'
+			}
+		}
 	},
 	darkMode: 'class',
 	plugins: [

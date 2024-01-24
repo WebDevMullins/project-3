@@ -11,6 +11,7 @@ import Checkout from './pages/Checkout'
 import Generate from './pages/Generate'
 import Signup from './pages/Signup'
 import Success from './pages/Success'
+import Team from './pages/Team.jsx'
 
 const router = createBrowserRouter([
 	{
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
 			{
 				path: '/success',
 				element: <Success />
+			},
+			{
+				path: '/team',
+				element: <Team/>
 			}
 		]
 	}
