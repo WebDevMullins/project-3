@@ -1,14 +1,17 @@
-import { count, presetColors, styles } from '@/utils/data'
-import { generateSchema } from '@/utils/validation'
 import { useMutation } from '@apollo/client'
-import { ColorPicker } from '@components/ColorPicker'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Input, Select, SelectItem } from '@nextui-org/react'
-import { CREATE_ICON } from '@utils/mutations'
+import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import { count, presetColors, styles } from '@/utils/data'
+import { generateSchema } from '@/utils/validation'
+import { ColorPicker } from '@components/ColorPicker'
+import { Button, Image, Input, Select, SelectItem } from '@nextui-org/react'
+import { CREATE_ICON } from '@utils/mutations'
+
 const Generate = () => {
-	const [createIcon, { loading, error, data }] = useMutation(CREATE_ICON)
+	const [createIcon, { loading, error }] = useMutation(CREATE_ICON)
+	const [iconUrl, setIconUrl] = useState([])
 
 	const {
 		control,
@@ -21,25 +24,30 @@ const Generate = () => {
 		resolver: zodResolver(generateSchema)
 	})
 
-	const onSubmit = async (data) => {
+	const onSubmit = async (input) => {
 		try {
+			console.log('Submitting form with input:', input)
+
 			const response = await createIcon({
 				variables: {
 					input: {
-						prompt: data.prompt,
-						style: data.style,
-						color: data.color,
-						count: data.count
+						...input
 					}
 				}
 			})
 
-			console.log(response.data.createIcon)
-			console.log(response)
+			const icons = response.data?.createIcon || []
+
+			const url = icons.map((icon) => icon.url)
+
+			setIconUrl(url)
+
+			console.log('URL:', url)
+			console.log(iconUrl)
+
 			reset()
-		} catch (error) {
-			console.error('Error creating icon', error.message)
-			// throw new Error(error)
+		} catch (err) {
+			console.error('Error creating icon', err.message)
 		}
 	}
 
@@ -96,10 +104,11 @@ const Generate = () => {
 							{...register('count')}>
 							{count.map((count) => (
 								<SelectItem
-									key={count}
-									value={count}
-									textValue={`${count}`}>
-									{count}
+									key={count.value}
+									value={count.value}
+									// textValue={`${count}`}
+								>
+									{count.label}
 								</SelectItem>
 							))}
 						</Select>
@@ -110,7 +119,16 @@ const Generate = () => {
 						Generate
 					</Button>
 				</form>
+				{loading && <p>Loading...</p>}
+				{error && <p>Error: {error.message}</p>}
 			</section>
+			{iconUrl.length > 0 && (
+				<Image
+					width={300}
+					alt='Image'
+					src={iconUrl}
+				/>
+			)}
 		</>
 	)
 }
