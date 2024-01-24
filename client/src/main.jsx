@@ -6,9 +6,10 @@ import App from './App.jsx'
 import Home from './pages/Home'
 import Login from './pages/Login'
 // import NoMatch from './pages/NoMatch'
-import Signup from './pages/Signup'
-import Checkout from './pages/Checkout'
 import Cancel from './pages/Cancel'
+import Checkout from './pages/Checkout'
+import Generate from './pages/Generate'
+import Signup from './pages/Signup'
 import Success from './pages/Success'
 
 const router = createBrowserRouter([
@@ -29,10 +30,10 @@ const router = createBrowserRouter([
 				path: '/signup',
 				element: <Signup />
 			},
-			// {
-			// 	path: '/generate',
-			// 	element: <Generate />
-			// },
+			{
+				path: '/generate',
+				element: <Generate />
+			},
 			{
 				path: '/checkout',
 				element: <Checkout />
