@@ -6,7 +6,17 @@ const { generateImage } = require('../utils/helpers')
 const resolvers = {
 	Query: {
 		user: async (_, { _id }) => {
-			return await User.findById(_id).populate('icons')
+			const user = await User.findById(_id).populate('icons')
+			const newUser = user.icons.map(icon => {
+				return {
+					...icon._doc,
+					url: 'https://aws.com'
+				}
+			})
+			return {
+				...user._doc,
+				icons: newUser
+			}
 		}
 	},
 	Mutation: {
