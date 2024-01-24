@@ -40,7 +40,7 @@ db.once('open', async () => {
 		prompt: 'prompt1'
 	})
 	await User.findOneAndUpdate(
-		{_id: users[0]._id},
+		{ _id: users[0]._id },
 		{ $push: { icons: icon1._id } },
 		{ new: true }
 	)
@@ -50,7 +50,7 @@ db.once('open', async () => {
 		prompt: 'prompt2'
 	})
 	await User.findOneAndUpdate(
-		{_id: users[1]._id},
+		{ _id: users[1]._id },
 		{ $push: { icons: icon2._id } },
 		{ new: true }
 	)
@@ -60,7 +60,7 @@ db.once('open', async () => {
 		prompt: 'prompt3'
 	})
 	await User.findOneAndUpdate(
-		{_id: users[2]._id},
+		{ _id: users[2]._id },
 		{ $push: { icons: icon3._id } },
 		{ new: true }
 	)
