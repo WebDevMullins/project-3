@@ -35,20 +35,35 @@ db.once('open', async () => {
 
 	const users = await User.find({})
 
-	await Icon.create({
+	const icon1 = await Icon.create({
 		userId: users[0]._id,
 		prompt: 'prompt1'
 	})
+	await User.findOneAndUpdate(
+		{ _id: users[0]._id },
+		{ $push: { icons: icon1._id } },
+		{ new: true }
+	)
 
-	await Icon.create({
+	const icon2 = await Icon.create({
 		userId: users[1]._id,
 		prompt: 'prompt2'
 	})
+	await User.findOneAndUpdate(
+		{ _id: users[1]._id },
+		{ $push: { icons: icon2._id } },
+		{ new: true }
+	)
 
-	await Icon.create({
+	const icon3 = await Icon.create({
 		userId: users[2]._id,
 		prompt: 'prompt3'
 	})
+	await User.findOneAndUpdate(
+		{ _id: users[2]._id },
+		{ $push: { icons: icon3._id } },
+		{ new: true }
+	)
 
 	console.log('icons seeded')
 
