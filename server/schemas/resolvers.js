@@ -64,6 +64,8 @@ const resolvers = {
 		createIcon: async (parent, args) => {
 			try {
 				const image_urls = generateImage(args)
+				console.log(image_urls)
+				return image_urls
 			} catch (error) {
 				throw new Error(error.message)
 			}
