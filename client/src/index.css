@@ -3,28 +3,28 @@
 @tailwind utilities;
 
 .picker {
-  width: 300px;
-  background: #000000;
-  border-radius: 9px;
+	width: 300px;
+	background: #000000;
+	border-radius: 9px;
 }
 
 .picker .react-colorful {
-  width: auto;
+	width: auto;
 }
 
 .picker__swatches {
-  display: flex;
-  padding: 12px;
-  flex-wrap: wrap;
+	display: flex;
+	padding: 12px;
+	flex-wrap: wrap;
 }
 
 .picker__swatch {
-  width: 24px;
-  height: 24px;
-  margin: 4px;
-  border: none;
-  padding: 0;
-  border-radius: 4px;
-  cursor: pointer;
-  outline: none;
+	width: 24px;
+	height: 24px;
+	margin: 4px;
+	border: none;
+	padding: 0;
+	border-radius: 4px;
+	cursor: pointer;
+	outline: none;
 }

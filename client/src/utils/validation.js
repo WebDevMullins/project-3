@@ -25,11 +25,9 @@ const loginSchema = z.object({
 const generateSchema = z.object({
 	prompt: z.string().min(1, 'Prompt is required'),
 	color: z.string().regex(/^#([0-9a-f]{3}){1,2}$/i, 'Invalid color'),
-	style: z
-		.string()
-		.refine((style) => styles.includes(style), {
-			message: 'Invalid style selected'
-		}),
+	style: z.string().refine((style) => styles.includes(style), {
+		message: 'Invalid style selected'
+	}),
 	count: z.string().regex(/^[1-5]$/, 'Invalid count')
 })
 
