@@ -15,10 +15,14 @@ import {
 	ModalHeader
 } from '@nextui-org/react'
 import { loginSchema } from '@utils/validation'
-import { LockKeyholeIcon, MailIcon } from 'lucide-react'
+import { EyeIcon, EyeOffIcon, MailIcon } from 'lucide-react'
+import { useState } from 'react'
 
 const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
 	const [login, { error }] = useMutation(LOGIN)
+	const [isVisable, setIsVisable] = useState(false)
+
+	const toggleVisibility = () => setIsVisable(!isVisable)
 
 	const {
 		register,
@@ -52,12 +56,13 @@ const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
 						<ModalHeader className='flex flex-col gap-1'>Login</ModalHeader>
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<ModalBody>
-								<Input
-									autoFocus
+							<Input
+									size='lg'
 									endContent={
 										<MailIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
 									}
 									label='Email'
+									labelPlacement='outside'
 									placeholder='Enter your email'
 									variant='bordered'
 									isInvalid={errors.email?.message}
@@ -65,12 +70,23 @@ const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
 									{...register('email')}
 								/>
 								<Input
+									size='lg'
 									endContent={
-										<LockKeyholeIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
+										<button
+											className='focus:outline-none'
+											type='button'
+											onClick={toggleVisibility}>
+											{isVisable ? (
+												<EyeOffIcon className='text-2xl text-default-400 pointer-events-none' />
+											) : (
+												<EyeIcon className='text-2xl text-default-400 pointer-events-none' />
+											)}
+										</button>
 									}
 									label='Password'
+									labelPlacement='outside'
 									placeholder='Enter your password'
-									type='password'
+									type={isVisable ? 'text' : 'password'}
 									variant='bordered'
 									isInvalid={errors.password?.message}
 									errorMessage={errors.password?.message}
