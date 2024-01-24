@@ -45,7 +45,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     updateCredits(_id: ID!, credits: Int!): User
     createCheckoutSession(lineItems: [LineItemInput]): CheckoutSession
-    addImages(_id: ID!, createdAt: String!, userID: ID!, url: String!, prompt: String): Icon
+    createIcon(_id: ID!, createdAt: String!, userID: ID!, url: String!, prompt: String): Icon
   }
 `
 

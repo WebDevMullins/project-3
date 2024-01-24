@@ -1,5 +1,7 @@
-const openAI = require('openai')
-const openai = new openAI({ apiKey: process.env.OPENAI_API_KEY })
+const dotenv = require('dotenv')
+dotenv.config()
+const OpenAI = require('openai')
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 async function generateImage({ prompt, color, style, count }) {
 	const finalPrompt = `${prompt}. Primarily colored ${color}. In a ${style} style.`
