@@ -4,7 +4,6 @@ import {
 	InMemoryCache,
 	createHttpLink
 } from '@apollo/client'
-import React, { useState, useEffect } from 'react'
 import './App.css'
 
 import { setContext } from '@apollo/client/link/context'

@@ -7,8 +7,7 @@ import {
 	NavbarMenu,
 	NavbarMenuToggle,
 	NavbarMenuItem,
-	Link,
-	Button
+	Link
 } from '@nextui-org/react'
 import AuthForm from '../AuthForm'
 
@@ -16,13 +15,25 @@ function Nav() {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 	const menuItems = [
 		'Home',
-		'Generate',
-		'Collection',
 		'About',
+		'Generate',
+		'Credits',
+		'Our Team',
+		'Collection',
 		'Contact',
-		'Help & Feedback',
-		'Our Team'
+		'Help & Feedback'
 	]
+
+	const handleMobileMenuNav = function (item, index) {
+		if (index === 0) {
+			return '/'
+		} else if (item === 'Credits') {
+			return '/success'
+		} else if (item === 'Our Team') {
+			return '/team'
+		}
+		return `${item.toLowerCase()}`
+	}
 
 	return (
 		<Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -61,6 +72,20 @@ function Nav() {
 						Generate
 					</Link>
 				</NavbarItem>
+				<NavbarItem>
+					<Link
+						color='foreground'
+						href='/success'>
+						Credits
+					</Link>
+				</NavbarItem>
+				<NavbarItem>
+					<Link
+						color='foreground'
+						href='/team'>
+						Our Team
+					</Link>
+				</NavbarItem>
 			</NavbarContent>
 			<NavbarContent justify='end'>
 				<NavbarItem className='hidden md:flex'>
@@ -72,8 +97,8 @@ function Nav() {
 					<NavbarMenuItem key={`${item}-${index}`}>
 						<Link
 							color={'foreground'}
-							className='w-full'
-							href={index === 0 ? '/' : `${item.toLowerCase()}`}
+							className='w-40'
+							href={handleMobileMenuNav(item, index)}
 							size='lg'>
 							{item}
 						</Link>

@@ -1,77 +1,97 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { count, presetColors, styles } from '@/utils/data'
+import { generateSchema } from '@/utils/validation'
+import { ColorPicker } from '@components/ColorPicker'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button, Input, Select, SelectItem } from '@nextui-org/react'
+import { Controller, useForm } from 'react-hook-form'
 
 const Generate = () => {
-    const [formState, setFormState] = useState({ prompt: '', color: '', style: '', count: 1 });
+	const {
+		control,
+		register,
+		handleSubmit,
+		formState: { errors },
+		reset
+	} = useForm({
+		mode: 'onBlur',
+		resolver: zodResolver(generateSchema)
+	})
 
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            console.log(`Prompt: ${formState.prompt}, Color: ${formState.color}, Style: ${formState.style}, Count: ${formState.count}`);
-        } catch (e) {
-            console.log(e);
-        }
-    };
+	const onSubmit = async (data) => {
+		console.log(data)
+		reset()
+	}
 
-    const handleChange = async (event) => {
-        const { name, value } = event.target;
-        setFormState({
-            ...formState,
-            [name]: value,
-        });
-    };
-
-    return (
-        <div className="container">
-            <Link to="/home">← Go to Homepage</Link>
-
-            <h2>Generate a Logo</h2>
-            <form onSubmit={handleFormSubmit}>
-                <div className="flex-row space-between">
-                    <label htmlFor="prompt">Prompt:</label>
-                    <input
-                      placeholder="A dog"
-                      name="prompt"
-                      type="text"
-                      id="prompt"
-                      onChange={handleChange}
-                    />
-                </div>
-                <div className="flex-row space-between">
-                    <label htmlFor="color">Color:</label>
-                    <input
-                      placeholder="Blue"
-                      name="color"
-                      type="text"
-                      id="color"
-                      onChange={handleChange}
-                    />
-                </div>
-                <div className="flex-row space-between">
-                    <label htmlFor="style">Style:</label>
-                    <input
-                      placeholder="Blocky and surrealist"
-                      name="style"
-                      type="text"
-                      id="style"
-                      onChange={handleChange}
-                    />
-                </div>
-                <div className="flex-row space-between">
-                    <label htmlFor="count">Count:</label>
-                    <input
-                      name="count"
-                      type="number"
-                      id="count"
-                      onChange={handleChange}
-                    />
-                </div>
-                <div className="flex-row flex-end">
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-        </div>
-    )
+	return (
+		<>
+			<section className='flex max-w-screen-md w-full mx-auto min-h-screen justify-center items-center'>
+				<form
+					className='flex flex-col gap-8'
+					onSubmit={handleSubmit(onSubmit)}>
+					<Input
+						type='text'
+						label='Prompt'
+						placeholder='adjective noun'
+						variant='bordered'
+						isInvalid={errors.prompt?.message}
+						errorMessage={errors.prompt?.message}
+						{...register('prompt')}
+					/>
+					<Controller
+						name='color'
+						control={control}
+						render={({ field: { onChange, value } }) => (
+							<ColorPicker
+								color={value}
+								onChange={onChange}
+								presetColors={presetColors}
+							/>
+						)}
+					/>
+					<div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+						<Select
+							variant='bordered'
+							label='Select a style'
+							className='max-w-xs'
+							isInvalid={errors.style?.message}
+							errorMessage={errors.style?.message}
+							{...register('style')}>
+							{styles.map((style) => (
+								<SelectItem
+									key={style}
+									value={style}>
+									{style}
+								</SelectItem>
+							))}
+						</Select>
+					</div>
+					<div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
+						<Select
+							variant='bordered'
+							label='Select number to generate'
+							className='max-w-xs'
+							isInvalid={errors.count?.message}
+							errorMessage={errors.count?.message}
+							{...register('count')}>
+							{count.map((count) => (
+								<SelectItem
+									key={count}
+									value={count}
+									textValue={`${count}`}>
+									{count}
+								</SelectItem>
+							))}
+						</Select>
+					</div>
+					<Button
+						color='primary'
+						type='submit'>
+						Generate
+					</Button>
+				</form>
+			</section>
+		</>
+	)
 }
 
-export default Generate;
+export default Generate
