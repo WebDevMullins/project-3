@@ -18,10 +18,10 @@ function Nav() {
 		'About',
 		'Generate',
 		'Credits',
+		'Our Team',
 		'Collection',
 		'Contact',
-		'Help & Feedback',
-		'Our Team'
+		'Help & Feedback'
 	]
 
 	const handleMobileMenuNav = function (item, index) {
@@ -29,7 +29,10 @@ function Nav() {
 			return '/'
 		} else if (item === 'Credits') {
 			return '/success'
-		} else return `${item.toLowerCase()}`
+		} else if (item === 'Our Team') {
+			return '/team'
+		}
+		return `${item.toLowerCase()}`
 	}
 
 	return (
