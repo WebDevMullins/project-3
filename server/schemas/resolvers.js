@@ -8,7 +8,7 @@ const resolvers = {
 	Query: {
 		user: async (_, { _id }) => {
 			const user = await User.findById(_id).populate('icons')
-			const newUser = user.icons.map(icon => {
+			const newUser = user.icons.map((icon) => {
 				return {
 					...icon._doc,
 					url: generateObjectUrl(icon._id)
