@@ -8,7 +8,7 @@ const resolvers = {
 	Query: {
 		user: async (_, { _id }) => {
 			const user = await User.findById(_id).populate('icons')
-			const iconUrlArray = user.icons.map(icon => {
+			const iconUrlArray = user.icons.map((icon) => {
 				return {
 					...icon._doc, // when spreading object, it has too properties. only need _doc property which has the actual information we want
 					url: generateObjectUrl(icon._id)
