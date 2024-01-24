@@ -47,7 +47,7 @@ const userSchema = new Schema({
 	icons: [
 		{
 			type: Schema.Types.ObjectId,
-			ref: 'icon'
+			ref: 'Icon'
 		}
 	]
 })
