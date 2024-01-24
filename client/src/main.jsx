@@ -12,6 +12,7 @@ import Generate from './pages/Generate'
 import Signup from './pages/Signup'
 import Success from './pages/Success'
 import Team from './pages/Team.jsx'
+import About from './pages/About.jsx'
 
 const router = createBrowserRouter([
 	{
@@ -49,7 +50,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/team',
-				element: <Team/>
+				element: <Team />
+			},
+			{
+				path: '/about',
+				element: <About />
 			}
 		]
 	}
