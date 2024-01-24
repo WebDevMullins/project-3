@@ -16,6 +16,7 @@ import store from './redux/store'
 import Layout from '@components/Layout'
 import Nav from '@components/Nav'
 import StarsCanvas from '@components/StarBackground'
+import Footer from '@components/Footer'
 
 const httpLink = createHttpLink({
 	uri: '/graphql'
@@ -49,6 +50,7 @@ function App() {
 					<Layout>
 						<Outlet />
 					</Layout>
+					<Footer />
 				</NextUIProvider>
 			</Provider>
 		</ApolloProvider>
