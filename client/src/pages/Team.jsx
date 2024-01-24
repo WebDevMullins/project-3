@@ -1,23 +1,23 @@
 function Team() {
 	return (
 		<section className='flex flex-row justify-center w-full mx-auto my-16 bg-neutral-700/25 backdrop-blur-xs rounded '>
-			<div class='py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6'>
-				<div class='mx-auto mb-8 max-w-screen-sm lg:mb-16'>
-					<h2 class='mb-4 text-4xl tracking-tight font-extrabold text-white'>
+			<div className='py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6'>
+				<div className='mx-auto mb-8 max-w-screen-sm lg:mb-16'>
+					<h2 className='mb-4 text-4xl tracking-tight font-extrabold text-white'>
 						Our Team
 					</h2>
-					<p class='font-light text-gray-500 sm:text-xl dark:text-gray-400'>
+					<p className='font-light text-gray-500 sm:text-xl dark:text-gray-400'>
 						Introducing the talented team behind A.I.conic
 					</p>
 				</div>
-				<div class='grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 '>
-					<div class='text-center text-gray-500 dark:text-gray-400 '>
+				<div className='grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 '>
+					<div className='text-center text-gray-500 dark:text-gray-400 '>
 						<img
-							class='mx-auto mb-4 w-36 h-36 rounded-full'
+							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/6474546?v=4'
 							alt='Brandon Avatar'
 						/>
-						<h3 class='mb-1 text-2xl font-bold tracking-tight text-white'>
+						<h3 className='mb-1 text-2xl font-bold tracking-tight text-white'>
 							<p>Brandon Mullins</p>
 						</h3>
 						<div className='flex flex-row justify-evenly '>
@@ -25,7 +25,7 @@ function Team() {
 								<p>Frontend Developer</p>
 								<a href='https://github.com/WebDevMullins'>
 									<svg
-										class='w-6 h-6'
+										className='w-6 h-6'
 										fill='white'
 										viewBox='0 0 24 24'
 										aria-hidden='true'>
@@ -39,13 +39,13 @@ function Team() {
 							</div>
 						</div>
 					</div>
-					<div class='text-center text-gray-500 dark:text-gray-400'>
+					<div className='text-center text-gray-500 dark:text-gray-400'>
 						<img
-							class='mx-auto mb-4 w-36 h-36 rounded-full'
+							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/99524749?v=4'
 							alt='Clay Avatar'
 						/>
-						<h3 class='mb-1 text-2xl font-bold tracking-tight text-white'>
+						<h3 className='mb-1 text-2xl font-bold tracking-tight text-white'>
 							<p>Clayton Guerrero</p>
 						</h3>
 						<div className='flex flex-row justify-evenly'>
@@ -53,7 +53,7 @@ function Team() {
 								<p>Frontend Developer</p>
 								<a href='https://github.com/clayguerrero'>
 									<svg
-										class='w-6 h-6'
+										className='w-6 h-6'
 										fill='white'
 										viewBox='0 0 24 24'
 										aria-hidden='true'>
@@ -67,13 +67,13 @@ function Team() {
 							</div>
 						</div>
 					</div>
-					<div class='text-center text-gray-500 dark:text-gray-400'>
+					<div className='text-center text-gray-500 dark:text-gray-400'>
 						<img
-							class='mx-auto mb-4 w-36 h-36 rounded-full'
+							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/116127829?v=4'
 							alt='Andrew Avatar'
 						/>
-						<h3 class='mb-1 text-2xl font-bold tracking-tight text-white'>
+						<h3 className='mb-1 text-2xl font-bold tracking-tight text-white'>
 							<p>Andrew Tullos</p>
 						</h3>
 						<div className='flex flex-row justify-evenly '>
@@ -81,7 +81,7 @@ function Team() {
 								<p>Frontend Developer</p>
 								<a href='https://github.com/AndrewTullos'>
 									<svg
-										class='w-6 h-6'
+										className='w-6 h-6'
 										fill='white'
 										viewBox='0 0 24 24'
 										aria-hidden='true'>
@@ -96,21 +96,21 @@ function Team() {
 						</div>
 					</div>
 				</div>
-				<div class='grid sm:grid-cols-2 columns-2xs md:px-20 mt-8 '>
-					<div class='text-center text-gray-500 dark:text-gray-400 max-w-48 justify-self-center '>
+				<div className='grid sm:grid-cols-2 columns-2xs md:px-20 mt-8 '>
+					<div className='text-center text-gray-500 dark:text-gray-400 max-w-48 justify-self-center '>
 						<img
-							class='mx-auto mb-4 w-36 h-36 rounded-full'
+							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/139809496?v=4'
 							alt='Austin Avatar'
 						/>
-						<h3 class='mb-1 text-2xl font-bold tracking-tight text-white'>
+						<h3 className='mb-1 text-2xl font-bold tracking-tight text-white'>
 							<p>Austin Mann</p>
 						</h3>
 						<div className='flex flex-row justify-evenly w-48'>
 							<p>Backend Developer</p>
 							<a href='https://github.com/ammann64'>
 								<svg
-									class='w-6 h-6'
+									className='w-6 h-6'
 									fill='white'
 									viewBox='0 0 24 24'
 									aria-hidden='true'>
@@ -123,20 +123,20 @@ function Team() {
 							</a>
 						</div>
 					</div>
-					<div class='text-center text-gray-500 dark:text-gray-400 max-w-48 justify-self-center mt-8 md:mt-0'>
+					<div className='text-center text-gray-500 dark:text-gray-400 max-w-48 justify-self-center mt-8 md:mt-0'>
 						<img
-							class='mx-auto mb-4 w-36 h-36 rounded-full'
+							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/139658551?v=4'
 							alt='Trini Avatar'
 						/>
-						<h3 class='mb-1 text-2xl font-bold tracking-tight text-white'>
+						<h3 className='mb-1 text-2xl font-bold tracking-tight text-white'>
 							<p>Trinidad Gayton</p>
 						</h3>
 						<div className='flex flex-row justify-evenly w-48'>
 							<p>Backend Developer</p>
 							<a href='https://github.com/tgaytan'>
 								<svg
-									class='w-6 h-6'
+									className='w-6 h-6'
 									fill='white'
 									viewBox='0 0 24 24'
 									aria-hidden='true'>
