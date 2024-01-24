@@ -14,6 +14,7 @@ const typeDefs = `
     createdAt: String!
     userId: ID!
     prompt: String!
+    url: String!
   }
 
   type Auth {
