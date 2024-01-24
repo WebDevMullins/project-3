@@ -1,4 +1,5 @@
 const { User, Icon } = require('../models')
+const { generateObjectUrl } = require('../utils/s3')
 const { signToken, AuthenticationError } = require('../utils/auth')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const { generateImage } = require('../utils/helpers')
@@ -10,7 +11,7 @@ const resolvers = {
 			const newUser = user.icons.map(icon => {
 				return {
 					...icon._doc,
-					url: 'https://aws.com'
+					url: generateObjectUrl(icon._id)
 				}
 			})
 			return {
