@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Icon } = require('../models')
 const { signToken, AuthenticationError } = require('../utils/auth')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const { generateImage } = require('../utils/helpers')
