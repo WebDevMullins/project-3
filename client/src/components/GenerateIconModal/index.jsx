@@ -4,19 +4,26 @@ import {
 	ModalBody,
 	ModalContent,
 	ModalFooter,
-	ModalHeader,
+	ModalHeader
 } from '@nextui-org/react'
+import { useNavigate } from 'react-router-dom'
 import IconCard from '../IconCard'
 
-const GenerateIconModal = ({ iconUrl, isOpen, onClose, prompt }) => {
+const GenerateIconModal = ({ iconUrl, isOpen, prompt }) => {
+	const navigate = useNavigate()
 
+	const handleNavigateGallery = () => {
+		navigate('/') // Redirect to home page
+	}
 	return (
 		<>
 			<Modal
 				isOpen={isOpen}
-				onClose={onClose}
-        backdrop='blur'
-        placement='bottom-center'>
+				backdrop='blur'
+				hideCloseButton='true'
+				isDismissable='false'
+				isKeyboardDismissDisabled='true'
+				placement='bottom-center'>
 				<ModalContent>
 					<ModalHeader className='flex flex-col gap-1 capitalize'>
 						{prompt}
@@ -32,10 +39,10 @@ const GenerateIconModal = ({ iconUrl, isOpen, onClose, prompt }) => {
 					</ModalBody>
 					<ModalFooter>
 						<Button
-							color='danger'
-							variant='light'
-							onPress={onClose}>
-							Close
+							color='primary'
+							variant='ghost'
+							onPress={handleNavigateGallery}>
+							Go to Gallery
 						</Button>
 					</ModalFooter>
 				</ModalContent>
