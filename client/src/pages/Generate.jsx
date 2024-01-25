@@ -80,8 +80,8 @@ const Generate = () => {
 						</p>
 					</div>
 					<div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6'>
-				<DashboardIconCard />
-				<DashboardIconCard />
+				<DashboardIconCard src='https://project3-bucket-jan18.s3.us-east-2.amazonaws.com/65b2cf9806acabfcbf0a06f2' />
+				<DashboardIconCard src='https://project3-bucket-jan18.s3.us-east-2.amazonaws.com/65b2cf9806acabfcbf0a06f2' />
 			</div>
 					<form
 						className='flex flex-col gap-8'

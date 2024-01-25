@@ -16,7 +16,7 @@ const DashboardIconCard = ({ alt, src }) => {
 			radius='lg'
 			className='border-none'>
 			<Image
-				src='https://project3-bucket-jan18.s3.us-east-2.amazonaws.com/65b2cf9806acabfcbf0a06f2'
+				src={src}
 				alt={alt}
 				height={300}
 				width={300}
@@ -45,7 +45,7 @@ const DashboardIconCard = ({ alt, src }) => {
 							key='download'
 							description='Download fullsize HD icon'
 							download={alt}
-							href='https://project3-bucket-jan18.s3.us-east-2.amazonaws.com/65b2cf9806acabfcbf0a06f2'
+							href={src}
 							startContent={<DownloadIcon/>}>
 							Download
 						</DropdownItem>
