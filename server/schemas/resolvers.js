@@ -1,4 +1,5 @@
 const { User, Icon } = require('../models')
+const { generateObjectUrl } = require('../utils/s3')
 const { signToken, AuthenticationError } = require('../utils/auth')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const { generateImage } = require('../utils/helpers')
@@ -6,7 +7,17 @@ const { generateImage } = require('../utils/helpers')
 const resolvers = {
 	Query: {
 		user: async (_, { _id }) => {
-			return await User.findById(_id).populate('icons')
+			const user = await User.findById(_id).populate('icons')
+			const iconUrlArray = user.icons.map((icon) => {
+				return {
+					...icon._doc, // when spreading object, it has too properties. only need _doc property which has the actual information we want
+					url: generateObjectUrl(icon._id)
+				}
+			})
+			return {
+				...user._doc, // when spreading object, it has too properties. only need _doc property which has the actual information we want
+				icons: iconUrlArray
+			}
 		}
 	},
 	Mutation: {
