@@ -1,23 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
 	Card,
 	CardHeader,
 	CardBody,
 	CardFooter,
-	Divider,
-	Button
+	Divider
 } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 
 const SuccessPage = () => {
+	const [userData, setUserData] = useState(null)
+	const [error, setError] = useState('')
 	const navigate = useNavigate()
 
+	useEffect(() => {
+		const fetchUserData = async () => {
+			try {
+				const token = localStorage.getItem('yourTokenKey') // Replace with your token key
+				const response = await fetch('/api/get-user-data', {
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				})
+
+				if (!response.ok) {
+					throw new Error('Failed to fetch user data')
+				}
+				const data = await response.json()
+				setUserData(data)
+			} catch (err) {
+				setError(err.message)
+			}
+		}
+
+		fetchUserData()
+	}, [])
+
 	const handleReturnHome = () => {
-		navigate('/') // Redirect to home page
+		navigate('/') // Redirect to the home page
+	}
+
+	if (error) {
+		return <div>Error: {error}</div>
+	}
+
+	if (!userData) {
+		return <div>Loading...</div>
 	}
 
 	return (
-
 		<div className='flex flex-row justify-center w-full mx-auto my-40'>
 			<section className='flex w-full justify-center align-center'>
 				<Card className=''>
@@ -46,12 +78,14 @@ const SuccessPage = () => {
 					</CardHeader>
 					<Divider />
 					<CardBody>
+						<h1>Payment Successful!</h1>
+						<p>Your new credit balance: {userData.credits}</p>
 						<Button
 							className='text-md'
 							color='primary'
 							radius='full'
 							size='sm'
-							onPress={handleReturnHome}>
+							onClick={handleReturnHome}>
 							Return to Home
 						</Button>
 					</CardBody>
