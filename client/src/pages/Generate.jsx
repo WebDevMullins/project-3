@@ -17,7 +17,7 @@ import { CREATE_ICON } from '@utils/mutations'
 import GenerateIconModal from '../components/GenerateIconModal'
 
 const Generate = () => {
-	const [createIcon, { loading, error }] = useMutation(CREATE_ICON)
+	const [createIcon, { error }] = useMutation(CREATE_ICON)
 	const [iconUrl, setIconUrl] = useState([])
 	const [prompt, setPrompt] = useState([])
 	const { isOpen, onOpen } = useDisclosure()
@@ -26,7 +26,7 @@ const Generate = () => {
 		control,
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors, isSubmitting, isSubmitSuccessful },
 		reset
 	} = useForm({
 		mode: 'onBlur',
@@ -52,7 +52,7 @@ const Generate = () => {
 			setIconUrl(url)
 			setPrompt(input.prompt)
 			console.log('URL:', url)
-			onOpen()
+			onOpen(isSubmitSuccessful)
 			reset()
 		} catch (err) {
 			console.error('Error creating icon', err.message)
@@ -138,11 +138,12 @@ const Generate = () => {
 						
 						<Button
 							color='primary'
-							type='submit'>
+							type='submit'
+							isLoading={isSubmitting}
+							>
 							Generate
 						</Button>
 					</form>
-					{loading && <p>Loading...</p>}
 					{error && <p>Error: {error.message}</p>}
 				</div>
 			</section>
