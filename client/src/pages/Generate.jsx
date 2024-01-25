@@ -1,17 +1,26 @@
 import { useMutation } from '@apollo/client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { count, presetColors, styles } from '@/utils/data'
 import { generateSchema } from '@/utils/validation'
 import { ColorPicker } from '@components/ColorPicker'
-import { Button, Image, Input, Select, SelectItem } from '@nextui-org/react'
+import {
+	Button,
+	Input,
+	Select,
+	SelectItem,
+	useDisclosure
+} from '@nextui-org/react'
 import { CREATE_ICON } from '@utils/mutations'
+import GenerateIconModal from '../components/GenerateIconModal'
 
 const Generate = () => {
 	const [createIcon, { loading, error }] = useMutation(CREATE_ICON)
 	const [iconUrl, setIconUrl] = useState([])
+	const [prompt, setPrompt] = useState([])
+	const { isOpen, onOpen, onClose } = useDisclosure()
 
 	const {
 		control,
@@ -41,15 +50,21 @@ const Generate = () => {
 			const url = icons.map((icon) => icon.url)
 
 			setIconUrl(url)
-
+			setPrompt(input.prompt)
 			console.log('URL:', url)
-			console.log(iconUrl)
-
+			onOpen()
 			reset()
 		} catch (err) {
 			console.error('Error creating icon', err.message)
 		}
 	}
+
+	useEffect(() => {
+		// Open the modal automatically when there are icons to display
+		if (iconUrl.length > 0) {
+			onOpen()
+		}
+	}, [iconUrl, onOpen])
 
 	return (
 		<>
@@ -105,9 +120,7 @@ const Generate = () => {
 							{count.map((count) => (
 								<SelectItem
 									key={count.value}
-									value={count.value}
-									// textValue={`${count}`}
-								>
+									value={count.value}>
 									{count.label}
 								</SelectItem>
 							))}
@@ -123,10 +136,11 @@ const Generate = () => {
 				{error && <p>Error: {error.message}</p>}
 			</section>
 			{iconUrl.length > 0 && (
-				<Image
-					width={300}
-					alt='Image'
-					src={iconUrl}
+				<GenerateIconModal
+					isOpen={isOpen}
+					onClose={onClose}
+					iconUrl={iconUrl}
+					prompt={prompt}
 				/>
 			)}
 		</>
