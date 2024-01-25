@@ -14,6 +14,7 @@ import {
 	useDisclosure
 } from '@nextui-org/react'
 import { CREATE_ICON } from '@utils/mutations'
+import DashboardIconCard from '../components/DashboardIconCard'
 import GenerateIconModal from '../components/GenerateIconModal'
 
 const Generate = () => {
@@ -78,6 +79,10 @@ const Generate = () => {
 							Enter your prompt, choose a style, and select a base color
 						</p>
 					</div>
+					<div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6'>
+				<DashboardIconCard />
+				<DashboardIconCard />
+			</div>
 					<form
 						className='flex flex-col gap-8'
 						onSubmit={handleSubmit(onSubmit)}>
@@ -135,12 +140,11 @@ const Generate = () => {
 								/>
 							)}
 						/>
-						
+
 						<Button
 							color='primary'
 							type='submit'
-							isLoading={isSubmitting}
-							>
+							isLoading={isSubmitting}>
 							Generate
 						</Button>
 					</form>
@@ -154,6 +158,7 @@ const Generate = () => {
 					prompt={prompt}
 				/>
 			)}
+			
 		</>
 	)
 }
