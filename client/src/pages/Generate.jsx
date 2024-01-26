@@ -1,11 +1,18 @@
+import { useMutation } from '@apollo/client'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+
 import { count, presetColors, styles } from '@/utils/data'
 import { generateSchema } from '@/utils/validation'
 import { ColorPicker } from '@components/ColorPicker'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Input, Select, SelectItem } from '@nextui-org/react'
-import { Controller, useForm } from 'react-hook-form'
+import { Button, Image, Input, Select, SelectItem } from '@nextui-org/react'
+import { CREATE_ICON } from '@utils/mutations'
 
 const Generate = () => {
+	const [createIcon, { loading, error }] = useMutation(CREATE_ICON)
+	const [iconUrl, setIconUrl] = useState([])
+
 	const {
 		control,
 		register,
@@ -17,9 +24,31 @@ const Generate = () => {
 		resolver: zodResolver(generateSchema)
 	})
 
-	const onSubmit = async (data) => {
-		console.log(data)
-		reset()
+	const onSubmit = async (input) => {
+		try {
+			console.log('Submitting form with input:', input)
+
+			const response = await createIcon({
+				variables: {
+					input: {
+						...input
+					}
+				}
+			})
+
+			const icons = response.data?.createIcon || []
+
+			const url = icons.map((icon) => icon.url)
+
+			setIconUrl(url)
+
+			console.log('URL:', url)
+			console.log(iconUrl)
+
+			reset()
+		} catch (err) {
+			console.error('Error creating icon', err.message)
+		}
 	}
 
 	return (
@@ -75,10 +104,11 @@ const Generate = () => {
 							{...register('count')}>
 							{count.map((count) => (
 								<SelectItem
-									key={count}
-									value={count}
-									textValue={`${count}`}>
-									{count}
+									key={count.value}
+									value={count.value}
+									// textValue={`${count}`}
+								>
+									{count.label}
 								</SelectItem>
 							))}
 						</Select>
@@ -89,7 +119,16 @@ const Generate = () => {
 						Generate
 					</Button>
 				</form>
+				{loading && <p>Loading...</p>}
+				{error && <p>Error: {error.message}</p>}
 			</section>
+			{iconUrl.length > 0 && (
+				<Image
+					width={300}
+					alt='Image'
+					src={iconUrl}
+				/>
+			)}
 		</>
 	)
 }

@@ -6,7 +6,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 async function generateImage({ prompt, color, style, count }) {
 	const finalPrompt = `${prompt}. Primarily colored ${color}. In a ${style} style.`
 	const image = await openai.images.generate({
-		model: 'dall-e-3',
+		model: 'dall-e-2',
 		finalPrompt,
 		n: parseInt(count)
 	})
