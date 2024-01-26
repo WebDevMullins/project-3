@@ -28,7 +28,7 @@ function Nav() {
 		if (index === 0) {
 			return '/'
 		} else if (item === 'Credits') {
-			return '/success'
+			return '/checkout'
 		} else if (item === 'Our Team') {
 			return '/team'
 		}
@@ -75,7 +75,7 @@ function Nav() {
 				<NavbarItem>
 					<Link
 						color='foreground'
-						href='/success'>
+						href='/checkout'>
 						Credits
 					</Link>
 				</NavbarItem>
