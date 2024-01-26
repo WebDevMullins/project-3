@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Checkout() {
 	const [error, setError] = useState('')
+	const navigate = useNavigate()
 
 	const createStripeSession = async (credits) => {
 		try {
@@ -17,6 +19,8 @@ function Checkout() {
 			if (!response.ok) {
 				throw new Error(sessionData.message || 'Error creating Stripe session')
 			}
+
+			navigate('/success', { state: { userSelection: credits } })
 
 			window.location.href = sessionData.url
 		} catch (err) {
