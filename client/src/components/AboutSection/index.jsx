@@ -1,13 +1,13 @@
 const AboutSection = () => {
 	return (
-		<div className='flex flex-col justify-center w-full mx-auto my-16 bg-neutral-700/25 backdrop-blur-xs rounded'>
+		<div className='flex flex-col justify-center w-full mx-auto my-16 '>
 			<h1 className='mt-8 text-4xl tracking-tight font-extrabold text-white text-center'>
 				About Us
 			</h1>
 			<section className=' dark:bg-gray-900'>
-				<div className=' mx-auto max-w-screen-xl py-8 px-6'>
-					<div className='max-w-screen-md mb-8 lg:mb-16'>
-						<h2 className='mb-4 text-4xl tracking-tight font-extrabold text-white'>
+				<div className=' mx-auto max-w-screen-xl py-8 px-6  '>
+					<div className='max-w-screen-md mb-8 lg:mb-16 text-center'>
+						<h2 className='mb-4 text-4xl tracking-tight font-extrabold text-white '>
 							Designed for business teams like yours
 						</h2>
 						<p className='text-gray-500 sm:text-xl dark:text-gray-400'>
@@ -15,7 +15,7 @@ const AboutSection = () => {
 							and capital can unlock long-term value and drive economic growth.
 						</p>
 					</div>
-					<div className='space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0'>
+					<div className='space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 max-sm:justify-center'>
 						<div>
 							<div className='flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900'>
 								<svg
