@@ -26,9 +26,7 @@ const s3 = new S3Client({
 	region: bucketRegion
 })
 
-async function generateIcon(prompt, count) {
-	const parsedCount = parseInt(count)
-
+async function generateIcon(prompt) {
 	if (process.env.MOCK_OPENAI_API === 'true') {
 		console.log(
 			'\n---==========================---',
@@ -36,13 +34,12 @@ async function generateIcon(prompt, count) {
 			'\n---==========================---\n'
 		)
 
-		return Array.from({ length: parsedCount }, () => mockImage)
+		return Array.from({ length: 1 }, () => mockImage)
 	} else {
 		try {
 			const response = await openai.images.generate({
 				model: 'dall-e-3',
 				prompt,
-				n: parsedCount,
 				response_format: 'b64_json'
 			})
 
@@ -132,7 +129,7 @@ const resolvers = {
 			try {
 				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${input.style} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`
 
-				const b64Icons = await generateIcon(finalPrompt, input.count)
+				const b64Icons = await generateIcon(finalPrompt)
 				const createdIcons = await Promise.all(
 					b64Icons.map(async (image) => {
 						const icon = await Icon.create({
