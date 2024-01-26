@@ -41,7 +41,6 @@ const typeDefs = `
     prompt: String!
     color: String!
     style: String!
-    count: String!
   }
 
   type Query {
