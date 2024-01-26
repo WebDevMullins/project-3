@@ -58,6 +58,7 @@ const SuccessPage = () => {
 				setUserData(responseBody.data.updateCredits)
 			} catch (err) {
 				setError(err.message)
+				console.log('Test')
 			}
 		}
 
