@@ -10,6 +10,7 @@ import {
 	Link
 } from '@nextui-org/react'
 import AuthForm from '../AuthForm'
+import Auth from '../../utils/auth'
 
 function Nav() {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false)
@@ -65,6 +66,15 @@ function Nav() {
 						About
 					</Link>
 				</NavbarItem>
+				{Auth.loggedIn() ? (
+				    <NavbarItem>
+					    <Link
+						    color='foreground'
+						    href='dashboard'>
+						    Dashboard
+					    </Link>
+				    </NavbarItem>
+				) : null}
 				<NavbarItem>
 					<Link
 						color='foreground'

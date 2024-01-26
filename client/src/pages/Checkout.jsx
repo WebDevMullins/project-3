@@ -1,60 +1,63 @@
-import React, { useState, useEffect } from 'react'
-import { useMutation, gql } from '@apollo/client'
-import OrderPreview from '../components/OrderPreview'
-import ProductDisplay from '../components/ProductDisplay'
-import Message from '../components/Message'
-
-const CHECKOUT_SESSION_MUTATION = gql`
-	mutation CreateCheckoutSession($lineItems: [LineItemInput]) {
-		createCheckoutSession(lineItems: $lineItems) {
-			id
-			url
-		}
-	}
-`
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Checkout() {
-	const [order] = useState({
-		items: [
-			{ name: 'Product 1', price: 10.99 },
-			{ name: 'Product 2', price: 5.49 }
-			// Add more items here
-		]
-	})
-	const [message, setMessage] = useState('')
-	const [createCheckoutSession] = useMutation(CHECKOUT_SESSION_MUTATION)
+	const [error, setError] = useState('')
+	const navigate = useNavigate()
 
-	useEffect(() => {
-		const query = new URLSearchParams(window.location.search)
-		if (query.get('success')) {
-			setMessage('Order placed! You will receive an email confirmation.')
-		}
-		if (query.get('canceled')) {
-			setMessage(
-				"Order canceled -- continue to shop around and checkout when you're ready."
-			)
-		}
-	}, [])
-
-	const handleCheckout = async () => {
+	const createStripeSession = async (credits) => {
 		try {
-			const lineItems = order.items.map((item) => ({
-				price: item.priceId,
-				quantity: 1
-			}))
+			const response = await fetch('/api/create-stripe-session', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ credits })
+			})
 
-			const { data } = await createCheckoutSession({ variables: { lineItems } })
-			window.location.href = data.createCheckoutSession.url
-		} catch (error) {
-			console.error('Error creating checkout session:', error)
+			const sessionData = await response.json()
+			if (!response.ok) {
+				throw new Error(sessionData.message || 'Error creating Stripe session')
+			}
+
+			navigate('/success', { state: { userSelection: credits } })
+
+			window.location.href = sessionData.url
+		} catch (err) {
+			setError(err.message)
 		}
+	}
+
+	const handleCheckout = (credits) => {
+		console.log('Credits:', credits)
+
+		createStripeSession(credits)
 	}
 
 	return (
-		<div>
-			{message ? <Message message={message} /> : <ProductDisplay />}
-			<OrderPreview order={order} />
-			<button onClick={handleCheckout}>Checkout</button>
+		<div className='flex flex-col items-center justify-center h-screen mx-auto'>
+			<div className='text-center mb-4'>
+				<h2 className='text-xl font-semibold'>Buy Credits</h2>
+				{error && <p className='text-red-500'>{error}</p>}
+				<div className='my-2'>
+					<p className='text-lg'>Choose a credit option:</p>
+					<button
+						onClick={() => handleCheckout(5)}
+						className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2'>
+						5 credits - $5
+					</button>
+					<button
+						onClick={() => handleCheckout(15)}
+						className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2'>
+						15 credits - $15
+					</button>
+					<button
+						onClick={() => handleCheckout(25)}
+						className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2'>
+						25 credits - $25
+					</button>
+				</div>
+			</div>
 		</div>
 	)
 }
