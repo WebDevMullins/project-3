@@ -17,7 +17,7 @@ const SuccessPage = () => {
 	useEffect(() => {
 		const fetchUserData = async () => {
 			try {
-				const token = localStorage.getItem('yourTokenKey') // Replace with your token key
+				const token = localStorage.getItem('Variable_For_Token_Key') 
 				const response = await fetch('/api/get-user-data', {
 					headers: {
 						Authorization: `Bearer ${token}`
