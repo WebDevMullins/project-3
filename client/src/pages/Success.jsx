@@ -1,13 +1,12 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import {
+	Button,
 	Card,
-	CardHeader,
 	CardBody,
 	CardFooter,
-	Divider,
-	Button
+	CardHeader,
+	Divider
 } from '@nextui-org/react'
+import { useNavigate } from 'react-router-dom'
 
 const SuccessPage = () => {
 	const navigate = useNavigate()
@@ -17,7 +16,6 @@ const SuccessPage = () => {
 	}
 
 	return (
-
 		<div className='flex flex-row justify-center w-full mx-auto my-40'>
 			<section className='flex w-full justify-center align-center'>
 				<Card className=''>

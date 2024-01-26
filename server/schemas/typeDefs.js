@@ -10,11 +10,11 @@ const typeDefs = `
   }
 
   type Icon {
-    _id: ID!
-    createdAt: String!
-    userId: ID!
-    prompt: String!
-    url: String!
+    _id: ID
+    createdAt: String
+    userId: ID
+    prompt: String
+    url: String
   }
 
   type Auth {
@@ -37,6 +37,13 @@ const typeDefs = `
     url: String
   }
 
+  input CreateIconInput {
+    prompt: String!
+    color: String!
+    style: String!
+    count: String!
+  }
+
   type Query {
     user(_id: ID!): User
   }
@@ -46,7 +53,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     updateCredits(_id: ID!, credits: Int!): User
     createCheckoutSession(lineItems: [LineItemInput]): CheckoutSession
-    createIcon(_id: ID!, createdAt: String!, userID: ID!, url: String!, prompt: String): Icon
+    createIcon(input: CreateIconInput!): [Icon]
   }
 `
 

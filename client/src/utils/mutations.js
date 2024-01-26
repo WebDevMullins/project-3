@@ -31,3 +31,10 @@ export const ADD_USER = gql`
 		}
 	}
 `
+export const CREATE_ICON = gql`
+	mutation createIcon($input: CreateIconInput!) {
+		createIcon(input: $input) {
+			url
+		}
+	}
+`

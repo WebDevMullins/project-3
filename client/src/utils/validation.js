@@ -28,7 +28,7 @@ const generateSchema = z.object({
 	style: z.string().refine((style) => styles.includes(style), {
 		message: 'Invalid style selected'
 	}),
-	count: z.string().regex(/^[1-5]$/, 'Invalid count')
+	count: z.string().min(1, 'Count is required')
 })
 
 export { generateSchema, loginSchema, signupSchema }

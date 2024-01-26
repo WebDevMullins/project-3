@@ -1,9 +1,57 @@
+const OpenAI = require('openai')
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
 const { User, Icon } = require('../models')
-const { generateObjectUrl } = require('../utils/s3')
-const { signToken, AuthenticationError } = require('../utils/auth')
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-const { generateImage } = require('../utils/helpers')
 
+const dotenv = require('dotenv')
+dotenv.config()
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
+const { signToken, AuthenticationError } = require('../utils/auth')
+const mockImage = require('../utils/mockImage')
+const { generateObjectUrl } = require('../utils/s3')
+
+const accessKey = process.env.ACCESS_KEY
+const secretAccessKey = process.env.SECRET_ACCESS_KEY
+const bucketName = process.env.BUCKET_NAME
+const bucketRegion = process.env.BUCKET_REGION
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+
+const s3 = new S3Client({
+	credentials: {
+		accessKeyId: accessKey,
+		secretAccessKey: secretAccessKey
+	},
+	region: bucketRegion
+})
+
+async function generateIcon(prompt, count) {
+	const parsedCount = parseInt(count)
+
+	if (process.env.MOCK_OPENAI_API === 'true') {
+		console.log(
+			'\n---==========================---',
+			'\n---=== Mocking OpenAI API ===---',
+			'\n---==========================---\n'
+		)
+
+		return Array.from({ length: parsedCount }, () => mockImage)
+	} else {
+		try {
+			const response = await openai.images.generate({
+				model: 'dall-e-3',
+				prompt,
+				n: parsedCount,
+				response_format: 'b64_json'
+			})
+
+			return response.data.map((result) => result.b64_json ?? '')
+		} catch (error) {
+			throw new Error(error.message)
+		}
+	}
+}
 const resolvers = {
 	Query: {
 		user: async (_, { _id }) => {
@@ -72,12 +120,45 @@ const resolvers = {
 				throw new Error(error.message)
 			}
 		},
-		createIcon: async (parent, args) => {
+		createIcon: async (parent, { input }, context) => {
 			try {
-				const image_urls = generateImage(args)
-				console.log(image_urls)
-				return image_urls
+				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${input.style} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`
+
+				const b64Icons = await generateIcon(finalPrompt, input.count)
+				const createdIcons = await Promise.all(
+					b64Icons.map(async (image) => {
+						const icon = await Icon.create({
+							prompt: input.prompt,
+							userId: context.user._id
+						})
+
+						await User.findOneAndUpdate(
+							{ _id: context.user._id },
+							{ $push: { icons: icon._id } },
+							{ new: true }
+						)
+
+						await s3.send(
+							new PutObjectCommand({
+								Bucket: `${bucketName}`,
+								Body: Buffer.from(image, 'base64'),
+								Key: icon.id,
+								ContentEncoding: 'base64',
+								ContentType: 'image/png'
+							})
+						)
+
+						return icon
+					})
+				)
+
+				return createdIcons.map((icon) => {
+					return {
+						url: `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${icon.id}`
+					}
+				})
 			} catch (error) {
+				console.error('Error creating icon', error)
 				throw new Error(error.message)
 			}
 		}

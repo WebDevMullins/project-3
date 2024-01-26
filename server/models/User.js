@@ -24,13 +24,6 @@ const userSchema = new Schema({
 		unique: true
 	},
 
-	// username: {
-	// 	type: String,
-	// 	required: true,
-	// 	unique: true,
-	// 	minlength: 4
-	// },
-
 	password: {
 		type: String,
 		required: true,
