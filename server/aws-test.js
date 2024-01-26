@@ -44,9 +44,7 @@ async function main() {
 	// )
 
 	function encode(body) {
-		console.log('-------step1 ------------ -----------')
 		let buf = Buffer.from(body);
-		console.log('-------step2 ------------ -----------')
 		let base64 = buf.toString("base64");
 		return base64;
 	}
