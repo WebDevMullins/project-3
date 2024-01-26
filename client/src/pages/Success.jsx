@@ -1,24 +1,87 @@
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
-	Button,
 	Card,
+	CardHeader,
 	CardBody,
 	CardFooter,
-	CardHeader,
-	Divider
+	Divider,
+	Button
 } from '@nextui-org/react'
-import { useNavigate } from 'react-router-dom'
+
+const priceIds = {
+	5: 5,
+	15: 15,
+	25: 25
+}
 
 const SuccessPage = () => {
+	const [userData, setUserData] = useState(null)
+	const [error, setError] = useState('')
+	const location = useLocation()
 	const navigate = useNavigate()
+	const userSelection = location.state?.userSelection
+
+	useEffect(() => {
+		const updateCredits = async () => {
+			const creditAmount = priceIds[userSelection]
+			try {
+				const response = await fetch('/graphql', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						query: `
+                           mutation UpdateCredits($credits: Int!) {
+                              updateCredits(credits: $credits) {
+                                    _id
+                                    credits
+                              }
+                           }
+                        `,
+						variables: {
+							credits: creditAmount
+						}
+					})
+				})
+
+				if (!response.ok) {
+					throw new Error('Failed to update credits')
+				}
+				const responseBody = await response.json()
+				if (responseBody.errors) {
+					throw new Error(
+						responseBody.errors.map((error) => error.message).join('\n')
+					)
+				}
+				setUserData(responseBody.data.updateCredits)
+			} catch (err) {
+				setError(err.message)
+			}
+		}
+
+		if (userSelection) {
+			updateCredits()
+		}
+	}, [userSelection])
 
 	const handleReturnHome = () => {
 		navigate('/') // Redirect to home page
 	}
 
+	if (error) {
+		return <div>Error: {error}</div>
+	}
+
+	if (!userData) {
+		return <div>Loading...</div>
+	}
+
 	return (
 		<div className='flex flex-row justify-center w-full mx-auto my-40'>
 			<section className='flex w-full justify-center align-center'>
-				<Card className=''>
+				<Card>
 					<CardHeader className='flex-col gap-3'>
 						<div className='flex flex-col'>
 							<p className='text-md'>Congratulations</p>
@@ -26,30 +89,17 @@ const SuccessPage = () => {
 								Your order has been placed successfully.
 							</p>
 						</div>
-						<div className='flex'>
-							<svg
-								xmlns='http://www.w3.org/2000/svg'
-								fill='none'
-								viewBox='0 0 24 24'
-								strokeWidth={1.5}
-								stroke='currentColor'
-								className='w-24 h-24 m-auto'>
-								<path
-									strokeLinecap='round'
-									strokeLinejoin='round'
-									d='M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'
-								/>
-							</svg>
-						</div>
 					</CardHeader>
 					<Divider />
 					<CardBody>
+						<h1>Payment Successful!</h1>
+						<p>Your new credit balance: {userData?.credits}</p>
 						<Button
 							className='text-md'
 							color='primary'
 							radius='full'
 							size='sm'
-							onPress={handleReturnHome}>
+							onClick={handleReturnHome}>
 							Return to Home
 						</Button>
 					</CardBody>

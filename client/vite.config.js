@@ -20,7 +20,7 @@ export default defineConfig({
 				secure: false,
 				changeOrigin: true
 			},
-			'/api': 'http://localhost:4242'
+			'/api': 'http://localhost:3001'
 		}
 	}
 })
