@@ -66,6 +66,14 @@ const resolvers = {
 				...user._doc, // when spreading object, it has too properties. only need _doc property which has the actual information we want
 				icons: iconUrlArray
 			}
+		},
+		me: async (parent, args, context) => {
+			if (context.user) {
+				const me = await User.findById(context.user._id).populate({
+					path: 'icons'
+				})
+				return me
+			}
 		}
 	},
 	Mutation: {
