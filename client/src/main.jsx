@@ -12,6 +12,7 @@ import Generate from './pages/Generate'
 import Signup from './pages/Signup'
 import Success from './pages/Success'
 import Team from './pages/Team.jsx'
+import Dashboard from './pages/Dashboard.jsx'
 
 const router = createBrowserRouter([
 	{
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
 			{
 				path: '/signup',
 				element: <Signup />
+			},
+			{
+				path: '/dashboard',
+				element: <Dashboard />
 			},
 			{
 				path: '/generate',
