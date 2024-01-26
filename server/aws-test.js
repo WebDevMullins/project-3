@@ -44,9 +44,9 @@ async function main() {
 	// )
 
 	function encode(body) {
-		let buf = Buffer.from(body);
-		let base64 = buf.toString("base64");
-		return base64;
+		let buf = Buffer.from(body)
+		let base64 = buf.toString('base64')
+		return base64
 	}
 
 	const data = await s3Client.send(
