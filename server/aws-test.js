@@ -43,14 +43,27 @@ async function main() {
 	//     })
 	// )
 
-	// const { Body } = await s3Client.send(
-	//     new GetObjectCommand({
-	//         Bucket: bucketName,
-	//         Key: 'my-eigth-object.txt'
-	//     })
-	// )
+	function encode(body) {
+		let buf = Buffer.from(body)
+		let base64 = buf.toString('base64')
+		return base64
+	}
 
-	// console.log(Body);
+	const data = await s3Client.send(
+		new GetObjectCommand({
+			Bucket: bucketName,
+			Key: 'bbJuliechen'
+		})
+	)
+
+	const imageArray = await data.Body.transformToByteArray()
+	console.log(imageArray)
+
+	// encode(data.body)
+
+	// console.log(Body)
+	// console.log('===================')
+	console.log('data:image/png;base64,' + encode(imageArray))
 }
 
 main()

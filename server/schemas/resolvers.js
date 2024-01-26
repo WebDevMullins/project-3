@@ -26,7 +26,16 @@ const s3 = new S3Client({
 	region: bucketRegion
 })
 
-async function generateIcon(prompt) {
+// this function will convert image from s3 to base64 string
+function encode(img) {
+	let buf = Buffer.from(img)
+	let base64 = buf.toString('base64')
+	return base64
+}
+
+async function generateIcon(prompt, count) {
+	const parsedCount = parseInt(count)
+
 	if (process.env.MOCK_OPENAI_API === 'true') {
 		console.log(
 			'\n---==========================---',
@@ -157,9 +166,21 @@ const resolvers = {
 					})
 				)
 
-				return createdIcons.map((icon) => {
+				return createdIcons.map(async (icon) => {
+					const data = await s3Client.send(
+						new GetObjectCommand({
+							Bucket: bucketName,
+							Key: icon.id
+						})
+					)
+
+					const imageArray = await data.Body.transformToByteArray()
+					const imageSrc = 'data:image/png;base64,' + encode(imageArray)
+
 					return {
-						url: `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${icon.id}`
+						// this was the single line before
+						// url: `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${icon.id}`
+						url: imageSrc
 					}
 				})
 			} catch (error) {
