@@ -1,9 +1,11 @@
+require('dotenv').config()
 const express = require('express')
 const { ApolloServer } = require('@apollo/server')
 const { expressMiddleware } = require('@apollo/server/express4')
 const path = require('path')
 const { authMiddleware } = require('./utils/auth')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const User = require('./models/User')
 
 const { typeDefs, resolvers } = require('./schemas')
 const db = require('./config/connection')
@@ -14,6 +16,9 @@ const server = new ApolloServer({
 	typeDefs,
 	resolvers
 })
+
+// Import stripe.js implementation
+require('./stripe')(app)
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
