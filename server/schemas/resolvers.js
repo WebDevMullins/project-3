@@ -1,5 +1,9 @@
 const OpenAI = require('openai')
-const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3')
+const {
+	S3Client,
+	PutObjectCommand,
+	GetObjectCommand
+} = require('@aws-sdk/client-s3')
 const { User, Icon } = require('../models')
 
 const dotenv = require('dotenv')
@@ -78,7 +82,7 @@ const resolvers = {
 				const me = await User.findById(context.user._id).populate({
 					path: 'icons'
 				})
-				const iconUrlArray = me.icons.map(icon => {
+				const iconUrlArray = me.icons.map((icon) => {
 					return {
 						...icon._doc,
 						url: generateObjectUrl(icon._id)
