@@ -21,7 +21,7 @@ const s3Client = new S3Client({
 	region: bucketRegion
 })
 
-const encode = body => {
+const encode = (body) => {
 	let buf = Buffer.from(body)
 	let base64 = buf.toString('base64')
 	return base64
