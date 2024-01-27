@@ -1,124 +1,84 @@
-require('dotenv').config()
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-const User = require('./models/User')
-const express = require('express')
-
 module.exports = function (app) {
-	// STRIPE CHECKOUT SESSION
-	app.use(express.json())
+	const Stripe = require('stripe')
+	const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
+	const express = require('express')
+	const User = require('./models/User')
 
-	app.post('/api/create-stripe-session', async (req, res) => {
+	const SUCCESS_URL = process.env.SUCCESS_URL
+	const CANCEL_URL = process.env.CANCEL_URL
+
+	// Create a checkout session
+	app.post('/create-checkout-session', async (req, res) => {
+		const { amount } = req.body
+
 		try {
-			const { credits } = req.body
-			console.log('Received credits:', credits)
-
-			const priceIds = {
-				5: process.env.FIVE_CREDITS,
-				15: process.env.FIFTEEN_CREDITS,
-				25: process.env.TWENTY_FIVE_CREDITS
-			}
-
-			const priceId = priceIds[credits]
-			if (!priceId) {
-				throw new Error('Invalid credit amount')
-			}
-
 			const session = await stripe.checkout.sessions.create({
 				payment_method_types: ['card'],
+
 				line_items: [
 					{
-						price: priceId,
+						price_data: {
+							currency: 'usd',
+							product_data: {
+								name: `Credits`
+							},
+							unit_amount: amount
+						},
 						quantity: 1
 					}
 				],
 				mode: 'payment',
-				success_url: `${req.headers.origin}/success`,
-				cancel_url: `${req.headers.origin}/cancel`
+				success_url: SUCCESS_URL,
+				cancel_url: CANCEL_URL
 			})
 
-			res.json({ url: session.url })
+			res.json({ id: session.id })
 		} catch (error) {
-			console.error('Error in create-stripe-session:', error)
+			console.error('Webhook Error:', err)
+			return response.status(400).send(`Webhook Error: ${err.message}`)
 
-			res.status(500).json({ message: error.message })
+			res.status(500).send(error.message)
 		}
 	})
 
-	// STRIPE WEBHOOK
+	// Hook handle post-payment events
+	// Hook handle post-payment events
 	app.post(
 		'/webhook',
 		express.raw({ type: 'application/json' }),
-		async (req, res) => {
-			const signature = req.headers['stripe-signature']
+		async (request, response) => {
+			const sig = request.headers['stripe-signature']
 			let event
 
 			try {
 				event = stripe.webhooks.constructEvent(
-					req.body,
-					signature,
+					request.body,
+					sig,
 					process.env.STRIPE_WEBHOOK_SECRET
 				)
 			} catch (err) {
-				return res.status(400).send(`Webhook Error: ${err.message}`)
+				return response.status(400).send(`Webhook Error: ${err.message}`)
 			}
 
 			if (event.type === 'checkout.session.completed') {
 				const session = event.data.object
-
-				const userId = session.metadata.userId
-				const creditsToAdd = parseInt(session.metadata.credits)
+				const userEmail = session.metadata.userEmail // Retrieve user's email from the session metadata
 
 				try {
-					// Update user's credits in the database
-					await User.findByIdAndUpdate(userId, {
-						$inc: { credits: creditsToAdd }
-					})
-				} catch (error) {
-					console.error('Error updating user credits:', error)
-					// Handle database update errors
-					return res.status(500).send('Error updating user credits')
+					// Update user's credits
+					await User.findOneAndUpdate(
+						{ email: userEmail },
+						{ $inc: { credits: 10 /* amount to increment */ } },
+						{ new: true }
+					)
+				} catch (err) {
+					console.error('Error updating user credits:', err)
+					response.status(500).end()
+					return
 				}
 			}
 
-			res.status(200).json({ received: true })
+			response.status(200).send({ received: true })
 		}
 	)
-
-	// STRIPE GET USER DATA !!!AUTH NEEDED!!!
-	// app.get('/api/get-user-data', async (req, res) => {
-	// 	try {
-	// 		if (!req.user) {
-	// 			return res.status(401).json({ message: 'Not authenticated' })
-	// 		}
-
-	// 		const userId = req.user._id // Assuming _id is part of the user data in the token
-
-	// 		const user = await User.findById(userId)
-
-	// 		if (!user) {
-	// 			return res.status(404).json({ message: 'User not found' })
-	// 		}
-
-	// 		res.json(user)
-	// 	} catch (error) {
-	// 		console.error('Error in get-user-data:', error)
-	// 		res.status(500).json({ message: 'Internal server error' })
-	// 	}
-	// })
-
-	// NO AUTH STRIPE USER DATA
-	app.get('/api/get-user-data', async (req, res) => {
-		try {
-			const user = await User.findOne()
-
-			if (!user) {
-				return res.status(404).json({ message: 'User not found' })
-			}
-
-			res.json(user)
-		} catch (error) {
-			console.error('Error in get-user-data:', error)
-			res.status(500).json({ message: 'Internal server error' })
-		}
-	})
 }

@@ -6,6 +6,8 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const SUCCESS_URL = process.env.SUCCESS_URL
+const CANCEL_URL = process.env.CANCEL_URL
 
 const { signToken, AuthenticationError } = require('../utils/auth')
 const mockImage = require('../utils/mockImage')
@@ -92,34 +94,36 @@ const resolvers = {
 
 			return { token, user }
 		},
-		updateCredits: async (_, { _id, credits }) => {
-			const user = await User.findByIdAndUpdate(_id, { credits }, { new: true })
-			if (!user) {
-				throw new Error('User not found')
-			}
-			// If statement to ensure no negative creidts
-			if (credits < 0) {
-				throw new Error('Invalid credit amount')
-			}
-			return user
-		},
-		createCheckoutSession: async (_, { lineItems }) => {
+
+		createCheckoutSession: async (_, { userEmail }) => {
 			try {
 				const session = await stripe.checkout.sessions.create({
-					line_items: lineItems,
+					payment_method_types: ['card'],
+					line_items: [
+						{
+							price_data: {
+								currency: 'usd',
+								product_data: {
+									name: 'Credit'
+								},
+								unit_amount: 1000
+							},
+							quantity: 1
+						}
+					],
 					mode: 'payment',
-					success_url: `http://localhost:3000/success`,
-					cancel_url: `http://localhost:3000/cancel`
+					success_url: SUCCESS_URL,
+					cancel_url: CANCEL_URL,
+					metadata: {
+						userEmail
+					}
 				})
-
-				return {
-					id: session.id,
-					url: session.url
-				}
+				return { sessionId: session.id }
 			} catch (error) {
 				throw new Error(error.message)
 			}
 		},
+
 		createIcon: async (parent, { input }, context) => {
 			try {
 				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${input.style} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`

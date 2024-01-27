@@ -10,7 +10,6 @@ export const LOGIN = gql`
 		}
 	}
 `
-
 export const ADD_USER = gql`
 	mutation addUser(
 		$firstName: String!
@@ -35,6 +34,13 @@ export const CREATE_ICON = gql`
 	mutation createIcon($input: CreateIconInput!) {
 		createIcon(input: $input) {
 			url
+		}
+	}
+`
+export const CREATE_CHECKOUT_SESSION = gql`
+	mutation createCheckoutSession($userEmail: String!) {
+		createCheckoutSession(userEmail: $userEmail) {
+			sessionId
 		}
 	}
 `

@@ -48,11 +48,15 @@ const typeDefs = `
     user(_id: ID!): User
   }
 
+  type Session {
+    sessionId: String
+  }
+
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     updateCredits(_id: ID!, credits: Int!): User
-    createCheckoutSession(lineItems: [LineItemInput]): CheckoutSession
+    createCheckoutSession(userEmail: String!): Session
     createIcon(input: CreateIconInput!): [Icon]
   }
 `
