@@ -78,7 +78,16 @@ const resolvers = {
 				const me = await User.findById(context.user._id).populate({
 					path: 'icons'
 				})
-				return me
+				const iconUrlArray = me.icons.map(icon => {
+					return {
+						...icon._doc,
+						url: generateObjectUrl(icon._id)
+					}
+				})
+				return {
+					...me._doc,
+					icons: iconUrlArray
+				}
 			}
 		}
 	},
