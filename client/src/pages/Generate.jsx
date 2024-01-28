@@ -14,7 +14,6 @@ import {
 	useDisclosure
 } from '@nextui-org/react'
 import { CREATE_ICON } from '@utils/mutations'
-import DashboardIconCard from '../components/DashboardIconCard'
 import GenerateIconModal from '../components/GenerateIconModal'
 
 const Generate = () => {
@@ -78,10 +77,6 @@ const Generate = () => {
 						<p className='font-light text-gray-500 sm:text-xl dark:text-gray-400'>
 							Enter your prompt, choose a style, and select a base color
 						</p>
-					</div>
-					<div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6'>
-						<DashboardIconCard src='https://project3-bucket-jan18.s3.us-east-2.amazonaws.com/65b2cf9806acabfcbf0a06f2' />
-						<DashboardIconCard src='https://project3-bucket-jan18.s3.us-east-2.amazonaws.com/65b2cf9806acabfcbf0a06f2' />
 					</div>
 					<form
 						className='flex flex-col gap-8'

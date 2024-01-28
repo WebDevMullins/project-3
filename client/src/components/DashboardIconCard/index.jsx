@@ -24,7 +24,7 @@ const DashboardIconCard = ({ alt, src }) => {
 			/>
 			<Dropdown>
 				<DropdownTrigger>
-					<div className='absolute top-1 right-1 flex items-end justify-center bg-transparent backdrop-blur-xl p-2 text-sm rounded-xl'>
+					<div className='absolute top-1 right-1 flex items-end justify-center bg-black/10 backdrop-blur-xl p-2 text-sm rounded-xl'>
 						<button>
 							<svg
 								stroke='currentColor'
