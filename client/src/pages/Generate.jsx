@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { count, presetColors, styles } from '@/utils/data'
+import { presetColors, styles } from '@/utils/data'
 import { generateSchema } from '@/utils/validation'
 import { ColorPicker } from '@components/ColorPicker'
 import {
@@ -62,7 +62,7 @@ const Generate = () => {
 
 	useEffect(() => {
 		// Open the modal automatically when there are icons to display
-		if (iconUrl.length > 0) {
+		if (iconUrl.length) {
 			onOpen()
 		}
 	}, [iconUrl, onOpen])
@@ -80,9 +80,9 @@ const Generate = () => {
 						</p>
 					</div>
 					<div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6'>
-				<DashboardIconCard src='https://project3-bucket-jan18.s3.us-east-2.amazonaws.com/65b2cf9806acabfcbf0a06f2' />
-				<DashboardIconCard src='https://project3-bucket-jan18.s3.us-east-2.amazonaws.com/65b2cf9806acabfcbf0a06f2' />
-			</div>
+						<DashboardIconCard src='https://project3-bucket-jan18.s3.us-east-2.amazonaws.com/65b2cf9806acabfcbf0a06f2' />
+						<DashboardIconCard src='https://project3-bucket-jan18.s3.us-east-2.amazonaws.com/65b2cf9806acabfcbf0a06f2' />
+					</div>
 					<form
 						className='flex flex-col gap-8'
 						onSubmit={handleSubmit(onSubmit)}>
@@ -112,23 +112,6 @@ const Generate = () => {
 								))}
 							</Select>
 						</div>
-						<div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
-							<Select
-								variant='bordered'
-								label='Select number to generate'
-								className='max-w-xs'
-								isInvalid={errors.count?.message}
-								errorMessage={errors.count?.message}
-								{...register('count')}>
-								{count.map((count) => (
-									<SelectItem
-										key={count.value}
-										value={count.value}>
-										{count.label}
-									</SelectItem>
-								))}
-							</Select>
-						</div>
 						<Controller
 							name='color'
 							control={control}
@@ -140,7 +123,6 @@ const Generate = () => {
 								/>
 							)}
 						/>
-
 						<Button
 							color='primary'
 							type='submit'
@@ -151,14 +133,13 @@ const Generate = () => {
 					{error && <p>Error: {error.message}</p>}
 				</div>
 			</section>
-			{iconUrl.length > 0 && (
+			{iconUrl.length && (
 				<GenerateIconModal
 					isOpen={isOpen}
 					iconUrl={iconUrl}
 					prompt={prompt}
 				/>
 			)}
-			
 		</>
 	)
 }

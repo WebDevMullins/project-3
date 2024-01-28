@@ -41,11 +41,11 @@ const typeDefs = `
     prompt: String!
     color: String!
     style: String!
-    count: String!
   }
 
   type Query {
     user(_id: ID!): User
+    me: User
   }
 
   type Session {

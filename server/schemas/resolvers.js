@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken')
 const OpenAI = require('openai')
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
+const {
+	S3Client,
+	PutObjectCommand,
+	GetObjectCommand
+} = require('@aws-sdk/client-s3')
 const { User, Icon } = require('../models')
 
 const dotenv = require('dotenv')
@@ -30,6 +34,13 @@ const s3 = new S3Client({
 	region: bucketRegion
 })
 
+// this function will convert image from s3 to base64 string
+function encode(img) {
+	let buf = Buffer.from(img)
+	let base64 = buf.toString('base64')
+	return base64
+}
+
 async function generateIcon(prompt, count) {
 	const parsedCount = parseInt(count)
 
@@ -40,13 +51,12 @@ async function generateIcon(prompt, count) {
 			'\n---==========================---\n'
 		)
 
-		return Array.from({ length: parsedCount }, () => mockImage)
+		return Array.from({ length: 1 }, () => mockImage)
 	} else {
 		try {
 			const response = await openai.images.generate({
 				model: 'dall-e-3',
 				prompt,
-				n: parsedCount,
 				response_format: 'b64_json'
 			})
 
@@ -69,6 +79,23 @@ const resolvers = {
 			return {
 				...user._doc, // when spreading object, it has too properties. only need _doc property which has the actual information we want
 				icons: iconUrlArray
+			}
+		},
+		me: async (parent, args, context) => {
+			if (context.user) {
+				const me = await User.findById(context.user._id).populate({
+					path: 'icons'
+				})
+				const iconUrlArray = me.icons.map((icon) => {
+					return {
+						...icon._doc,
+						url: generateObjectUrl(icon._id)
+					}
+				})
+				return {
+					...me._doc,
+					icons: iconUrlArray
+				}
 			}
 		}
 	},
@@ -138,7 +165,7 @@ const resolvers = {
 			try {
 				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${input.style} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`
 
-				const b64Icons = await generateIcon(finalPrompt, input.count)
+				const b64Icons = await generateIcon(finalPrompt)
 				const createdIcons = await Promise.all(
 					b64Icons.map(async (image) => {
 						const icon = await Icon.create({
@@ -166,9 +193,21 @@ const resolvers = {
 					})
 				)
 
-				return createdIcons.map((icon) => {
+				return createdIcons.map(async (icon) => {
+					const data = await s3.send(
+						new GetObjectCommand({
+							Bucket: bucketName,
+							Key: icon.id
+						})
+					)
+
+					const imageArray = await data.Body.transformToByteArray()
+					const imageSrc = 'data:image/png;base64,' + encode(imageArray)
+
 					return {
-						url: `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${icon.id}`
+						// this was the single line before
+						// url: `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${icon.id}`
+						url: imageSrc
 					}
 				})
 			} catch (error) {
