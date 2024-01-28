@@ -11,10 +11,13 @@ export default function Dashboard() {
 
 	if (loading) {
 		return (
+            <section className='flex justify-center items-center min-h-screen'>
+
 			<Spinner
 				label='Loading...'
 				size='lg'
-			/>
+                />
+                </section>
 		)
 	} else {
 		return (
@@ -35,6 +38,7 @@ export default function Dashboard() {
 									<DashboardIconCard
 										key={icon._id}
 										src={icon.url}
+                                        alt={icon.prompt}
 									/>
 								))}
 							</div>
