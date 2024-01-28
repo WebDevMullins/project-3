@@ -28,3 +28,12 @@ export const QUERY_ME = gql`
 		}
 	}
 `
+export const GET_USER_DATA = gql`
+	query GetUser {
+		user {
+			id
+			name
+			email
+		}
+	}
+`

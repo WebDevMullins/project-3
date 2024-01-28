@@ -1,124 +1,123 @@
-require('dotenv').config()
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
-const User = require('./models/User')
-const express = require('express')
-
 module.exports = function (app) {
-	// STRIPE CHECKOUT SESSION
-	app.use(express.json())
+	require('dotenv').config()
+	const jwt = require('jsonwebtoken')
+	const User = require('./models/User')
 
-	app.post('/api/create-stripe-session', async (req, res) => {
+	const Stripe = require('stripe')
+	const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
+	const express = require('express')
+
+	const SUCCESS_URL = process.env.SUCCESS_URL
+	const CANCEL_URL = process.env.CANCEL_URL
+
+	// Create a checkout session
+	app.post('/create-checkout-session', async (req, res) => {
 		try {
-			const { credits } = req.body
-			console.log('Received credits:', credits)
+			const token = req.headers.authorization.split(' ')[1]
+			const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-			const priceIds = {
-				5: process.env.FIVE_CREDITS,
-				15: process.env.FIFTEEN_CREDITS,
-				25: process.env.TWENTY_FIVE_CREDITS
-			}
+			const userId = decoded.data._id // Extract user ID from token
+			const user = await User.findById(userId) // Fetch user from database
 
-			const priceId = priceIds[credits]
-			if (!priceId) {
-				throw new Error('Invalid credit amount')
+			if (!user) {
+				return res.status(404).json({ message: 'User not found' })
 			}
 
 			const session = await stripe.checkout.sessions.create({
 				payment_method_types: ['card'],
 				line_items: [
 					{
-						price: priceId,
+						price_data: {
+							currency: 'usd',
+							product_data: {
+								name: `Credits`
+							},
+							unit_amount: 1000 // Set the amount (e.g., 1000 for $10.00)
+						},
 						quantity: 1
 					}
 				],
 				mode: 'payment',
-				success_url: `${req.headers.origin}/success`,
-				cancel_url: `${req.headers.origin}/cancel`
+				success_url: SUCCESS_URL,
+				cancel_url: CANCEL_URL,
+				metadata: {
+					userId: user._id.toString() // Pass user ID in metadata for further processing
+				}
 			})
 
-			res.json({ url: session.url })
+			res.json({ id: session.id })
 		} catch (error) {
-			console.error('Error in create-stripe-session:', error)
-
-			res.status(500).json({ message: error.message })
+			console.error('Error creating checkout session:', error)
 		}
 	})
 
-	// STRIPE WEBHOOK
+	// Hook handle post-payment events
 	app.post(
 		'/webhook',
 		express.raw({ type: 'application/json' }),
-		async (req, res) => {
-			const signature = req.headers['stripe-signature']
+		async (request, response) => {
+			const sig = request.headers['stripe-signature']
 			let event
 
 			try {
 				event = stripe.webhooks.constructEvent(
-					req.body,
-					signature,
+					request.body,
+					sig,
 					process.env.STRIPE_WEBHOOK_SECRET
 				)
+				console.log('Webhook event received:', event.type)
 			} catch (err) {
-				return res.status(400).send(`Webhook Error: ${err.message}`)
+				console.error('Error in webhook signature verification:', err)
+				return response.status(400).send(`Webhook Error: ${err.message}`)
 			}
 
 			if (event.type === 'checkout.session.completed') {
 				const session = event.data.object
-
 				const userId = session.metadata.userId
-				const creditsToAdd = parseInt(session.metadata.credits)
 
 				try {
-					// Update user's credits in the database
-					await User.findByIdAndUpdate(userId, {
-						$inc: { credits: creditsToAdd }
-					})
-				} catch (error) {
-					console.error('Error updating user credits:', error)
-					// Handle database update errors
-					return res.status(500).send('Error updating user credits')
+					console.log('Updating credits for user:', userId)
+
+					// Update user's credits
+					const updatedUser = await User.findByIdAndUpdate(
+						userId,
+						{ $inc: { credits: 10 } }, // Increment credits
+						{ new: true }
+					)
+					console.log('Updated user:', updatedUser)
+				} catch (err) {
+					console.error('Error updating user credits:', err)
+					response.status(500).end()
+					return
 				}
 			}
 
-			res.status(200).json({ received: true })
+			response.status(200).send({ received: true })
 		}
 	)
 
-	// STRIPE GET USER DATA !!!AUTH NEEDED!!!
-	// app.get('/api/get-user-data', async (req, res) => {
-	// 	try {
-	// 		if (!req.user) {
-	// 			return res.status(401).json({ message: 'Not authenticated' })
-	// 		}
-
-	// 		const userId = req.user._id // Assuming _id is part of the user data in the token
-
-	// 		const user = await User.findById(userId)
-
-	// 		if (!user) {
-	// 			return res.status(404).json({ message: 'User not found' })
-	// 		}
-
-	// 		res.json(user)
-	// 	} catch (error) {
-	// 		console.error('Error in get-user-data:', error)
-	// 		res.status(500).json({ message: 'Internal server error' })
-	// 	}
-	// })
-
-	// NO AUTH STRIPE USER DATA
-	app.get('/api/get-user-data', async (req, res) => {
+	app.post('/update-credits', async (req, res) => {
 		try {
-			const user = await User.findOne()
+			const token = req.headers.authorization.split(' ')[1] // Assuming token is sent in the Authorization header
+			const decoded = jwt.verify(token, process.env.JWT_SECRET) // Replace JWT_SECRET with your secret key
 
-			if (!user) {
-				return res.status(404).json({ message: 'User not found' })
+			const userId = decoded.data._id // Or however your user ID is stored in the token
+
+			// Find the user and update credits
+			const updatedUser = await User.findByIdAndUpdate(
+				userId,
+				{ $inc: { credits: req.body.credits } }, // Increment credits by the given amount
+				{ new: true }
+			)
+
+			if (!updatedUser) {
+				return res.status(404).send('User not found')
 			}
 
-			res.json(user)
+			res.send(updatedUser)
 		} catch (error) {
-			console.error('Error in get-user-data:', error)
-			res.status(500).json({ message: 'Internal server error' })
+			console.error(error)
+			res.status(500).send('Error updating credits')
 		}
 	})
 }
