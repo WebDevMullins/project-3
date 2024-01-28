@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const OpenAI = require('openai')
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
 const { User, Icon } = require('../models')
@@ -8,6 +9,7 @@ dotenv.config()
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const SUCCESS_URL = process.env.SUCCESS_URL
 const CANCEL_URL = process.env.CANCEL_URL
+const secret = 'mysecretssshhhhhhh'
 
 const { signToken, AuthenticationError } = require('../utils/auth')
 const mockImage = require('../utils/mockImage')
@@ -95,8 +97,16 @@ const resolvers = {
 			return { token, user }
 		},
 
-		createCheckoutSession: async (_, { userEmail }) => {
+		createCheckoutSession: async (_, { token }) => {
 			try {
+				const decoded = jwt.verify(token, secret)
+				const userId = decoded.data._id
+
+				const user = await User.findById(userId)
+				if (!user) {
+					throw new Error('User not found')
+				}
+
 				const session = await stripe.checkout.sessions.create({
 					payment_method_types: ['card'],
 					line_items: [
@@ -104,7 +114,7 @@ const resolvers = {
 							price_data: {
 								currency: 'usd',
 								product_data: {
-									name: 'Credit'
+									name: 'Credits'
 								},
 								unit_amount: 1000
 							},
@@ -115,7 +125,7 @@ const resolvers = {
 					success_url: SUCCESS_URL,
 					cancel_url: CANCEL_URL,
 					metadata: {
-						userEmail
+						userId: user._id.toString()
 					}
 				})
 				return { sessionId: session.id }

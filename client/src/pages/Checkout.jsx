@@ -5,9 +5,16 @@ import { CREATE_CHECKOUT_SESSION } from '../utils/mutations'
 function Checkout() {
 	const [createCheckoutSession] = useMutation(CREATE_CHECKOUT_SESSION)
 
-	const handleCheckout = async (userEmail) => {
+	const handleCheckout = async (id_token) => {
+		const token = localStorage.getItem('id_token')
+		console.log('Retrieved token:', token)
+		if (!token) {
+			console.error('No token found in local storage.')
+			return
+		}
 		try {
-			const { data } = await createCheckoutSession({ variables: { userEmail } })
+			// Pass the token as a variable to the mutation
+			const { data } = await createCheckoutSession({ variables: { token } })
 			const sessionId = data.createCheckoutSession.sessionId
 
 			// Redirect to Stripe Checkout

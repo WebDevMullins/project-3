@@ -38,8 +38,8 @@ export const CREATE_ICON = gql`
 	}
 `
 export const CREATE_CHECKOUT_SESSION = gql`
-	mutation createCheckoutSession($userEmail: String!) {
-		createCheckoutSession(userEmail: $userEmail) {
+	mutation createCheckoutSession($token: String!) {
+		createCheckoutSession(token: $token) {
 			sessionId
 		}
 	}

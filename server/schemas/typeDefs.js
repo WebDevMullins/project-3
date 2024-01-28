@@ -55,8 +55,8 @@ const typeDefs = `
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    updateCredits(_id: ID!, credits: Int!): User
-    createCheckoutSession(userEmail: String!): Session
+    updateCredits(token: String!, credits: Int!): User
+    createCheckoutSession(token: String!): Session
     createIcon(input: CreateIconInput!): [Icon]
   }
 `
