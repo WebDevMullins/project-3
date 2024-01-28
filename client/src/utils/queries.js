@@ -37,3 +37,14 @@ export const GET_USER_DATA = gql`
 		}
 	}
 `
+
+export const QUERY_COMMUNITY_ICONS = gql`
+	query communityIcons {
+		communityIcons {
+			_id
+			createdAt
+			url
+			prompt
+		}
+	}
+`

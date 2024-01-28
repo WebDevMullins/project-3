@@ -85,9 +85,11 @@ const resolvers = {
 		},
 		me: async (parent, args, context) => {
 			if (context.user) {
-				const me = await User.findById(context.user._id).populate({
-					path: 'icons'
-				})
+				const me = await User.findById(context.user._id)
+					.populate({
+						path: 'icons',
+						options: { sort: { createdAt: -1 } }
+					})
 				const iconUrlArray = me.icons.map((icon) => {
 					return {
 						...icon._doc,
@@ -99,6 +101,16 @@ const resolvers = {
 					icons: iconUrlArray
 				}
 			}
+		},
+		communityIcons: async () => {
+			const icons = await Icon.find().sort({ createdAt: -1 }).limit(24)
+			const iconUrlArray = icons.map((icon) => {
+				return {
+					...icon._doc,
+					url: generateObjectUrl(icon._id)
+				}
+			})
+			return iconUrlArray
 		}
 	},
 	Mutation: {

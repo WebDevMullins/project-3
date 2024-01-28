@@ -13,6 +13,7 @@ import Signup from './pages/Signup'
 import Success from './pages/Success'
 import Team from './pages/Team.jsx'
 import Dashboard from './pages/Dashboard.jsx'
+import Community from './pages/Community.jsx'
 
 const router = createBrowserRouter([
 	{
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
 			{
 				path: '/team',
 				element: <Team/>
+			},
+			{
+				path: '/community',
+				element: <Community/>
 			}
 		]
 	}

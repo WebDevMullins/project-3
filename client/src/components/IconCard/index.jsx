@@ -8,6 +8,7 @@ const IconCard = ({ alt, src }) => {
 			<Image
 				src={src}
 				alt={alt}
+				title={alt}
 				height={300}
 				width={300}
 				className='object-cover'
