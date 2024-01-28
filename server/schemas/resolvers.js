@@ -187,7 +187,7 @@ const resolvers = {
 								Body: Buffer.from(image, 'base64'),
 								Key: icon.id,
 								ContentEncoding: 'base64',
-								ContentType: 'image/png'
+								ContentType: 'image/jpeg'
 							})
 						)
 
