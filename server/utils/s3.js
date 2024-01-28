@@ -21,6 +21,12 @@ const s3Client = new S3Client({
 	region: bucketRegion
 })
 
+const encode = (body) => {
+	let buf = Buffer.from(body)
+	let base64 = buf.toString('base64')
+	return base64
+}
+
 module.exports = {
 	addObject: async function (fileName) {
 		await s3Client.send(
@@ -41,5 +47,16 @@ module.exports = {
 	},
 	generateObjectUrl: async function (fileName) {
 		return `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`
+	},
+	generateObjectData: async function (fileName) {
+		const data = await s3Client.send(
+			new GetObjectCommand({
+				Bucket: bucketName,
+				Key: fileName
+			})
+		)
+		const imageArray = await data.Body.transformToByteArray()
+		const imageSrc = 'data:image/png;base64,' + encode(imageArray)
+		return imageSrc
 	}
 }
