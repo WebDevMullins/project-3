@@ -1,5 +1,6 @@
 import {
 	Card,
+	Chip,
 	Dropdown,
 	DropdownItem,
 	DropdownMenu,
@@ -9,8 +10,17 @@ import {
 } from '@nextui-org/react'
 import { DownloadIcon, TrashIcon } from 'lucide-react'
 
-const DashboardIconCard = ({ alt, src }) => {
+const prompt = (content) => (
+	<Chip
+		color='primary'
+		radius='small'
+		variant='dot'
+		className='capitalize'>
+		{content}
+	</Chip>
+)
 
+const DashboardIconCard = ({ alt, src }) => {
 	return (
 		<Card
 			radius='lg'
@@ -39,14 +49,16 @@ const DashboardIconCard = ({ alt, src }) => {
 						</button>
 					</div>
 				</DropdownTrigger>
-				<DropdownMenu variant='faded'>
+				<DropdownMenu
+					variant='faded'
+					topContent={prompt(alt)}>
 					<DropdownSection showDivider>
 						<DropdownItem
 							key='download'
 							description='Download fullsize HD icon'
 							download={alt}
 							href={src}
-							startContent={<DownloadIcon/>}>
+							startContent={<DownloadIcon />}>
 							Download
 						</DropdownItem>
 					</DropdownSection>
