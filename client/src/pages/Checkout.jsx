@@ -5,7 +5,8 @@ import { CREATE_CHECKOUT_SESSION } from '../utils/mutations'
 function Checkout() {
 	const [createCheckoutSession] = useMutation(CREATE_CHECKOUT_SESSION)
 
-	const handleCheckout = async (id_token) => {
+	const handleCheckout = async (priceId) => {
+		console.log('Price ID:', priceId)
 		const token = localStorage.getItem('id_token')
 		console.log('Retrieved token:', token)
 		if (!token) {
@@ -14,7 +15,9 @@ function Checkout() {
 		}
 		try {
 			// Pass the token as a variable to the mutation
-			const { data } = await createCheckoutSession({ variables: { token } })
+			const { data } = await createCheckoutSession({
+				variables: { token, priceId }
+			})
 			const sessionId = data.createCheckoutSession.sessionId
 
 			// Redirect to Stripe Checkout
@@ -36,17 +39,7 @@ function Checkout() {
 					<button
 						onClick={() => handleCheckout('price_1ObEEvAA6kLI3uZeIaRFMTBQ')}
 						className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2'>
-						5 credits - $5
-					</button>
-					<button
-						onClick={() => handleCheckout('price_1ObEC4AA6kLI3uZePZ01Lu7l')}
-						className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2'>
-						15 credits - $15
-					</button>
-					<button
-						onClick={() => handleCheckout('price_1ObEDqAA6kLI3uZeVUP85kLp')}
-						className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2'>
-						25 credits - $25
+						10 credits - $10
 					</button>
 				</div>
 			</div>

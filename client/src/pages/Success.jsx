@@ -1,4 +1,6 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import {
 	Card,
 	CardHeader,
@@ -9,6 +11,12 @@ import {
 } from '@nextui-org/react'
 
 const SuccessPage = () => {
+	const navigate = useNavigate()
+
+	const handleReturnToHome = () => {
+		navigate('/')
+	}
+
 	return (
 		<div className='flex flex-row justify-center w-full mx-auto my-40'>
 			<section className='flex w-full justify-center align-center'>
@@ -24,12 +32,13 @@ const SuccessPage = () => {
 					<Divider />
 					<CardBody>
 						<h1>Payment Successful!</h1>
-						<p>Your new credit balance: </p>
+						<h3>10 Credit Added to Your Balance</h3>
 						<Button
 							className='text-md'
 							color='primary'
 							radius='full'
-							size='sm'>
+							size='sm'
+							onClick={handleReturnToHome}>
 							Return to Home
 						</Button>
 					</CardBody>
