@@ -44,3 +44,16 @@ export const CREATE_CHECKOUT_SESSION = gql`
 		}
 	}
 `
+
+export const DELETE_ICON = gql`
+	mutation deleteIcon($_id: ID!) {
+		deleteIcon(_id: $_id) {
+			_id
+			icons {
+				_id
+				prompt
+				url
+			}
+		}
+	}
+`

@@ -3,7 +3,8 @@ const OpenAI = require('openai')
 const {
 	S3Client,
 	PutObjectCommand,
-	GetObjectCommand
+	GetObjectCommand,
+	DeleteObjectCommand
 } = require('@aws-sdk/client-s3')
 const { User, Icon } = require('../models')
 
@@ -55,9 +56,10 @@ async function generateIcon(prompt, count) {
 	} else {
 		try {
 			const response = await openai.images.generate({
-				model: 'dall-e-3',
+				model: 'dall-e-2',
 				prompt,
-				response_format: 'b64_json'
+				response_format: 'b64_json',
+				size: '512x512'
 			})
 
 			return response.data.map((result) => result.b64_json ?? '')
@@ -212,6 +214,41 @@ const resolvers = {
 				})
 			} catch (error) {
 				console.error('Error creating icon', error)
+				throw new Error(error.message)
+			}
+		},
+		deleteIcon: async (parent, { _id }, context) => {
+			try {
+				const icon = await Icon.findById(_id)
+
+				if (!icon) {
+					throw new Error('Icon not found')
+				}
+
+				if (icon.userId.toString() !== context.user._id.toString()) {
+					throw new Error('You are not authorized to delete this icon')
+				}
+
+				await s3.send(
+					new DeleteObjectCommand({
+						Bucket: bucketName,
+						Key: icon.id
+					})
+				)
+
+				await Icon.findByIdAndDelete(_id)
+
+				return await User.findOneAndUpdate(
+					{ _id: context.user._id },
+					{ $pull: { icons: _id } },
+					{ new: true }
+				)
+
+				// return {
+				// 	message: 'Icon deleted successfully'
+				// }
+			} catch (error) {
+				console.error('Error deleting icon', error)
 				throw new Error(error.message)
 			}
 		}

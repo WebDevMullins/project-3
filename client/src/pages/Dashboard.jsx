@@ -1,13 +1,28 @@
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 
 import DashboardIconCard from '@components/DashboardIconCard'
 import { Button, Link, Spinner } from '@nextui-org/react'
 import { QUERY_ME } from '@utils/queries'
+import { DELETE_ICON } from '@utils/mutations'
 
 export default function Dashboard() {
 	const { loading, data } = useQuery(QUERY_ME)
-	console.log(data)
+    const [deleteIcon, { error }] = useMutation(DELETE_ICON, {
+        refetchQueries: [{ query: QUERY_ME }]
+    })
 	const user = data?.me || {}
+
+    const handleDeleteIcon = async (iconId) => {
+        try {
+            await deleteIcon({
+                variables: { _id: iconId }
+            })
+            console.log('IconId', iconId)
+        } catch (err) {
+            console.error('Error deleting icon', err.message)
+            throw new Error(error)
+        }
+    }
 
 	if (loading) {
 		return (
@@ -39,6 +54,7 @@ export default function Dashboard() {
 										key={icon._id}
 										src={icon.url}
                                         alt={icon.prompt}
+                                        onDelete={() => handleDeleteIcon(icon._id)}
 									/>
 								))}
 							</div>

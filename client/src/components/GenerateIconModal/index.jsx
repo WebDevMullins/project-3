@@ -1,20 +1,15 @@
 import {
 	Button,
+	Link,
 	Modal,
 	ModalBody,
 	ModalContent,
 	ModalFooter,
 	ModalHeader
 } from '@nextui-org/react'
-import { useNavigate } from 'react-router-dom'
 import IconCard from '../IconCard'
 
 const GenerateIconModal = ({ iconUrl, isOpen, prompt }) => {
-	const navigate = useNavigate()
-
-	const handleNavigateGallery = () => {
-		navigate('/') // Redirect to home page
-	}
 	return (
 		<>
 			<Modal
@@ -39,9 +34,10 @@ const GenerateIconModal = ({ iconUrl, isOpen, prompt }) => {
 					</ModalBody>
 					<ModalFooter>
 						<Button
+							as={Link}
 							color='primary'
 							variant='ghost'
-							onPress={handleNavigateGallery}>
+							href='/dashboard'>
 							Go to Gallery
 						</Button>
 					</ModalFooter>

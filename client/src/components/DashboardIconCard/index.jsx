@@ -20,7 +20,7 @@ const prompt = (content) => (
 	</Chip>
 )
 
-const DashboardIconCard = ({ alt, src }) => {
+const DashboardIconCard = ({ alt, src, onDelete }) => {
 	return (
 		<Card
 			radius='lg'
@@ -51,13 +51,15 @@ const DashboardIconCard = ({ alt, src }) => {
 				</DropdownTrigger>
 				<DropdownMenu
 					variant='faded'
-					topContent={prompt(alt)}>
+					topContent={prompt(alt)}
+					aria-label='Dropdown Menu'>
 					<DropdownSection showDivider>
 						<DropdownItem
 							key='download'
 							description='Download fullsize HD icon'
 							download={alt}
 							href={src}
+							aria-label='Download icon'
 							startContent={<DownloadIcon />}>
 							Download
 						</DropdownItem>
@@ -67,7 +69,9 @@ const DashboardIconCard = ({ alt, src }) => {
 							key='delete'
 							color='danger'
 							description='Permanently delete the icon'
-							startContent={<TrashIcon />}>
+							aria-label='Delete icon'
+							startContent={<TrashIcon />}
+							onClick={onDelete}>
 							Delete
 						</DropdownItem>
 						Delete

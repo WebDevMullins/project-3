@@ -58,6 +58,7 @@ const typeDefs = `
     updateCredits(token: String!, credits: Int!): User
     createCheckoutSession(token: String!): Session
     createIcon(input: CreateIconInput!): [Icon]
+    deleteIcon(_id: ID!): User
   }
 `
 

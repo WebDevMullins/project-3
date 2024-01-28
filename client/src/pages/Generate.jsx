@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { presetColors, styles } from '@/utils/data'
 import { generateSchema } from '@/utils/validation'
 import { ColorPicker } from '@components/ColorPicker'
+import GenerateIconModal from '@components/GenerateIconModal'
 import {
 	Button,
 	Input,
@@ -14,10 +15,12 @@ import {
 	useDisclosure
 } from '@nextui-org/react'
 import { CREATE_ICON } from '@utils/mutations'
-import GenerateIconModal from '../components/GenerateIconModal'
+import { QUERY_ME } from '@utils/queries'
 
 const Generate = () => {
-	const [createIcon, { error }] = useMutation(CREATE_ICON)
+	const [createIcon, { error }] = useMutation(CREATE_ICON, {
+		refetchQueries: [{ query: QUERY_ME }]
+	})
 	const [iconUrl, setIconUrl] = useState([])
 	const [prompt, setPrompt] = useState([])
 	const { isOpen, onOpen } = useDisclosure()
