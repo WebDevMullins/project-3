@@ -1,11 +1,19 @@
+const jwt = require('jsonwebtoken')
 const OpenAI = require('openai')
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
+const {
+	S3Client,
+	PutObjectCommand,
+	GetObjectCommand
+} = require('@aws-sdk/client-s3')
 const { User, Icon } = require('../models')
 
 const dotenv = require('dotenv')
 dotenv.config()
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const SUCCESS_URL = process.env.SUCCESS_URL
+const CANCEL_URL = process.env.CANCEL_URL
+const secret = 'mysecretssshhhhhhh'
 
 const { signToken, AuthenticationError } = require('../utils/auth')
 const mockImage = require('../utils/mockImage')
@@ -26,6 +34,13 @@ const s3 = new S3Client({
 	region: bucketRegion
 })
 
+// this function will convert image from s3 to base64 string
+function encode(img) {
+	let buf = Buffer.from(img)
+	let base64 = buf.toString('base64')
+	return base64
+}
+
 async function generateIcon(prompt, count) {
 	const parsedCount = parseInt(count)
 
@@ -36,13 +51,12 @@ async function generateIcon(prompt, count) {
 			'\n---==========================---\n'
 		)
 
-		return Array.from({ length: parsedCount }, () => mockImage)
+		return Array.from({ length: 1 }, () => mockImage)
 	} else {
 		try {
 			const response = await openai.images.generate({
 				model: 'dall-e-3',
 				prompt,
-				n: parsedCount,
 				response_format: 'b64_json'
 			})
 
@@ -65,6 +79,23 @@ const resolvers = {
 			return {
 				...user._doc, // when spreading object, it has too properties. only need _doc property which has the actual information we want
 				icons: iconUrlArray
+			}
+		},
+		me: async (parent, args, context) => {
+			if (context.user) {
+				const me = await User.findById(context.user._id).populate({
+					path: 'icons'
+				})
+				const iconUrlArray = me.icons.map((icon) => {
+					return {
+						...icon._doc,
+						url: generateObjectUrl(icon._id)
+					}
+				})
+				return {
+					...me._doc,
+					icons: iconUrlArray
+				}
 			}
 		}
 	},
@@ -92,39 +123,49 @@ const resolvers = {
 
 			return { token, user }
 		},
-		updateCredits: async (_, { _id, credits }) => {
-			const user = await User.findByIdAndUpdate(_id, { credits }, { new: true })
-			if (!user) {
-				throw new Error('User not found')
-			}
-			// If statement to ensure no negative creidts
-			if (credits < 0) {
-				throw new Error('Invalid credit amount')
-			}
-			return user
-		},
-		createCheckoutSession: async (_, { lineItems }) => {
-			try {
-				const session = await stripe.checkout.sessions.create({
-					line_items: lineItems,
-					mode: 'payment',
-					success_url: `http://localhost:3000/success`,
-					cancel_url: `http://localhost:3000/cancel`
-				})
 
-				return {
-					id: session.id,
-					url: session.url
+		createCheckoutSession: async (_, { token }) => {
+			try {
+				const decoded = jwt.verify(token, secret)
+				const userId = decoded.data._id
+
+				const user = await User.findById(userId)
+				if (!user) {
+					throw new Error('User not found')
 				}
+
+				const session = await stripe.checkout.sessions.create({
+					payment_method_types: ['card'],
+					line_items: [
+						{
+							price_data: {
+								currency: 'usd',
+								product_data: {
+									name: 'Credits'
+								},
+								unit_amount: 1000
+							},
+							quantity: 1
+						}
+					],
+					mode: 'payment',
+					success_url: SUCCESS_URL,
+					cancel_url: CANCEL_URL,
+					metadata: {
+						userId: user._id.toString()
+					}
+				})
+				return { sessionId: session.id }
 			} catch (error) {
 				throw new Error(error.message)
 			}
 		},
+
 		createIcon: async (parent, { input }, context) => {
 			try {
 				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${input.style} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`
 
-				const b64Icons = await generateIcon(finalPrompt, input.count)
+				const b64Icons = await generateIcon(finalPrompt)
 				const createdIcons = await Promise.all(
 					b64Icons.map(async (image) => {
 						const icon = await Icon.create({
@@ -152,9 +193,21 @@ const resolvers = {
 					})
 				)
 
-				return createdIcons.map((icon) => {
+				return createdIcons.map(async (icon) => {
+					const data = await s3.send(
+						new GetObjectCommand({
+							Bucket: bucketName,
+							Key: icon.id
+						})
+					)
+
+					const imageArray = await data.Body.transformToByteArray()
+					const imageSrc = 'data:image/png;base64,' + encode(imageArray)
+
 					return {
-						url: `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${icon.id}`
+						// this was the single line before
+						// url: `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${icon.id}`
+						url: imageSrc
 					}
 				})
 			} catch (error) {

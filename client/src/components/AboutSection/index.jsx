@@ -1,3 +1,5 @@
+import React from "react"
+
 const AboutSection = () => {
 	return (
 		<div className='flex flex-col justify-center w-full mx-auto my-16 '>

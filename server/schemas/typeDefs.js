@@ -41,18 +41,22 @@ const typeDefs = `
     prompt: String!
     color: String!
     style: String!
-    count: String!
   }
 
   type Query {
     user(_id: ID!): User
+    me: User
+  }
+
+  type Session {
+    sessionId: String
   }
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    updateCredits(_id: ID!, credits: Int!): User
-    createCheckoutSession(lineItems: [LineItemInput]): CheckoutSession
+    updateCredits(token: String!, credits: Int!): User
+    createCheckoutSession(token: String!): Session
     createIcon(input: CreateIconInput!): [Icon]
   }
 `

@@ -1,3 +1,5 @@
+import TeamModal from '../components/Team/TeamModal'
+
 function Team() {
 	return (
 		<section className='flex flex-row justify-center w-full mx-auto my-16 bg-neutral-700/25 backdrop-blur-xs rounded-2xl '>
@@ -12,11 +14,12 @@ function Team() {
 				</div>
 				<div className='grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 '>
 					<div className='text-center text-gray-500 dark:text-gray-400 '>
-						<img
+						{/* <img
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/6474546?v=4'
 							alt='Brandon Avatar'
-						/>
+						/> */}
+						<TeamModal></TeamModal>
 						<h3 className='mb-1 text-2xl font-bold tracking-tight text-white'>
 							<p>Brandon Mullins</p>
 						</h3>
