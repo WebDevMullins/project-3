@@ -18,30 +18,27 @@ const presetColors = [
 ]
 
 const styles = [
-	'metallic',
-	'polygon',
-	'pixelated',
-	'clay',
-	'gradient',
-	'flat',
-	'illustrated',
-	'minimalistic',
-	'hand-drawn',
-	'watercolor',
-	'isometric',
-	'neon',
-	'cartoonish',
-	'3d',
-	'line-art',
-	'pop-art',
-	'doodle',
-	'grunge',
-	'sticker',
-	'realistic',
-	'mosaic',
-	'origami',
-	'chalkboard',
-	'woodcut'
+	{ name: '3D', value: ' 3D, volumetric, rendered, immersive' },
+	{ name: 'Artwork', value: 'artwork, organic, hand-drawn, sketch-like' },
+	{ name: 'Cartoon', value: 'cartoonish, fun, playful' },
+	{ name: 'Chalk', value: 'chalkboard, textured, hand-drawn' },
+	{ name: 'Clay', value: 'clay, claymation, clay-like, textured, sculpted' },
+	{ name: 'Gradient', value: 'gradient, smooth, vibrant, transitional' },
+	{ name: 'Grunge', value: 'grunge, distressed, gritty, grunge-inspired' },
+	{ name: 'Illustrated', value: 'illustrated, hand-crafted, artistic' },
+	{ name: 'Metallic', value: 'lustrous, polished, sleek' },
+	{ name: 'Minimalistic', value: 'refined, minimalistic, simple' },
+	{ name: 'Mosaic', value: 'complex, mosaic, intricate' },
+	{ name: 'Neon', value: 'newo, luminous, bright, vivid' },
+	{
+		name: 'Polygon',
+		value: 'geometric, angular, sharp, multi-sided, polygonal'
+	},
+	{ name: 'Popart', value: 'vibrant, bold, pop-art inspired' },
+	{ name: 'Origami', value: 'folded, paper-like, origami-inspired' },
+	{ name: 'Retro', value: 'nostalgic, classic, vintage, retro' },
+	{ name: 'Sticker', value: 'bold, sticker-like, outlined' },
+	{ name: 'Woodwork', value: 'engraved, woodcut, rustic' }
 ]
 
 export { presetColors, styles }

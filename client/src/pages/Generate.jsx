@@ -115,9 +115,10 @@ const Generate = () => {
 									{...register('style')}>
 									{styles.map((style) => (
 										<SelectItem
-											key={style}
-											value={style}>
-											{style}
+											key={style.name}
+											value={style.value}
+											className='capitalize'>
+											{style.name}
 										</SelectItem>
 									))}
 								</Select>
