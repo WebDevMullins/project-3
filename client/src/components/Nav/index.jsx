@@ -20,7 +20,7 @@ function Nav() {
 		'Community',
 		'About',
 		'Generate',
-		'Credits',
+		'Pricing',
 		'Our Team',
 		'Collection',
 		'Contact',
@@ -94,8 +94,8 @@ function Nav() {
 				<NavbarItem>
 					<Link
 						color='foreground'
-						href='/checkout'>
-						Credits
+						href='/pricing'>
+						Pricing
 					</Link>
 				</NavbarItem>
 				<NavbarItem>

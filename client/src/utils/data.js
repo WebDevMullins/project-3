@@ -41,4 +41,29 @@ const styles = [
 	{ name: 'Woodwork', value: 'engraved, woodcut, rustic' }
 ]
 
-export { presetColors, styles }
+const tiers = {
+	starter: [
+		'50 Credits',
+		'$0.10 per icon',
+		'Basic icon customization options',
+		'Unlimited icon storage',
+		'Entry-level access to AI-generated icons',
+		'Priority access to new features and updates'
+	],
+	plus: [
+		'125 Credits',
+		'$0.08 per icon',
+		'Affordable pricing for individuals and small businesses',
+		'Unlimited icon storage',
+		'Priority access to new features and updates'
+	],
+	premium: [
+		'250 Credits',
+		'$0.06 per icon',
+		'Ideal for businesses and designers with demanding icon creation requirements',
+		'Suitable for users seeking the most flexibility and features',
+		'Priority access to new features and updates'
+	]
+}
+
+export { presetColors, styles, tiers }
