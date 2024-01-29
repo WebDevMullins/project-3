@@ -85,11 +85,10 @@ const resolvers = {
 		},
 		me: async (parent, args, context) => {
 			if (context.user) {
-				const me = await User.findById(context.user._id)
-					.populate({
-						path: 'icons',
-						options: { sort: { createdAt: -1 } }
-					})
+				const me = await User.findById(context.user._id).populate({
+					path: 'icons',
+					options: { sort: { createdAt: -1 } }
+				})
 				const iconUrlArray = me.icons.map((icon) => {
 					return {
 						...icon._doc,
