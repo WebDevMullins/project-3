@@ -16,6 +16,7 @@
 	display: flex;
 	padding: 12px;
 	flex-wrap: wrap;
+	justify-content: center;
 }
 
 .picker__swatch {

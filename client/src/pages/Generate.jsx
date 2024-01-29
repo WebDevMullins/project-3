@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import Auth from '@/utils/auth'
 import { presetColors, styles } from '@/utils/data'
 import { generateSchema } from '@/utils/validation'
 import { ColorPicker } from '@components/ColorPicker'
@@ -135,12 +136,20 @@ const Generate = () => {
 									)}
 								/>
 							</div>
-							<Button
-								color='primary'
-								type='submit'
-								isLoading={isSubmitting}>
-								Generate
-							</Button>
+							{Auth.loggedIn() ? (
+								<Button
+									color='primary'
+									type='submit'
+									isLoading={isSubmitting}>
+									Generate
+								</Button>
+							) : (
+								<Button
+									color='default'
+									disabled>
+									Please login to Generate
+								</Button>
+							)}
 						</form>
 					</div>
 					{error && <p>Error: {error.message}</p>}
