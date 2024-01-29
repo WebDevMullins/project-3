@@ -92,8 +92,10 @@ const Generate = () => {
 								<Input
 									type='text'
 									label='Prompt'
-									placeholder='adjective noun'
+									labelPlacement='outside'
+									placeholder='grouchy granny'
 									variant='bordered'
+									size='lg'
 									isInvalid={errors.prompt?.message}
 									errorMessage={errors.prompt?.message}
 									{...register('prompt')}
@@ -103,8 +105,10 @@ const Generate = () => {
 							<div className='flex flex-wrap md:flex-nowrap gap-4'>
 								<Select
 									variant='bordered'
-									label='Select a style'
-									// className='max-w-xs'
+									label='Style'
+									labelPlacement='outside'
+									placeholder='Select a style'
+									size='lg'
 									isInvalid={errors.style?.message}
 									errorMessage={errors.style?.message}
 									{...register('style')}>
