@@ -1,6 +1,5 @@
 import {
 	Card,
-	Chip,
 	Dropdown,
 	DropdownItem,
 	DropdownMenu,
@@ -9,16 +8,6 @@ import {
 	Image
 } from '@nextui-org/react'
 import { DownloadIcon, TrashIcon } from 'lucide-react'
-
-const prompt = (content) => (
-	<Chip
-		color='primary'
-		radius='small'
-		variant='dot'
-		className='capitalize'>
-		{content}
-	</Chip>
-)
 
 const DashboardIconCard = ({ alt, src, onDelete }) => {
 	return (
@@ -51,7 +40,6 @@ const DashboardIconCard = ({ alt, src, onDelete }) => {
 				</DropdownTrigger>
 				<DropdownMenu
 					variant='faded'
-					topContent={prompt(alt)}
 					aria-label='Dropdown Menu'>
 					<DropdownSection showDivider>
 						<DropdownItem
