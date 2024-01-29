@@ -2,37 +2,37 @@ import { useMutation, useQuery } from '@apollo/client'
 
 import DashboardIconCard from '@components/DashboardIconCard'
 import { Button, Link, Spinner } from '@nextui-org/react'
-import { QUERY_ME } from '@utils/queries'
 import { DELETE_ICON } from '@utils/mutations'
+import { QUERY_ME } from '@utils/queries'
 
 export default function Dashboard() {
 	const { loading, data } = useQuery(QUERY_ME)
-    const [deleteIcon, { error }] = useMutation(DELETE_ICON, {
-        refetchQueries: [{ query: QUERY_ME }]
-    })
+	const [deleteIcon, { error }] = useMutation(DELETE_ICON, {
+		refetchQueries: [{ query: QUERY_ME }]
+	})
 	const user = data?.me || {}
+	console.log('user', user)
 
-    const handleDeleteIcon = async (iconId) => {
-        try {
-            await deleteIcon({
-                variables: { _id: iconId }
-            })
-            console.log('IconId', iconId)
-        } catch (err) {
-            console.error('Error deleting icon', err.message)
-            throw new Error(error)
-        }
-    }
+	const handleDeleteIcon = async (iconId) => {
+		try {
+			await deleteIcon({
+				variables: { _id: iconId }
+			})
+			console.log('IconId', iconId)
+		} catch (err) {
+			console.error('Error deleting icon', err.message)
+			throw new Error(error)
+		}
+	}
 
 	if (loading) {
 		return (
-            <section className='flex justify-center items-center min-h-screen'>
-
-			<Spinner
-				label='Loading...'
-				size='lg'
-                />
-                </section>
+			<section className='flex justify-center items-center min-h-screen'>
+				<Spinner
+					label='Loading...'
+					size='lg'
+				/>
+			</section>
 		)
 	} else {
 		return (
@@ -53,8 +53,10 @@ export default function Dashboard() {
 									<DashboardIconCard
 										key={icon._id}
 										src={icon.url}
-                                        alt={icon.prompt}
-                                        onDelete={() => handleDeleteIcon(icon._id)}
+										alt={icon.prompt}
+										author={user.firstName ? user.firstName : 'Unknown'}
+										date={icon.createdAt}
+										onDelete={() => handleDeleteIcon(icon._id)}
 									/>
 								))}
 							</div>

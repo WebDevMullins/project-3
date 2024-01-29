@@ -19,9 +19,9 @@ export const QUERY_ME = gql`
 		me {
 			_id
 			firstName
-			lastName
 			icons {
 				_id
+				createdAt
 				url
 				prompt
 			}

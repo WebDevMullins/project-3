@@ -6,7 +6,6 @@ import { QUERY_COMMUNITY_ICONS } from '@utils/queries'
 
 export default function Community() {
 	const { loading, data } = useQuery(QUERY_COMMUNITY_ICONS)
-	console.log('Community Icons:', data)
 	const icons = data?.communityIcons || []
 
 	if (loading) {
