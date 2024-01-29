@@ -14,7 +14,15 @@ const iconSchema = new Schema({
 	prompt: {
 		type: String,
 		required: true
-	}
+	},
+	style: {
+		type: String,
+		required: true
+	},
+	color: {
+		type: String,
+		required: true
+	},
 })
 
 const Icon = model('Icon', iconSchema)

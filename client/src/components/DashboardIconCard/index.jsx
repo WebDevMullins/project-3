@@ -22,15 +22,16 @@ const prompt = (content) => (
 	</Chip>
 )
 
-const DashboardIconCard = ({ alt, author, date, src, onDelete }) => {
+const DashboardIconCard = ({ alt, author, color, date, style, src, onDelete }) => {
 	const createdDate = dateFormat(date)
-	console.log('date', date)
 
 	return (
 		<CardTooltip
 			alt={alt}
 			author={author}
-			createdDate={createdDate}>
+			color={color}
+			createdDate={createdDate}
+			style={style}>
 			<Card
 				radius='lg'
 				className='border-none'>

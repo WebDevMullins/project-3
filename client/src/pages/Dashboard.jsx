@@ -11,14 +11,12 @@ export default function Dashboard() {
 		refetchQueries: [{ query: QUERY_ME }]
 	})
 	const user = data?.me || {}
-	console.log('user', user)
 
 	const handleDeleteIcon = async (iconId) => {
 		try {
 			await deleteIcon({
 				variables: { _id: iconId }
 			})
-			console.log('IconId', iconId)
 		} catch (err) {
 			console.error('Error deleting icon', err.message)
 			throw new Error(error)
@@ -55,7 +53,9 @@ export default function Dashboard() {
 										src={icon.url}
 										alt={icon.prompt}
 										author={user.firstName ? user.firstName : 'Unknown'}
+										color={icon.color}
 										date={icon.createdAt}
+										style={icon.style}
 										onDelete={() => handleDeleteIcon(icon._id)}
 									/>
 								))}

@@ -24,6 +24,8 @@ export const QUERY_ME = gql`
 				createdAt
 				url
 				prompt
+				style
+				color
 			}
 		}
 	}
@@ -44,6 +46,8 @@ export const QUERY_COMMUNITY_ICONS = gql`
 			_id
 			createdAt
 			prompt
+			style
+			color
 			user {
 				_id
 				firstName

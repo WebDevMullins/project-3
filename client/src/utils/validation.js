@@ -1,4 +1,3 @@
-import { styles } from '@/utils/data'
 import { z } from 'zod'
 
 const signupSchema = z.object({
@@ -25,9 +24,7 @@ const loginSchema = z.object({
 const generateSchema = z.object({
 	prompt: z.string().min(1, 'Prompt is required'),
 	color: z.string().regex(/^#([0-9a-f]{3}){1,2}$/i, 'Invalid color'),
-	style: z.string().refine((style) => styles.some((s) => s.name === style), {
-		message: 'Invalid style selected'
-	})
+	style: z.string().min(1, 'Style is required')
 })
 
 export { generateSchema, loginSchema, signupSchema }
