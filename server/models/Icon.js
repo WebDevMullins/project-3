@@ -22,7 +22,7 @@ const iconSchema = new Schema({
 	color: {
 		type: String,
 		required: true
-	},
+	}
 })
 
 const Icon = model('Icon', iconSchema)
