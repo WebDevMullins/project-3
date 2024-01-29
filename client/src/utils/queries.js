@@ -43,8 +43,12 @@ export const QUERY_COMMUNITY_ICONS = gql`
 		communityIcons {
 			_id
 			createdAt
-			url
 			prompt
+			user {
+				_id
+				firstName
+			}
+			url
 		}
 	}
 `

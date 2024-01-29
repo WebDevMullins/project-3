@@ -15,6 +15,7 @@ const typeDefs = `
     userId: ID
     prompt: String
     url: String
+    user: User
   }
 
   type Auth {

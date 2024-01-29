@@ -37,7 +37,8 @@ export default function Community() {
 									key={icon._id}
 									src={icon.url}
 									alt={icon.prompt}
-									title={icon.prompt}
+									author={icon.user? icon.user.firstName : 'Unknown'}
+									date={icon.createdAt}
 								/>
 							))}
 						</div>

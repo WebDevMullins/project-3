@@ -2,8 +2,8 @@ const { Schema, model } = require('mongoose')
 
 const iconSchema = new Schema({
 	createdAt: {
-		type: Schema.Types.Date,
-		default: Date.now()
+		type: Date,
+		default: Date.now
 	},
 
 	userId: {
