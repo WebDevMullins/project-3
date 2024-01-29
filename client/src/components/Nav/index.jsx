@@ -12,6 +12,7 @@ import {
 	NavbarMenuToggle
 } from '@nextui-org/react'
 import AuthForm from '../AuthForm'
+import Credits from '../Credits'
 
 function Nav() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -46,7 +47,11 @@ function Nav() {
 					className='sm:hidden'
 				/>
 				<NavbarBrand>
-					<Link href='/' className='font-bold text-inherit'>A.I.conic</Link>
+					<Link
+						href='/'
+						className='font-bold text-inherit'>
+						A.I.conic
+					</Link>
 				</NavbarBrand>
 			</NavbarContent>
 
@@ -107,6 +112,9 @@ function Nav() {
 				</NavbarItem>
 			</NavbarContent>
 			<NavbarContent justify='end'>
+				<NavbarItem>
+					<Credits />
+				</NavbarItem>
 				<NavbarItem className='hidden md:flex'>
 					<AuthForm />
 				</NavbarItem>
