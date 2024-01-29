@@ -131,7 +131,7 @@ const Generate = () => {
 					{error && <p>Error: {error.message}</p>}
 				</div>
 			</section>
-			{iconUrl.length && (
+			{iconUrl && (
 				<GenerateIconModal
 					isOpen={isOpen}
 					iconUrl={iconUrl}
