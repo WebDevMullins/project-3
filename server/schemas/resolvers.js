@@ -187,6 +187,18 @@ const resolvers = {
 
 		createIcon: async (parent, { input, style }, context) => {
 			try {
+				const user = await User.findById(context.user._id)
+
+				if (user.credits < 9) {
+					throw new Error('Not enough credits.\nPlease purchase more.')
+				}
+
+				await User.findOneAndUpdate(
+					{ _id: context.user._id },
+					{ $inc: { credits: -10 } },
+					{ new: true }
+				)
+
 				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${style.value} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`
 
 				const b64Icons = await generateIcon(finalPrompt)
