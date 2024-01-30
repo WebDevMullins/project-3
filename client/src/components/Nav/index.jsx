@@ -1,23 +1,25 @@
-import React from 'react'
+import { useState } from 'react'
+
+import Auth from '@/utils/auth'
 import {
+	Link,
 	Navbar,
 	NavbarBrand,
 	NavbarContent,
 	NavbarItem,
 	NavbarMenu,
-	NavbarMenuToggle,
 	NavbarMenuItem,
-	Link
+	NavbarMenuToggle
 } from '@nextui-org/react'
 import AuthForm from '../AuthForm'
-import Auth from '../../utils/auth'
+import Credits from '../Credits'
 
 function Nav() {
-	const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const menuItems = [
 		'Home',
 		'Generate',
-		'Credits',
+		'Pricing',
 		'Our Team',
 	]
 
@@ -40,7 +42,11 @@ function Nav() {
 					className='sm:hidden'
 				/>
 				<NavbarBrand>
-					<p className='font-bold text-inherit'>A.I.conic</p>
+					<Link
+						href='/'
+						className='font-bold text-inherit'>
+						A.I.conic
+					</Link>
 				</NavbarBrand>
 			</NavbarContent>
 
@@ -73,8 +79,8 @@ function Nav() {
 				<NavbarItem>
 					<Link
 						color='foreground'
-						href='/checkout'>
-						Credits
+						href='/pricing'>
+						Pricing
 					</Link>
 				</NavbarItem>
 				<NavbarItem>
@@ -86,6 +92,9 @@ function Nav() {
 				</NavbarItem>
 			</NavbarContent>
 			<NavbarContent justify='end'>
+				<NavbarItem>
+					<Credits />
+				</NavbarItem>
 				<NavbarItem className='hidden md:flex'>
 					<AuthForm />
 				</NavbarItem>

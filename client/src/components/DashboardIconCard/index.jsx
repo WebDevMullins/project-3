@@ -7,10 +7,12 @@ import {
 	DropdownTrigger,
 	Image
 } from '@nextui-org/react'
+import { dateFormat } from '@utils/helpers'
 import { DownloadIcon, TrashIcon } from 'lucide-react'
+import CardTooltip from '../CardTooltip'
 
-const DashboardIconCard = ({ alt, src }) => {
 
+const DashboardIconCard = ({ alt, src, onDelete }) => {
 	return (
 		<Card
 			radius='lg'
@@ -24,7 +26,7 @@ const DashboardIconCard = ({ alt, src }) => {
 			/>
 			<Dropdown>
 				<DropdownTrigger>
-					<div className='absolute top-1 right-1 flex items-end justify-center bg-transparent backdrop-blur-xl p-2 text-sm rounded-xl'>
+					<div className='absolute top-1 right-1 flex items-end justify-center bg-black/10 backdrop-blur-xl p-2 text-sm rounded-xl'>
 						<button>
 							<svg
 								stroke='currentColor'
@@ -39,14 +41,17 @@ const DashboardIconCard = ({ alt, src }) => {
 						</button>
 					</div>
 				</DropdownTrigger>
-				<DropdownMenu variant='faded'>
+				<DropdownMenu
+					variant='faded'
+					aria-label='Dropdown Menu'>
 					<DropdownSection showDivider>
 						<DropdownItem
 							key='download'
 							description='Download fullsize HD icon'
 							download={alt}
 							href={src}
-							startContent={<DownloadIcon/>}>
+							aria-label='Download icon'
+							startContent={<DownloadIcon />}>
 							Download
 						</DropdownItem>
 					</DropdownSection>
@@ -55,14 +60,15 @@ const DashboardIconCard = ({ alt, src }) => {
 							key='delete'
 							color='danger'
 							description='Permanently delete the icon'
-							startContent={<TrashIcon />}>
+							aria-label='Delete icon'
+							startContent={<TrashIcon />}
+							onClick={onDelete}>
 							Delete
-						</DropdownItem>
-						Delete
-					</DropdownSection>
-				</DropdownMenu>
-			</Dropdown>
-		</Card>
+						</DropdownSection>
+					</DropdownMenu>
+				</Dropdown>
+			</Card>
+		</CardTooltip>
 	)
 }
 

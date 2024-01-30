@@ -3,7 +3,8 @@ const OpenAI = require('openai')
 const {
 	S3Client,
 	PutObjectCommand,
-	GetObjectCommand
+	GetObjectCommand,
+	DeleteObjectCommand
 } = require('@aws-sdk/client-s3')
 const { User, Icon } = require('../models')
 
@@ -55,9 +56,10 @@ async function generateIcon(prompt, count) {
 	} else {
 		try {
 			const response = await openai.images.generate({
-				model: 'dall-e-3',
+				model: 'dall-e-2',
 				prompt,
-				response_format: 'b64_json'
+				response_format: 'b64_json',
+				size: '512x512'
 			})
 
 			return response.data.map((result) => result.b64_json ?? '')
@@ -84,7 +86,8 @@ const resolvers = {
 		me: async (parent, args, context) => {
 			if (context.user) {
 				const me = await User.findById(context.user._id).populate({
-					path: 'icons'
+					path: 'icons',
+					options: { sort: { createdAt: -1 } }
 				})
 				const iconUrlArray = me.icons.map((icon) => {
 					return {
@@ -97,6 +100,17 @@ const resolvers = {
 					icons: iconUrlArray
 				}
 			}
+		},
+		communityIcons: async () => {
+			const icons = await Icon.find().sort({ createdAt: -1 }).limit(24)
+			return icons.map(async (icon) => {
+				const user = await User.findById(icon.userId)
+				return {
+					...(icon ? icon._doc : {}),
+					user: user ? user._doc : null,
+					url: icon ? generateObjectUrl(icon._id) : null
+				}
+			})
 		}
 	},
 	Mutation: {
@@ -161,15 +175,17 @@ const resolvers = {
 			}
 		},
 
-		createIcon: async (parent, { input }, context) => {
+		createIcon: async (parent, { input, style }, context) => {
 			try {
-				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${input.style} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`
+				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${style.value} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`
 
 				const b64Icons = await generateIcon(finalPrompt)
 				const createdIcons = await Promise.all(
 					b64Icons.map(async (image) => {
 						const icon = await Icon.create({
 							prompt: input.prompt,
+							style: style.name,
+							color: input.color,
 							userId: context.user._id
 						})
 
@@ -185,7 +201,7 @@ const resolvers = {
 								Body: Buffer.from(image, 'base64'),
 								Key: icon.id,
 								ContentEncoding: 'base64',
-								ContentType: 'image/png'
+								ContentType: 'image/jpeg'
 							})
 						)
 
@@ -212,6 +228,41 @@ const resolvers = {
 				})
 			} catch (error) {
 				console.error('Error creating icon', error)
+				throw new Error(error.message)
+			}
+		},
+		deleteIcon: async (parent, { _id }, context) => {
+			try {
+				const icon = await Icon.findById(_id)
+
+				if (!icon) {
+					throw new Error('Icon not found')
+				}
+
+				if (icon.userId.toString() !== context.user._id.toString()) {
+					throw new Error('You are not authorized to delete this icon')
+				}
+
+				await s3.send(
+					new DeleteObjectCommand({
+						Bucket: bucketName,
+						Key: icon.id
+					})
+				)
+
+				await Icon.findByIdAndDelete(_id)
+
+				return await User.findOneAndUpdate(
+					{ _id: context.user._id },
+					{ $pull: { icons: _id } },
+					{ new: true }
+				)
+
+				// return {
+				// 	message: 'Icon deleted successfully'
+				// }
+			} catch (error) {
+				console.error('Error deleting icon', error)
 				throw new Error(error.message)
 			}
 		}
