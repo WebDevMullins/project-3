@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import Auth from '@/utils/auth'
 import {
+	Image,
 	Link,
 	Navbar,
 	NavbarBrand,
@@ -40,8 +41,18 @@ function Nav() {
 					<NavbarBrand>
 						<Link
 							href='/'
-							className='font-bold text-inherit'>
-							A.I.conic
+							className='font-bold tracking-wide text-inherit'>
+							<div className='flex items-center gap-2'>
+								<Image
+									src='/favicon.png'
+									height={48}
+									width={32}
+								/>
+								<p>
+									<span className='text-primary'>AI</span>
+									conic
+								</p>
+							</div>
 						</Link>
 					</NavbarBrand>
 				</NavbarContent>
