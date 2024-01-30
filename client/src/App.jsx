@@ -10,9 +10,6 @@ import { setContext } from '@apollo/client/link/context'
 import { NextUIProvider } from '@nextui-org/react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
-import { Provider } from 'react-redux'
-import store from './redux/store'
-
 import Layout from '@components/Layout'
 import Nav from '@components/Nav'
 import StarsCanvas from '@components/StarBackground'
@@ -43,7 +40,6 @@ function App() {
 
 	return (
 		<ApolloProvider client={client}>
-			<Provider store={store}>
 				<NextUIProvider navigate={navigate}>
 					<StarsCanvas />
 					<Nav />
@@ -52,7 +48,6 @@ function App() {
 					</Layout>
 					<Footer />
 				</NextUIProvider>
-			</Provider>
 		</ApolloProvider>
 	)
 }

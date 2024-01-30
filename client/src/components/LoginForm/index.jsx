@@ -1,9 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import Auth from '@utils/auth'
-import { LOGIN } from '@utils/mutations'
-import { useForm } from 'react-hook-form'
-
 import { useMutation } from '@apollo/client'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import {
 	Button,
 	Input,
@@ -14,9 +12,10 @@ import {
 	ModalFooter,
 	ModalHeader
 } from '@nextui-org/react'
+import Auth from '@utils/auth'
+import { LOGIN } from '@utils/mutations'
 import { loginSchema } from '@utils/validation'
 import { EyeIcon, EyeOffIcon, MailIcon } from 'lucide-react'
-import { useState } from 'react'
 
 const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
 	const [login, { error }] = useMutation(LOGIN)
@@ -41,8 +40,6 @@ const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
 		} catch (e) {
 			console.log(e)
 		}
-		console.log('Login data:', data)
-		console.log('Login errors:', errors)
 		reset()
 	}
 	return (
@@ -56,7 +53,7 @@ const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
 						<ModalHeader className='flex flex-col gap-1'>Login</ModalHeader>
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<ModalBody>
-							<Input
+								<Input
 									size='lg'
 									endContent={
 										<MailIcon className='text-2xl text-default-400 pointer-events-none flex-shrink-0' />
