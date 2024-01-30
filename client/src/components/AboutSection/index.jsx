@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 const AboutSection = () => {
 	return (
@@ -10,14 +10,12 @@ const AboutSection = () => {
 				<div className='mx-auto max-w-screen-xl py-8 px-6'>
 					<div className=' mb-8 lg:mb-16 text-center'>
 						<h2 className='mb-4 text-2xl tracking-tight font-extrabold text-white '>
-							Quick. Simple. Easy.
+							Quick. Easy. Iconic.
 						</h2>
 						<p className='text-gray-500 sm:text-xl justify-self-center md:px-16'>
-							[enter sales pitch here] Lorem ipsum dolor sit amet consectetur,
-							adipisicing elit. Adipisci ipsum unde modi earum quibusdam aliquid
-							blanditiis laborum nobis eius repellat et placeat consequuntur,
-							possimus pariatur exercitationem distinctio praesentium minima
-							sed.
+							From large companies to passion projects, A.I.conic was designed with
+							diverse needs in mind. Let's take a look at into what makes
+							A.I.conic right for you.
 						</p>
 					</div>
 					<div className='space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 justify-center text-center'>
@@ -67,7 +65,7 @@ const AboutSection = () => {
 							</div>
 							<h3 className='mb-2 text-xl font-bold '>Credit System</h3>
 							<p className='text-gray-500 '>
-								Users are able to purchse credits to generate icons.
+								A.I.conic utilizes a refillable credit system to enable the brightest of ideas.
 							</p>
 						</div>
 						<div>
@@ -89,10 +87,9 @@ const AboutSection = () => {
 									</svg>
 								</div>
 							</div>
-							<h3 className='mb-2 text-xl font-bold '>User Gallery</h3>
+							<h3 className='mb-2 text-xl font-bold '>Gallery</h3>
 							<p className='text-gray-500 '>
-								Users are able to view their collection of icons, by visiting
-								their gallery.
+								Need inspiration? Checkout what others have created under the Community tab.
 							</p>
 						</div>
 						<div>
