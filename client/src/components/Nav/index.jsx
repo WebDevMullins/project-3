@@ -45,7 +45,7 @@ function Nav() {
 							<div className='flex items-center gap-2'>
 								<Image
 									src='/favicon.png'
-									height={48}
+									height={32}
 									width={32}
 								/>
 								<p>
@@ -56,17 +56,16 @@ function Nav() {
 						</Link>
 					</NavbarBrand>
 				</NavbarContent>
-
 				<NavbarContent
 					className='hidden sm:flex gap-4'
 					justify='center'>
-					<NavbarItem>
+					{/* <NavbarItem>
 						<Link
 							color='foreground'
 							href='/'>
 							Home
 						</Link>
-					</NavbarItem>
+					</NavbarItem> */}
 					<NavbarItem>
 						<Link
 							color='foreground'
@@ -106,9 +105,11 @@ function Nav() {
 					</NavbarItem>
 				</NavbarContent>
 				<NavbarContent justify='end'>
-					<NavbarItem>
-						<Credits />
-					</NavbarItem>
+					{Auth.loggedIn() ? (
+						<NavbarItem>
+							<Credits />
+						</NavbarItem>
+					) : null}
 					<NavbarItem className='hidden md:flex'>
 						<AuthForm />
 					</NavbarItem>
