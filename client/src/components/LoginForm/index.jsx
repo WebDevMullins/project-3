@@ -1,10 +1,7 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-
-import { setUser } from '@/redux/userSlice'
 import {
 	Button,
 	Input,
@@ -17,25 +14,12 @@ import {
 } from '@nextui-org/react'
 import Auth from '@utils/auth'
 import { LOGIN } from '@utils/mutations'
-import { QUERY_ME } from '@utils/queries'
 import { loginSchema } from '@utils/validation'
 import { EyeIcon, EyeOffIcon, MailIcon } from 'lucide-react'
 
 const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
 	const [login, { error }] = useMutation(LOGIN)
 	const [isVisable, setIsVisable] = useState(false)
-
-	const dispatch = useDispatch()
-	const { data: userData } = useQuery(QUERY_ME)
-	console.log(userData)
-
-	useEffect(() => {
-		if (userData && userData.me) {
-			dispatch(
-				setUser({ credits: userData.me.credits, icons: userData.me.icons })
-			)
-		}
-	}, [userData, dispatch])
 
 	const toggleVisibility = () => setIsVisable(!isVisable)
 

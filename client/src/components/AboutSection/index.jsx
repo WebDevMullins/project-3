@@ -11,9 +11,9 @@ const AboutSection = () => {
 							Quick. Easy. Iconic.
 						</h2>
 						<p className='text-gray-500 sm:text-xl justify-self-center md:px-16'>
-							From large companies to passion projects, A.I.conic was designed with
-							diverse needs in mind. Let&rsquo;s take a look at into what makes
-							A.I.conic right for you.
+							From large companies to passion projects, A.I.conic was designed
+							with diverse needs in mind. Let&rsquo;s take a look at into what
+							makes A.I.conic right for you.
 						</p>
 					</div>
 					<div className='space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 justify-center text-center'>
@@ -63,7 +63,8 @@ const AboutSection = () => {
 							</div>
 							<h3 className='mb-2 text-xl font-bold '>Credit System</h3>
 							<p className='text-gray-500 '>
-								A.I.conic utilizes a refillable credit system to enable the brightest of ideas.
+								A.I.conic utilizes a refillable credit system to enable the
+								brightest of ideas.
 							</p>
 						</div>
 						<div>
@@ -87,7 +88,8 @@ const AboutSection = () => {
 							</div>
 							<h3 className='mb-2 text-xl font-bold '>Gallery</h3>
 							<p className='text-gray-500 '>
-								Need inspiration? Checkout what others have created under the Community tab.
+								Need inspiration? Checkout what others have created under the
+								Community tab.
 							</p>
 						</div>
 						<div>
