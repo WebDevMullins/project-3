@@ -19,9 +19,6 @@ function Nav() {
 		'Generate',
 		'Credits',
 		'Our Team',
-		'Collection',
-		'Contact',
-		'Help & Feedback'
 	]
 
 	const handleMobileMenuNav = function (item, index) {
