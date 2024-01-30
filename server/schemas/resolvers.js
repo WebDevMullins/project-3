@@ -18,7 +18,7 @@ const secret = 'mysecretssshhhhhhh'
 
 const { signToken, AuthenticationError } = require('../utils/auth')
 const mockImage = require('../utils/mockImage')
-const { generateObjectUrl } = require('../utils/s3')
+const { generateObjectUrl, generateObjectData } = require('../utils/s3')
 
 const accessKey = process.env.ACCESS_KEY
 const secretAccessKey = process.env.SECRET_ACCESS_KEY
@@ -89,10 +89,18 @@ const resolvers = {
 					path: 'icons',
 					options: { sort: { createdAt: -1 } }
 				})
-				const iconUrlArray = me.icons.map((icon) => {
+				const iconUrlArray = me.icons.map(async (icon) => {
+					const data = await s3.send(
+						new GetObjectCommand({
+							Bucket: bucketName,
+							Key: icon.id
+						})
+					)
+					const imageArray = await data.Body.transformToByteArray()
+					const imageSrc = 'data:image/png;base64,' + encode(imageArray)
 					return {
 						...icon._doc,
-						url: generateObjectUrl(icon._id)
+						url: imageSrc
 					}
 				})
 				return {
