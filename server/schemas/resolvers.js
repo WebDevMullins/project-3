@@ -86,7 +86,8 @@ const resolvers = {
 		me: async (parent, args, context) => {
 			if (context.user) {
 				const me = await User.findById(context.user._id).populate({
-					path: 'icons'
+					path: 'icons',
+					options: { sort: { createdAt: -1 } }
 				})
 				const iconUrlArray = me.icons.map((icon) => {
 					return {
@@ -99,6 +100,17 @@ const resolvers = {
 					icons: iconUrlArray
 				}
 			}
+		},
+		communityIcons: async () => {
+			const icons = await Icon.find().sort({ createdAt: -1 }).limit(24)
+			return icons.map(async (icon) => {
+				const user = await User.findById(icon.userId)
+				return {
+					...(icon ? icon._doc : {}),
+					user: user ? user._doc : null,
+					url: icon ? generateObjectUrl(icon._id) : null
+				}
+			})
 		}
 	},
 	Mutation: {
@@ -163,15 +175,17 @@ const resolvers = {
 			}
 		},
 
-		createIcon: async (parent, { input }, context) => {
+		createIcon: async (parent, { input, style }, context) => {
 			try {
-				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${input.style} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`
+				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${style.value} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`
 
 				const b64Icons = await generateIcon(finalPrompt)
 				const createdIcons = await Promise.all(
 					b64Icons.map(async (image) => {
 						const icon = await Icon.create({
 							prompt: input.prompt,
+							style: style.name,
+							color: input.color,
 							userId: context.user._id
 						})
 

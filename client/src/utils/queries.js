@@ -19,11 +19,13 @@ export const QUERY_ME = gql`
 		me {
 			_id
 			firstName
-			lastName
 			icons {
 				_id
+				createdAt
 				url
 				prompt
+				style
+				color
 			}
 		}
 	}
@@ -34,6 +36,23 @@ export const GET_USER_DATA = gql`
 			id
 			name
 			email
+		}
+	}
+`
+
+export const QUERY_COMMUNITY_ICONS = gql`
+	query communityIcons {
+		communityIcons {
+			_id
+			createdAt
+			prompt
+			style
+			color
+			user {
+				_id
+				firstName
+			}
+			url
 		}
 	}
 `

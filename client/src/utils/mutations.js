@@ -31,8 +31,8 @@ export const ADD_USER = gql`
 	}
 `
 export const CREATE_ICON = gql`
-	mutation createIcon($input: CreateIconInput!) {
-		createIcon(input: $input) {
+	mutation createIcon($input: CreateIconInput!, $style: StyleInput!) {
+		createIcon(input: $input, style: $style) {
 			url
 		}
 	}

@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .picker {
-	width: 300px;
-	background: #000000;
+	width: 100%;
+	background: transparent;
 	border-radius: 9px;
 }
 
@@ -16,6 +16,7 @@
 	display: flex;
 	padding: 12px;
 	flex-wrap: wrap;
+	justify-content: center;
 }
 
 .picker__swatch {

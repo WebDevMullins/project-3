@@ -2,8 +2,8 @@ const { Schema, model } = require('mongoose')
 
 const iconSchema = new Schema({
 	createdAt: {
-		type: Schema.Types.Date,
-		default: Date.now()
+		type: Date,
+		default: Date.now
 	},
 
 	userId: {
@@ -12,6 +12,14 @@ const iconSchema = new Schema({
 		ref: 'User'
 	},
 	prompt: {
+		type: String,
+		required: true
+	},
+	style: {
+		type: String,
+		required: true
+	},
+	color: {
 		type: String,
 		required: true
 	}
