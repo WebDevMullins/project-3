@@ -1,5 +1,3 @@
-import { Image } from '@nextui-org/react'
-
 function Team() {
 	return (
 		<section className='flex flex-row justify-center md:px-24 mx-auto my-16 bg-neutral-700/25 backdrop-blur-xs rounded-2xl '>
@@ -12,9 +10,9 @@ function Team() {
 						Introducing the talented team behind AIconic
 					</p>
 				</div>
-				<div className='grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 '>
-					<div className='text-center text-gray-400 '>
-						<Image
+				<div className='grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3'>
+					<div className='text-center text-gray-400'>
+						<img 
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/6474546?v=4'
 							alt='Brandon Avatar'
@@ -42,7 +40,7 @@ function Team() {
 						</div>
 					</div>
 					<div className='text-center text-gray-400'>
-						<Image
+						<img
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/99524749?v=4'
 							alt='Clay Avatar'
@@ -70,7 +68,7 @@ function Team() {
 						</div>
 					</div>
 					<div className='text-center text-gray-400'>
-						<Image
+						<img
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/116127829?v=4'
 							alt='Andrew Avatar'
@@ -100,7 +98,7 @@ function Team() {
 				</div>
 				<div className='grid sm:grid-cols-2 columns-2xs md:px-20 mt-8 '>
 					<div className='text-center text-gray-400 max-w-48 justify-self-center '>
-						<Image
+						<img
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/139809496?v=4'
 							alt='Austin Avatar'
@@ -126,7 +124,7 @@ function Team() {
 						</div>
 					</div>
 					<div className='text-center text-gray-400 max-w-48 justify-self-center mt-8 md:mt-0'>
-						<Image
+						<img
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/139658551?v=4'
 							alt='Trini Avatar'
