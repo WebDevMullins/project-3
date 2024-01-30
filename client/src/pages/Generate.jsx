@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import Auth from '@/utils/auth'
 import { presetColors, styles } from '@/utils/data'
 import { generateSchema } from '@/utils/validation'
 import { ColorPicker } from '@components/ColorPicker'
@@ -38,12 +39,17 @@ const Generate = () => {
 
 	const onSubmit = async (input) => {
 		try {
-			console.log('Submitting form with input:', input)
+			const style = styles.find((s) => s.name === input.style)
 
 			const response = await createIcon({
 				variables: {
 					input: {
-						...input
+						prompt: input.prompt,
+						color: input.color
+					},
+					style: {
+						name: style.name,
+						value: style.value
 					}
 				}
 			})
@@ -54,7 +60,6 @@ const Generate = () => {
 
 			setIconUrl(url)
 			setPrompt(input.prompt)
-			console.log('URL:', url)
 			onOpen(isSubmitSuccessful)
 			reset()
 		} catch (err) {
@@ -78,56 +83,80 @@ const Generate = () => {
 							Generate Icon
 						</h2>
 						<p className='font-light text-gray-500 sm:text-xl dark:text-gray-400'>
-							Enter your prompt, choose a style, and select a base color
+							Enter your <span className='text-primary'>prompt</span>, choose a{' '}
+							<span className='text-primary'>style</span>, and select a base{' '}
+							<span className='text-primary'>color</span>
 						</p>
 					</div>
-					<form
-						className='flex flex-col gap-8'
-						onSubmit={handleSubmit(onSubmit)}>
-						<Input
-							type='text'
-							label='Prompt'
-							placeholder='adjective noun'
-							variant='bordered'
-							isInvalid={errors.prompt?.message}
-							errorMessage={errors.prompt?.message}
-							{...register('prompt')}
-						/>
-						<div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
-							<Select
-								variant='bordered'
-								label='Select a style'
-								className='max-w-xs'
-								isInvalid={errors.style?.message}
-								errorMessage={errors.style?.message}
-								{...register('style')}>
-								{styles.map((style) => (
-									<SelectItem
-										key={style}
-										value={style}>
-										{style}
-									</SelectItem>
-								))}
-							</Select>
-						</div>
-						<Controller
-							name='color'
-							control={control}
-							render={({ field: { onChange, value } }) => (
-								<ColorPicker
-									color={value}
-									onChange={onChange}
-									presetColors={presetColors}
+					<div className='flex flex-col max-w-screen-sm items-center'>
+						<form
+							className='flex flex-col w-full gap-8'
+							onSubmit={handleSubmit(onSubmit)}>
+							{/* Prompt */}
+							<div className='flex flex-wrap md:flex-nowrap gap-4'>
+								<Input
+									type='text'
+									label='Prompt'
+									labelPlacement='outside'
+									placeholder='grouchy granny'
+									variant='bordered'
+									size='lg'
+									isInvalid={errors.prompt?.message}
+									errorMessage={errors.prompt?.message}
+									{...register('prompt')}
 								/>
+							</div>
+							{/* Style */}
+							<div className='flex flex-wrap md:flex-nowrap gap-4'>
+								<Select
+									variant='bordered'
+									label='Style'
+									labelPlacement='outside'
+									placeholder='Select a style'
+									size='lg'
+									isInvalid={errors.style?.message}
+									errorMessage={errors.style?.message}
+									{...register('style')}>
+									{styles.map((style) => (
+										<SelectItem
+											key={style.name}
+											value={{ name: style.name, value: style.value }}
+											className='capitalize'>
+											{style.name}
+										</SelectItem>
+									))}
+								</Select>
+							</div>
+							{/* Color */}
+							<div className='flex flex-wrap justify-center md:flex-nowrap gap-4'>
+								<Controller
+									name='color'
+									control={control}
+									render={({ field: { onChange, value } }) => (
+										<ColorPicker
+											color={value}
+											onChange={onChange}
+											presetColors={presetColors}
+										/>
+									)}
+								/>
+							</div>
+							{Auth.loggedIn() ? (
+								<Button
+									color='primary'
+									type='submit'
+									isLoading={isSubmitting}>
+									Generate
+								</Button>
+							) : (
+								<Button
+									color='default'
+									disabled>
+									Please login to Generate
+								</Button>
 							)}
-						/>
-						<Button
-							color='primary'
-							type='submit'
-							isLoading={isSubmitting}>
-							Generate
-						</Button>
-					</form>
+						</form>
+					</div>
 					{error && <p>Error: {error.message}</p>}
 				</div>
 			</section>
