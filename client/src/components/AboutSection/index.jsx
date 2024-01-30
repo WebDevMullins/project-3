@@ -2,19 +2,24 @@ const AboutSection = () => {
 	return (
 		<div className='flex flex-col justify-center w-full mx-auto my-16 '>
 			<h1 className='mt-8 text-4xl tracking-tight font-extrabold text-white text-center'>
-				About A.I.conic
+				About AIconic
 			</h1>
-			<section className=' '>
-				<div className='mx-auto max-w-screen-xl py-8 px-6'>
+			<section className=''>
+				<div className='mx-auto max-w-screen-xl py-8 px-4 sm:py-16 lg:px-6'>
 					<div className=' mb-8 lg:mb-16 text-center'>
-						<h2 className='mb-4 text-2xl tracking-tight font-extrabold text-white '>
+						<h2 className='mb-4 text-2xl tracking-tight font-extrabold text-white'>
 							Quick. Easy. Iconic.
 						</h2>
-						<p className='text-gray-500 sm:text-xl justify-self-center md:px-16'>
-							From large companies to passion projects, A.I.conic was designed
-							with diverse needs in mind. Let&rsquo;s take a look at into what
-							makes A.I.conic right for you.
+						<div className="flex flex-col gap-2">
+						<p className=' text-gray-400 sm:text-xl justify-self-center md:px-16'>
+							From large companies to passion projects, AIconic was designed
+							with diverse needs in mind.
 						</p>
+						<p className=' text-gray-400 sm:text-xl justify-self-center md:px-16'>
+							Let&rsquo;s take a look at into what
+							makes AIconic right for you.
+						</p>
+						</div>
 					</div>
 					<div className='space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 justify-center text-center'>
 						<div className='flex flex-col px-16'>
@@ -35,9 +40,8 @@ const AboutSection = () => {
 									</svg>
 								</div>
 							</div>
-
-							<h3 className='mb-2 text-xl font-bold '>Custom</h3>
-							<p className='text-gray-500 '>
+							<h3 className='mb-2 text-xl font-bold'>Custom</h3>
+							<p className='text-gray-400'>
 								Generated Icons are completely unique and created specifically
 								for you!
 							</p>
@@ -62,8 +66,8 @@ const AboutSection = () => {
 								</div>
 							</div>
 							<h3 className='mb-2 text-xl font-bold '>Credit System</h3>
-							<p className='text-gray-500 '>
-								A.I.conic utilizes a refillable credit system to enable the
+							<p className='text-gray-400 '>
+								AIconic utilizes a refillable credit system to enable the
 								brightest of ideas.
 							</p>
 						</div>
@@ -87,7 +91,7 @@ const AboutSection = () => {
 								</div>
 							</div>
 							<h3 className='mb-2 text-xl font-bold '>Gallery</h3>
-							<p className='text-gray-500 '>
+							<p className='text-gray-400 '>
 								Need inspiration? Checkout what others have created under the
 								Community tab.
 							</p>
@@ -112,8 +116,8 @@ const AboutSection = () => {
 								</div>
 							</div>
 							<h3 className='mb-2 text-xl font-bold '>Stripe</h3>
-							<p className='text-gray-500 '>
-								A.I.conic utilizes Stripe to ensure security to users.
+							<p className='text-gray-400 '>
+								AIconic utilizes Stripe to ensure security to users.
 							</p>
 						</div>
 					</div>

@@ -11,9 +11,7 @@ import { NextUIProvider } from '@nextui-org/react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 import Layout from '@components/Layout'
-import Nav from '@components/Nav'
 import StarsCanvas from '@components/StarBackground'
-import Footer from '@components/Footer'
 
 const httpLink = createHttpLink({
 	uri: '/graphql'
@@ -40,14 +38,12 @@ function App() {
 
 	return (
 		<ApolloProvider client={client}>
-				<NextUIProvider navigate={navigate}>
-					<StarsCanvas />
-					<Nav />
-					<Layout>
-						<Outlet />
-					</Layout>
-					<Footer />
-				</NextUIProvider>
+			<NextUIProvider navigate={navigate}>
+				<StarsCanvas />
+				<Layout>
+					<Outlet />
+				</Layout>
+			</NextUIProvider>
 		</ApolloProvider>
 	)
 }
