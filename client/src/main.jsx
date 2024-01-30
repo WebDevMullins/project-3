@@ -11,7 +11,6 @@ import Generate from './pages/Generate'
 import Signup from './pages/Signup'
 import Success from './pages/Success'
 import Team from './pages/Team.jsx'
-import About from './pages/About.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Community from './pages/Community.jsx'
 import Pricing from './pages/Pricing.jsx'
@@ -56,15 +55,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/team',
-<<<<<<< HEAD
-				element: <Team />
-=======
 				element: <Team/>
 			},
 			{
 				path: '/community',
 				element: <Community/>
->>>>>>> cc8d4d0a572803a07b2f35e4e0532cc34bba50e1
 			}
 		]
 	}
