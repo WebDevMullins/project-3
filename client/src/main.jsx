@@ -7,13 +7,13 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 // import NoMatch from './pages/NoMatch'
 import Cancel from './pages/Cancel'
-import Checkout from './pages/Checkout'
 import Generate from './pages/Generate'
 import Signup from './pages/Signup'
 import Success from './pages/Success'
 import Team from './pages/Team.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Community from './pages/Community.jsx'
+import Pricing from './pages/Pricing.jsx'
 
 const router = createBrowserRouter([
 	{
@@ -42,8 +42,8 @@ const router = createBrowserRouter([
 				element: <Generate />
 			},
 			{
-				path: '/checkout',
-				element: <Checkout />
+				path: '/pricing',
+				element: <Pricing />
 			},
 			{
 				path: '/cancel',

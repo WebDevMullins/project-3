@@ -6,7 +6,6 @@ import { QUERY_COMMUNITY_ICONS } from '@utils/queries'
 
 export default function Community() {
 	const { loading, data } = useQuery(QUERY_COMMUNITY_ICONS)
-	console.log('Community Icons:', data)
 	const icons = data?.communityIcons || []
 
 	if (loading) {
@@ -37,7 +36,10 @@ export default function Community() {
 									key={icon._id}
 									src={icon.url}
 									alt={icon.prompt}
-									title={icon.prompt}
+									author={icon.user? icon.user.firstName : 'Unknown'}
+									color={icon.color}
+									date={icon.createdAt}
+									style={icon.style}
 								/>
 							))}
 						</div>

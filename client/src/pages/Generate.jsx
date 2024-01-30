@@ -39,12 +39,17 @@ const Generate = () => {
 
 	const onSubmit = async (input) => {
 		try {
-			console.log('Submitting form with input:', input)
+			const style = styles.find((s) => s.name === input.style)
 
 			const response = await createIcon({
 				variables: {
 					input: {
-						...input
+						prompt: input.prompt,
+						color: input.color
+					},
+					style: {
+						name: style.name,
+						value: style.value
 					}
 				}
 			})
@@ -55,7 +60,6 @@ const Generate = () => {
 
 			setIconUrl(url)
 			setPrompt(input.prompt)
-			console.log('URL:', url)
 			onOpen(isSubmitSuccessful)
 			reset()
 		} catch (err) {
@@ -116,7 +120,7 @@ const Generate = () => {
 									{styles.map((style) => (
 										<SelectItem
 											key={style.name}
-											value={style.value}
+											value={{ name: style.name, value: style.value }}
 											className='capitalize'>
 											{style.name}
 										</SelectItem>
