@@ -16,7 +16,7 @@
 <img src="https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff&style=flat" alt="Vite Badge">
 </p>
 
-**_Insert intro here_**
+Our startup leverages the DALL-E engine in an AI-driven platform to revolutionize logo design for busy entrepreneurs.  Built on React, Express, and MongoDB, our user-friendly interface allows instant generation of unique logos tailored to your brand.
 
 ## Table of Contents
 
@@ -30,7 +30,7 @@
 ### Clone repo to destinaton.
 
 ```bash
-git clone ***insert link here***
+git clone git@github.com:WebDevMullins/project-3.git
 ```
 
 ### Install dependencies using:
@@ -49,9 +49,9 @@ npm run develop
 
 ## Demo
 
-### [Deployed Site on Render](**_insert link here_**)
+### Deployed Site on Render: https://project-3-8j08.onrender.com/
 
-**_Insert image here_**
+![home page](assets/images/A.IconicHomePage.png)
 
 ## License
 
