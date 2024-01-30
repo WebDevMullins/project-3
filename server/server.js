@@ -18,7 +18,7 @@ const server = new ApolloServer({
 })
 
 // Import stripe.js implementation
-require('./stripe')(app)
+require('./utils/stripe')(app)
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {

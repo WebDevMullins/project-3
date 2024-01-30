@@ -70,19 +70,6 @@ async function generateIcon(prompt, count) {
 }
 const resolvers = {
 	Query: {
-		user: async (_, { _id }) => {
-			const user = await User.findById(_id).populate('icons')
-			const iconUrlArray = user.icons.map((icon) => {
-				return {
-					...icon._doc, // when spreading object, it has too properties. only need _doc property which has the actual information we want
-					url: generateObjectUrl(icon._id)
-				}
-			})
-			return {
-				...user._doc, // when spreading object, it has too properties. only need _doc property which has the actual information we want
-				icons: iconUrlArray
-			}
-		},
 		me: async (parent, args, context) => {
 			if (context.user) {
 				const me = await User.findById(context.user._id).populate({
@@ -243,8 +230,6 @@ const resolvers = {
 					const imageSrc = 'data:image/png;base64,' + encode(imageArray)
 
 					return {
-						// this was the single line before
-						// url: `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${icon.id}`
 						url: imageSrc
 					}
 				})
@@ -279,10 +264,6 @@ const resolvers = {
 					{ $pull: { icons: _id } },
 					{ new: true }
 				)
-
-				// return {
-				// 	message: 'Icon deleted successfully'
-				// }
 			} catch (error) {
 				console.error('Error deleting icon', error)
 				throw new Error(error.message)

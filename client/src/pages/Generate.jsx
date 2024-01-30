@@ -20,13 +20,16 @@ import { QUERY_ME } from '@utils/queries'
 import ErrorModal from '../components/ErrorModal'
 
 const Generate = () => {
+	// Define state and hooks
 	const [createIcon, { error }] = useMutation(CREATE_ICON, {
-		refetchQueries: [{ query: QUERY_ME }]
+		// Mutation hook for creating icons
+		refetchQueries: [{ query: QUERY_ME }] // Refetching user data after mutation
 	})
-	const [iconUrl, setIconUrl] = useState([])
-	const [prompt, setPrompt] = useState([])
-	const { isOpen, onOpen } = useDisclosure()
+	const [iconUrl, setIconUrl] = useState([]) // State for storing generated icon URLs
+	const [prompt, setPrompt] = useState([]) // State for storing user prompts
+	const { isOpen, onOpen } = useDisclosure() // Disclosure hook for managing modal visibility
 
+	// Define form management hook
 	const {
 		control,
 		register,
@@ -34,14 +37,16 @@ const Generate = () => {
 		formState: { errors, isSubmitting, isSubmitSuccessful },
 		reset
 	} = useForm({
-		mode: 'onBlur',
-		resolver: zodResolver(generateSchema)
+		mode: 'onBlur', // Form validation mode
+		resolver: zodResolver(generateSchema) // Using Zod schema for form validation
 	})
 
+	// Define form submission handler
 	const onSubmit = async (input) => {
 		try {
-			const style = styles.find((s) => s.name === input.style)
+			const style = styles.find((s) => s.name === input.style) // Find selected style
 
+			// Execute GraphQL mutation to create icon
 			const response = await createIcon({
 				variables: {
 					input: {
@@ -55,29 +60,29 @@ const Generate = () => {
 				}
 			})
 
-			const icons = response.data?.createIcon || []
+			const icons = response.data?.createIcon || [] // Extract created icons from response
+			const url = icons.map((icon) => icon.url) // Extract icon URLs
 
-			const url = icons.map((icon) => icon.url)
-
-			setIconUrl(url)
-			setPrompt(input.prompt)
-			onOpen(isSubmitSuccessful)
-			reset()
+			setIconUrl(url) // Set generated icon URLs
+			setPrompt(input.prompt) // Set user prompt
+			onOpen(isSubmitSuccessful) // Open modal if submission is successful
+			reset() // Reset form
 		} catch (err) {
-			console.error('Error creating icon', err.message)
+			console.error('Error creating icon', err.message) // Log error if icon creation fails
 		}
 	}
 
+	// Effect hook to open modal when icons are available
 	useEffect(() => {
-		// Open the modal automatically when there are icons to display
 		if (iconUrl.length) {
-			onOpen()
+			onOpen() // Open modal
 		}
 	}, [iconUrl, onOpen])
 
+	// Render component
 	return (
 		<>
-			<section className='flex flex-row justify-center w-full mx-auto my-16 bg-neutral-700/25 backdrop-blur-xs rounded '>
+			<section className='flex flex-row justify-center md:px-24 mx-auto my-16 bg-neutral-700/25 backdrop-blur-xs rounded '>
 				<div className='py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6'>
 					<div className='mx-auto mb-8 max-w-screen-sm lg:mb-16'>
 						<h2 className='mb-4 text-4xl tracking-tight font-extrabold text-white'>
@@ -163,7 +168,7 @@ const Generate = () => {
 					</div>
 					{error && (
 						<ErrorModal
-							isOpen={error}
+							isOpen={error} // Display error modal if there's an error
 							error={error}
 						/>
 					)}
@@ -171,7 +176,7 @@ const Generate = () => {
 			</section>
 			{iconUrl && (
 				<GenerateIconModal
-					isOpen={isOpen}
+					isOpen={isOpen} // Display icon modal if there are generated icons
 					iconUrl={iconUrl}
 					prompt={prompt}
 				/>
