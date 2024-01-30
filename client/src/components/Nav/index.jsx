@@ -16,7 +16,6 @@ function Nav() {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 	const menuItems = [
 		'Home',
-		'About',
 		'Generate',
 		'Credits',
 		'Our Team',
@@ -58,22 +57,14 @@ function Nav() {
 						Home
 					</Link>
 				</NavbarItem>
-				<NavbarItem>
-					<Link
-						color='foreground'
-						href='/about'
-						aria-current='page'>
-						About
-					</Link>
-				</NavbarItem>
 				{Auth.loggedIn() ? (
-				    <NavbarItem>
-					    <Link
-						    color='foreground'
-						    href='dashboard'>
-						    Dashboard
-					    </Link>
-				    </NavbarItem>
+					<NavbarItem>
+						<Link
+							color='foreground'
+							href='dashboard'>
+							Dashboard
+						</Link>
+					</NavbarItem>
 				) : null}
 				<NavbarItem>
 					<Link

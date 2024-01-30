@@ -1,5 +1,3 @@
-import TeamModal from '../components/Team/TeamModal'
-import member from '../components/Team/TeamInfo'
 import React from 'react'
 import {
 	Modal,
