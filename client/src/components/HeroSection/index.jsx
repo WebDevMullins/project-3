@@ -22,7 +22,7 @@ const HeroSection = () => {
 							digital icon generator.
 						</p>
 						<Button
-							href='/'
+							href='/generate'
 							as={Link}
 							color='primary'
 							className='hover:cursor-pointer'>
