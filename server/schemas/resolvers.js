@@ -89,20 +89,22 @@ const resolvers = {
 					path: 'icons',
 					options: { sort: { createdAt: -1 } }
 				})
-				const iconUrlArray = me.icons.map(async (icon) => {
-					const data = await s3.send(
-						new GetObjectCommand({
-							Bucket: bucketName,
-							Key: icon.id
-						})
-					)
-					const imageArray = await data.Body.transformToByteArray()
-					const imageSrc = 'data:image/png;base64,' + encode(imageArray)
-					return {
-						...icon._doc,
-						url: imageSrc
-					}
-				})
+				const iconUrlArray = await Promise.all(
+					me.icons.map(async (icon) => {
+						const data = await s3.send(
+							new GetObjectCommand({
+								Bucket: bucketName,
+								Key: icon.id
+							})
+						)
+						const imageArray = await data.Body.transformToByteArray()
+						const imageSrc = 'data:image/jpeg;base64,' + encode(imageArray)
+						return {
+							...icon._doc,
+							url: imageSrc
+						}
+					})
+				)
 				return {
 					...me._doc,
 					icons: iconUrlArray

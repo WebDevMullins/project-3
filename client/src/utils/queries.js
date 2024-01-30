@@ -19,6 +19,8 @@ export const QUERY_ME = gql`
 		me {
 			_id
 			firstName
+			lastName
+			credits
 			icons {
 				_id
 				createdAt
