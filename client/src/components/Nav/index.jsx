@@ -18,14 +18,9 @@ function Nav() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const menuItems = [
 		'Home',
-		'Community',
-		'About',
 		'Generate',
 		'Pricing',
 		'Our Team',
-		'Collection',
-		'Contact',
-		'Help & Feedback'
 	]
 
 	const handleMobileMenuNav = function (item, index) {
@@ -63,21 +58,6 @@ function Nav() {
 						color='foreground'
 						href='/'>
 						Home
-					</Link>
-				</NavbarItem>
-				<NavbarItem>
-					<Link
-						color='foreground'
-						href='/community'>
-						Community
-					</Link>
-				</NavbarItem>
-				<NavbarItem>
-					<Link
-						color='foreground'
-						href='/about'
-						aria-current='page'>
-						About
 					</Link>
 				</NavbarItem>
 				{Auth.loggedIn() ? (
