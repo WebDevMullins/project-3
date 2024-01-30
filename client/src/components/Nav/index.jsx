@@ -22,7 +22,7 @@ function Nav() {
 		if (index === 0) {
 			return '/'
 		} else if (item === 'Credits') {
-			return '/checkout'
+			return '/pricing'
 		} else if (item === 'Our Team') {
 			return '/team'
 		}

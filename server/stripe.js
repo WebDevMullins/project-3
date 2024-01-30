@@ -7,55 +7,10 @@ module.exports = function (app) {
 	const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
 	const express = require('express')
 
-	// const SUCCESS_URL = process.env.SUCCESS_URL
-	// const CANCEL_URL = process.env.CANCEL_URL
-
-	// Create a checkout session
-	// app.post('/create-checkout-session', async (req, res) => {
-	// 	try {
-	// 		const token = req.headers.authorization.split(' ')[1]
-	// 		const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
-	// 		const userId = decoded.data._id // Extract user ID from token
-	// 		const user = await User.findById(userId) // Fetch user from database
-
-	// 		if (!user) {
-	// 			return res.status(404).json({ message: 'User not found' })
-	// 		}
-
-	// 		const session = await stripe.checkout.sessions.create({
-	// 			payment_method_types: ['card'],
-	// 			line_items: [
-	// 				{
-	// 					price_data: {
-	// 						currency: 'usd',
-	// 						product_data: {
-	// 							name: `Credits`
-	// 						},
-	// 						unit_amount: 1000 // Set the amount (e.g., 1000 for $10.00)
-	// 					},
-	// 					quantity: 1
-	// 				}
-	// 			],
-	// 			mode: 'payment',
-	// 			success_url: SUCCESS_URL,
-	// 			cancel_url: CANCEL_URL,
-	// 			metadata: {
-	// 				userId: user._id.toString() // Pass user ID in metadata for further processing
-	// 			}
-	// 		})
-
-	// 		res.json({ id: session.id })
-	// 	} catch (error) {
-	// 		console.error('Error creating checkout session:', error)
-	// 	}
-	// })
-
 	// Hook handle post-payment events
 	app.post(
 		'/webhook',
 		express.raw({ type: 'application/json' }),
-		console.log('Webhook received'),
 		async (req, res) => {
 			const sig = req.headers['stripe-signature']
 			let event
