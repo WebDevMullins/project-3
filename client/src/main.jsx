@@ -12,11 +12,8 @@ import Generate from './pages/Generate'
 import Signup from './pages/Signup'
 import Success from './pages/Success'
 import Team from './pages/Team.jsx'
-<<<<<<< HEAD
 import About from './pages/About.jsx'
-=======
 import Dashboard from './pages/Dashboard.jsx'
->>>>>>> f7154a02574d63867d201b740c90047905b77d6c
 
 const router = createBrowserRouter([
 	{
