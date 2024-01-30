@@ -4,11 +4,11 @@ import {
 	InMemoryCache,
 	createHttpLink
 } from '@apollo/client'
-import './App.css'
-
 import { setContext } from '@apollo/client/link/context'
 import { NextUIProvider } from '@nextui-org/react'
 import { Outlet, useNavigate } from 'react-router-dom'
+
+import './App.css'
 
 import Layout from '@components/Layout'
 import StarsCanvas from '@components/StarBackground'
