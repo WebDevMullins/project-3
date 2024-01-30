@@ -11,11 +11,12 @@ export const ColorPicker = ({ color, onChange, presetColors }) => {
 			<div className='picker__swatches'>
 				{presetColors.map((presetColor) => (
 					<button
-						key={presetColor}
+						key={presetColor.hex}
 						className='picker__swatch'
 						type='button'
-						style={{ background: presetColor }}
-						onClick={() => onChange(presetColor)}
+						title={presetColor.name}
+						style={{ background: presetColor.hex }}
+						onClick={() => onChange(presetColor.hex)}
 					/>
 				))}
 			</div>
