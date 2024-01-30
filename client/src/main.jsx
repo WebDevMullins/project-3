@@ -54,7 +54,7 @@ const router = createBrowserRouter([
 				element: <Success />
 			},
 			{
-				path: '/team',
+				path: '/ourteam',
 				element: <Team/>
 			},
 			{
