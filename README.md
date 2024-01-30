@@ -16,7 +16,7 @@
 <img src="https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff&style=flat" alt="Vite Badge">
 </p>
 
-Our startup leverages the DALL-E engine in an AI-driven platform to revolutionize logo design for busy entrepreneurs.  Built on React, Express, and MongoDB, our user-friendly interface allows instant generation of unique logos tailored to your brand.
+Our startup leverages the DALL-E engine in an AI-driven platform to revolutionize logo design for busy entrepreneurs. Built on React, Express, and MongoDB, our user-friendly interface allows instant generation of unique logos tailored to your brand.
 
 ## Table of Contents
 
