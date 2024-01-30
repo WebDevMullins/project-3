@@ -16,23 +16,13 @@ import Credits from '../Credits'
 
 function Nav() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
-	const menuItems = [
-		'Home',
-		'Community',
-		'About',
-		'Generate',
-		'Pricing',
-		'Our Team',
-		'Collection',
-		'Contact',
-		'Help & Feedback'
-	]
+	const menuItems = ['Home', 'Generate', 'Pricing', 'Our Team']
 
 	const handleMobileMenuNav = function (item, index) {
 		if (index === 0) {
 			return '/'
 		} else if (item === 'Credits') {
-			return '/checkout'
+			return '/pricing'
 		} else if (item === 'Our Team') {
 			return '/team'
 		}
@@ -70,14 +60,6 @@ function Nav() {
 						color='foreground'
 						href='/community'>
 						Community
-					</Link>
-				</NavbarItem>
-				<NavbarItem>
-					<Link
-						color='foreground'
-						href='/about'
-						aria-current='page'>
-						About
 					</Link>
 				</NavbarItem>
 				{Auth.loggedIn() ? (

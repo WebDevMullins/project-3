@@ -2,7 +2,7 @@ import { Button, Link } from '@nextui-org/react'
 
 const HeroSection = () => {
 	return (
-		<div className='container'>
+		<div className='container h-screen md:h-full '>
 			<section>
 				<div className='grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12'>
 					<div className='hidden lg:mt-0 lg:col-span-5 lg:flex'>
@@ -22,7 +22,7 @@ const HeroSection = () => {
 							digital icon generator.
 						</p>
 						<Button
-							href='/'
+							href='/generate'
 							as={Link}
 							color='primary'
 							className='hover:cursor-pointer'>
