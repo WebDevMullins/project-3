@@ -17,6 +17,7 @@ import {
 } from '@nextui-org/react'
 import { CREATE_ICON } from '@utils/mutations'
 import { QUERY_ME } from '@utils/queries'
+import ErrorModal from '../components/ErrorModal'
 
 const Generate = () => {
 	const [createIcon, { error }] = useMutation(CREATE_ICON, {
@@ -82,10 +83,13 @@ const Generate = () => {
 						<h2 className='mb-4 text-4xl tracking-tight font-extrabold text-white'>
 							Generate Icon
 						</h2>
-						<p className='font-light text-gray-500 sm:text-xl dark:text-gray-400'>
+						<p className='mb-4 font-light text-gray-400 sm:text-xl'>
 							Enter your <span className='text-primary'>prompt</span>, choose a{' '}
 							<span className='text-primary'>style</span>, and select a base{' '}
 							<span className='text-primary'>color</span>
+						</p>
+						<p className='font-light text-gray-400'>
+							Each generation costs 10 Credits
 						</p>
 					</div>
 					<div className='flex flex-col max-w-screen-sm items-center'>
@@ -157,7 +161,12 @@ const Generate = () => {
 							)}
 						</form>
 					</div>
-					{error && <p>Error: {error.message}</p>}
+					{error && (
+						<ErrorModal
+							isOpen={error}
+							error={error}
+						/>
+					)}
 				</div>
 			</section>
 			{iconUrl && (

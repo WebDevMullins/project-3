@@ -39,9 +39,7 @@ const SuccessPage = () => {
 				</CardHeader>
 				<CardBody className='mb-4 text-center gap-2'>
 					<h1 className='text-2xl font-semibold'>Success</h1>
-					<p className='font-light text-gray-400 text-lg'>
-						100 Credits Added
-					</p>
+					<p className='font-light text-gray-400 text-lg'>100 Credits Added</p>
 				</CardBody>
 				<Divider />
 				<CardFooter className='flex flex-col mt-4 text-center'>
