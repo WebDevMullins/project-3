@@ -1,89 +1,24 @@
-import React from 'react'
-import {
-	Modal,
-	ModalContent,
-	ModalHeader,
-	ModalBody,
-	ModalFooter,
-	Button,
-	useDisclosure
-} from '@nextui-org/react'
+import { Image } from '@nextui-org/react'
 
 function Team() {
-	  const { isOpen, onOpen, onOpenChange } = useDisclosure()
-	// const members = [
-	// 	{
-	// 		WebDevMullins: {
-	// 			img: 'https://avatars.githubusercontent.com/u/6474546?v=4',
-	// 			alt: 'Brandon Avatar',
-	// 			info: 'Brandons info',
-	// 			site: 'https://webdevmullins.netlify.app/aboutme'
-	// 		},
-
-	// 		clayguerrero: {
-	// 			img: 'https://avatars.githubusercontent.com/u/99524749?v=4',
-	// 			alt: 'Clay Avatar',
-	// 			info: 'clays info',
-	// 			site: 'https://main--dulcet-belekoy-21be5e.netlify.app/'
-	// 		}
-	// 	}
-	// ]
 	return (
-		<section className='flex flex-row justify-center w-full mx-auto my-16 bg-neutral-700/25 backdrop-blur-xs rounded-2xl '>
+		<section className='flex flex-row justify-center md:px-24 mx-auto my-16 bg-neutral-700/25 backdrop-blur-xs rounded-2xl '>
 			<div className='py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6'>
 				<div className='mx-auto mb-8 max-w-screen-sm lg:mb-16'>
 					<h2 className='mb-4 text-4xl tracking-tight font-extrabold text-white'>
 						Our Team
 					</h2>
-					<p className='font-light text-gray-500 sm:text-xl dark:text-gray-400'>
-						Introducing the talented team behind A.I.conic
+					<p className='font-light text-gray-400 sm:text-xl'>
+						Introducing the talented team behind AIconic
 					</p>
 				</div>
 				<div className='grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 '>
-					<div className='text-center text-gray-500 dark:text-gray-400 '>
-						<img
+					<div className='text-center text-gray-400 '>
+						<Image
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/6474546?v=4'
 							alt='Brandon Avatar'
 						/>
-						{/* <Button
-							onPress={onOpen}
-							className='mx-auto mb-4 w-36 h-36 rounded-full bg-opacity-0'>
-							<img
-								src={member[0].WebDevMullins.img}
-								alt={member[0].WebDevMullins.alt}
-							/>
-						</Button> */}
-						{/* <Modal
-							isOpen={isOpen}
-							onOpenChange={onOpenChange}>
-							<ModalContent>
-								{(onClose) => (
-									<>
-										<ModalHeader>About Brandon</ModalHeader>
-										<ModalBody>
-											<p>{member[0].WebDevMullins.info}</p>
-											<a href={member[0].WebDevMullins.site}>
-												Click Here to see my Portfolio
-											</a>
-										</ModalBody>
-										<ModalFooter>
-											<Button
-												color='danger'
-												variant='light'
-												onPress={onClose}>
-												Close
-											</Button>
-											<Button
-												color='primary'
-												onPress={onClose}>
-												Action
-											</Button>
-										</ModalFooter>
-									</>
-								)}
-							</ModalContent>
-						</Modal> */}
 						<h3 className='mb-1 text-2xl font-bold tracking-tight text-white'>
 							<p>Brandon Mullins</p>
 						</h3>
@@ -106,50 +41,12 @@ function Team() {
 							</div>
 						</div>
 					</div>
-					<div className='text-center text-gray-500 dark:text-gray-400'>
-						<img
+					<div className='text-center text-gray-400'>
+						<Image
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/99524749?v=4'
 							alt='Clay Avatar'
 						/>
-						{/* <Button
-							onPress={onOpen}
-							className='mx-auto mb-4 w-36 h-36 rounded-full bg-opacity-0'>
-							<img
-								src={member[0].clayguerrero.img}
-								alt={member[0].clayguerrero.alt}
-							/>
-						</Button>
-						<Modal
-							isOpen={isOpen}
-							onOpenChange={onOpenChange}>
-							<ModalContent>
-								{(onClose) => (
-									<>
-										<ModalHeader>About Clayton</ModalHeader>
-										<ModalBody>
-											<p>{member[0].clayguerrero.info}</p>
-											<a href={member[0].clayguerrero.site}>
-												Click Here to see my Portfolio
-											</a>
-										</ModalBody>
-										<ModalFooter>
-											<Button
-												color='danger'
-												variant='light'
-												onPress={onClose}>
-												Close
-											</Button>
-											<Button
-												color='primary'
-												onPress={onClose}>
-												Action
-											</Button>
-										</ModalFooter>
-									</>
-								)}
-							</ModalContent>
-						</Modal> */}
 						<h3 className='mb-1 text-2xl font-bold tracking-tight text-white'>
 							<p>Clayton Guerrero</p>
 						</h3>
@@ -172,8 +69,8 @@ function Team() {
 							</div>
 						</div>
 					</div>
-					<div className='text-center text-gray-500 dark:text-gray-400'>
-						<img
+					<div className='text-center text-gray-400'>
+						<Image
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/116127829?v=4'
 							alt='Andrew Avatar'
@@ -202,8 +99,8 @@ function Team() {
 					</div>
 				</div>
 				<div className='grid sm:grid-cols-2 columns-2xs md:px-20 mt-8 '>
-					<div className='text-center text-gray-500 dark:text-gray-400 max-w-48 justify-self-center '>
-						<img
+					<div className='text-center text-gray-400 max-w-48 justify-self-center '>
+						<Image
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/139809496?v=4'
 							alt='Austin Avatar'
@@ -228,8 +125,8 @@ function Team() {
 							</a>
 						</div>
 					</div>
-					<div className='text-center text-gray-500 dark:text-gray-400 max-w-48 justify-self-center mt-8 md:mt-0'>
-						<img
+					<div className='text-center text-gray-400 max-w-48 justify-self-center mt-8 md:mt-0'>
+						<Image
 							className='mx-auto mb-4 w-36 h-36 rounded-full'
 							src='https://avatars.githubusercontent.com/u/139658551?v=4'
 							alt='Trini Avatar'

@@ -1,7 +1,7 @@
 module.exports = function (app) {
 	require('dotenv').config()
 	// const jwt = require('jsonwebtoken')
-	const User = require('./models/User')
+	const User = require('../models/User')
 
 	const Stripe = require('stripe')
 	const stripe = Stripe(process.env.STRIPE_SECRET_KEY)

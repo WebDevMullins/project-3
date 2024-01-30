@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+
 import {
 	Button,
 	Input,
@@ -18,11 +19,14 @@ import { loginSchema } from '@utils/validation'
 import { EyeIcon, EyeOffIcon, MailIcon } from 'lucide-react'
 
 const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
-	const [login, { error }] = useMutation(LOGIN)
-	const [isVisable, setIsVisable] = useState(false)
+	// Define states and hooks
+	const [login, { error }] = useMutation(LOGIN) // GraphQL mutation for user login
+	const [isVisable, setIsVisable] = useState(false) // State to toggle password visibility
 
+	// Function to toggle password visibility
 	const toggleVisibility = () => setIsVisable(!isVisable)
 
+	// Form validation and submission using react-hook-form
 	const {
 		register,
 		handleSubmit,
@@ -30,29 +34,38 @@ const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
 		reset
 	} = useForm({ mode: 'onBlur', resolver: zodResolver(loginSchema) })
 
+	// Handle form submission
 	const onSubmit = async (data) => {
 		try {
+			// Execute login mutation with user credentials
 			const mutationResponse = await login({
 				variables: { email: data.email, password: data.password }
 			})
+			// Extract token from mutation response and login user
 			const token = mutationResponse.data.login.token
 			Auth.login(token)
 		} catch (e) {
-			console.log(e)
+			console.log(e) // Log any errors during login
 		}
-		reset()
+		reset() // Reset form after submission
 	}
+
 	return (
 		<Modal
 			isOpen={isOpen}
 			onOpenChange={onOpenChange}
+			backdrop='blur'
 			placement='center'>
 			<ModalContent>
 				{() => (
 					<>
+						{/* Modal header */}
 						<ModalHeader className='flex flex-col gap-1'>Login</ModalHeader>
+						{/* Login form */}
 						<form onSubmit={handleSubmit(onSubmit)}>
+							{/* Modal body */}
 							<ModalBody>
+								{/* Input for email */}
 								<Input
 									size='lg'
 									endContent={
@@ -66,6 +79,7 @@ const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
 									errorMessage={errors.email?.message}
 									{...register('email')}
 								/>
+								{/* Input for password */}
 								<Input
 									size='lg'
 									endContent={
@@ -90,12 +104,15 @@ const LoginForm = ({ isOpen, onOpenChange, openSignupModal }) => {
 									{...register('password')}
 								/>
 							</ModalBody>
+							{/* Modal footer */}
 							<ModalFooter className='flex flex-col'>
+								{/* Display login error message if any */}
 								{error ? (
 									<p className='text-red-500 text-sm text-center'>
 										{error.message}
 									</p>
 								) : null}
+								{/* Links for signup and login buttons */}
 								<div className='flex justify-between'>
 									<Link
 										color='primary'

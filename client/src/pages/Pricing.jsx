@@ -33,7 +33,7 @@ function Pricing() {
 	}
 
 	return (
-		<section className='flex flex-row justify-center w-full mx-auto my-16 bg-neutral-700/25 rounded'>
+		<section className='flex flex-row justify-center md:px-24 mx-auto my-16 bg-neutral-700/25 rounded'>
 			<div className='py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6'>
 				<div className='mx-auto max-w-screen-md text-center mb-8 lg:mb-12'>
 					<h2 className='mb-4 text-4xl tracking-tight font-extrabold text-white'>

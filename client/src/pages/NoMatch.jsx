@@ -10,7 +10,7 @@ import {
 } from '@nextui-org/react'
 import { XCircleIcon } from 'lucide-react'
 
-const SuccessPage = () => {
+const NoMatch = () => {
 	// Hook to handle navigation
 	const navigate = useNavigate()
 	// State to manage countdown
@@ -26,7 +26,7 @@ const SuccessPage = () => {
 		// Redirect timer after 5 seconds
 		const redirectTimer = setTimeout(() => {
 			// Navigate to '/generate' route
-			navigate('/generate')
+			navigate('/')
 		}, 5000)
 
 		// Cleanup function to clear timers
@@ -49,10 +49,10 @@ const SuccessPage = () => {
 				</CardHeader>
 				<CardBody className='mb-4 text-center gap-2'>
 					{/* Heading for cancellation message */}
-					<h1 className='text-2xl font-semibold'>Cancelled</h1>
+					<h1 className='text-2xl font-semibold'>Uh oh!</h1>
 					{/* Subtitle for cancellation message */}
 					<p className='font-light text-gray-400 text-lg'>
-						Your order was not placed
+						Looks like you&apos;re lost!
 					</p>
 				</CardBody>
 				<Divider />
@@ -68,4 +68,4 @@ const SuccessPage = () => {
 	)
 }
 
-export default SuccessPage
+export default NoMatch

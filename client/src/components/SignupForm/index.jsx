@@ -1,10 +1,11 @@
 import { useMutation } from '@apollo/client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+
 import Auth from '@utils/auth'
 import { ADD_USER } from '@utils/mutations'
 import { signupSchema } from '@utils/validation'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
 
 import {
 	Button,
@@ -19,12 +20,15 @@ import {
 import { EyeIcon, EyeOffIcon, MailIcon } from 'lucide-react'
 
 const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
-	const [addUser, { error }] = useMutation(ADD_USER)
-	const [email, setEmail] = useState('')
-	const [isVisable, setIsVisable] = useState(false)
+	// Define states and hooks
+	const [addUser, { error }] = useMutation(ADD_USER) // GraphQL mutation for adding a new user
+	const [email, setEmail] = useState('') // State to store email for error message display
+	const [isVisable, setIsVisable] = useState(false) // State to toggle password visibility
 
+	// Function to toggle password visibility
 	const toggleVisibility = () => setIsVisable(!isVisable)
 
+	// Form validation and submission using react-hook-form
 	const {
 		register,
 		handleSubmit,
@@ -32,8 +36,9 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 		reset
 	} = useForm({ mode: 'onBlur', resolver: zodResolver(signupSchema) })
 
+	// Handle form submission
 	const onSubmit = async (data) => {
-		setEmail(data.email)
+		setEmail(data.email) // Store email for error message display
 		const mutationResponse = await addUser({
 			variables: {
 				email: data.email,
@@ -42,23 +47,29 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 				lastName: data.lastName
 			}
 		})
-		const token = mutationResponse.data.addUser.token
-		Auth.login(token)
-		reset()
+		const token = mutationResponse.data.addUser.token // Extract token from mutation response
+		Auth.login(token) // Log in user with extracted token
+		reset() // Reset form after submission
 	}
 
 	return (
+		// Modal component for signup form
 		<Modal
 			isOpen={isOpen}
 			onOpenChange={onOpenChange}
+			backdrop='blur'
 			placement='center'>
 			<ModalContent>
 				{() => (
 					<>
+						{/* Modal header */}
 						<ModalHeader className='flex flex-col gap-1'>Signup</ModalHeader>
+						{/* Signup form */}
 						<form onSubmit={handleSubmit(onSubmit)}>
+							{/* Modal body */}
 							<ModalBody>
 								<div className='flex gap-2'>
+									{/* Inputs for first name and last name */}
 									<Input
 										size='lg'
 										autoFocus
@@ -83,6 +94,7 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 										{...register('lastName')}
 									/>
 								</div>
+								{/* Input for email */}
 								<Input
 									size='lg'
 									endContent={
@@ -96,6 +108,7 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 									errorMessage={errors.email?.message}
 									{...register('email')}
 								/>
+								{/* Input for password */}
 								<Input
 									size='lg'
 									endContent={
@@ -120,7 +133,9 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 									{...register('password')}
 								/>
 							</ModalBody>
+							{/* Modal footer */}
 							<ModalFooter className='flex flex-col'>
+								{/* Display signup error message if email is already in use */}
 								{error &&
 								error.message ===
 									`E11000 duplicate key error collection: test.users index: email_1 dup key: { email: "${email}" }` ? (
@@ -129,6 +144,7 @@ const SignupForm = ({ isOpen, onOpenChange, openLoginModal }) => {
 									</p>
 								) : null}
 								<div className='flex justify-between'>
+									{/* Links for login and signup buttons */}
 									<Link
 										color='primary'
 										onClick={openLoginModal}

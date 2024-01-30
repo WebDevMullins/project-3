@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Spinner } from '@nextui-org/spinner'
 import { BadgeCentIcon } from 'lucide-react'
-import { QUERY_ME } from '../../utils/queries'
+import { QUERY_ME } from '@utils/queries'
 
 const Credits = () => {
 	const { loading, data } = useQuery(QUERY_ME)
