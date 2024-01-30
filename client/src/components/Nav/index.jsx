@@ -16,12 +16,7 @@ import Credits from '../Credits'
 
 function Nav() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
-	const menuItems = [
-		'Home',
-		'Generate',
-		'Pricing',
-		'Our Team',
-	]
+	const menuItems = ['Home', 'Generate', 'Pricing', 'Our Team']
 
 	const handleMobileMenuNav = function (item, index) {
 		if (index === 0) {
@@ -58,6 +53,13 @@ function Nav() {
 						color='foreground'
 						href='/'>
 						Home
+					</Link>
+				</NavbarItem>
+				<NavbarItem>
+					<Link
+						color='foreground'
+						href='/community'>
+						Community
 					</Link>
 				</NavbarItem>
 				{Auth.loggedIn() ? (

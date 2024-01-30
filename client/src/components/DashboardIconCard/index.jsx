@@ -7,13 +7,19 @@ import {
 	DropdownTrigger,
 	Image
 } from '@nextui-org/react'
-import { dateFormat } from '@utils/helpers'
 import { DownloadIcon, TrashIcon } from 'lucide-react'
 import CardTooltip from '../CardTooltip'
 
 
-const DashboardIconCard = ({ alt, src, onDelete }) => {
+const DashboardIconCard = ({ alt, author, color, createdDate, style, src, onDelete }) => {
 	return (
+		<CardTooltip
+			alt={alt}
+			author={author}
+			color={color}
+			createdDate={createdDate}
+			style={style}
+			>
 		<Card
 			radius='lg'
 			className='border-none'>
@@ -64,6 +70,7 @@ const DashboardIconCard = ({ alt, src, onDelete }) => {
 							startContent={<TrashIcon />}
 							onClick={onDelete}>
 							Delete
+						</DropdownItem>
 						</DropdownSection>
 					</DropdownMenu>
 				</Dropdown>
