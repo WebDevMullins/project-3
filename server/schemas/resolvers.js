@@ -97,7 +97,7 @@ const resolvers = {
 						})
 					)
 					const imageArray = await data.Body.transformToByteArray()
-					const imageSrc = 'data:image/png;base64,' + encode(imageArray)
+					const imageSrc = 'data:image/jpeg;base64,' + encode(imageArray)
 					return {
 						...icon._doc,
 						url: imageSrc
