@@ -1,48 +1,18 @@
-import React from 'react'
+import { Link } from '@nextui-org/react'
 
 function Footer() {
 	return (
-		<footer className=' rounded-lg shadow m-4 dark:bg-gray-800 '>
-			<div className='w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between'>
-				<span className='text-sm text-gray-500 sm:text-center dark:text-gray-400'>
-					© 2024{' '}
-					<a
-						href='/'
-						className='hover:underline'>
-						A.I.conic™
-					</a>
-					. All Rights Reserved.
-				</span>
-				<ul className='flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0'>
-					<li>
-						<a
-							href='/about'
-							className='hover:underline me-4 md:me-6'>
-							About
-						</a>
-					</li>
-					<li>
-						<a
-							href='#'
-							className='hover:underline me-4 md:me-6'>
-							Privacy Policy
-						</a>
-					</li>
-					<li>
-						<a
-							href='#'
-							className='hover:underline me-4 md:me-6'>
-							Licensing
-						</a>
-					</li>
-					<li>
-						<a
-							href='#'
-							className='hover:underline'>
-							Contact
-						</a>
-					</li>
-				</ul>
+		<footer className='flex rounded-lg shadow'>
+			<div className='w-full flex items-center justify-center gap-2 mx-auto m-4 max-w-screen-xl text-center'>
+				<p className='text-sm text-gray-400 sm:text-center'>©2024</p>
+				<Link
+					href='/ourteam'
+					className='hover:underline'>
+					AIconic ™
+				</Link>
+				<p className='text-sm text-gray-400 sm:text-center'>
+					All Rights Reserved.
+				</p>
 			</div>
 		</footer>
 	)
