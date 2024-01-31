@@ -186,7 +186,7 @@ const resolvers = {
 					{ new: true }
 				)
 
-				const finalPrompt = `a modern icon of ${input.prompt}, with a color of ${input.color}, in a ${style.value} style, minimalistic, high quality, trending on art station, unreal engine 5 graphics quality`
+				const finalPrompt = `an icon of ${input.prompt}, in ${input.color}, with a ${style.value} effect, trending on art station, unreal engine 5 graphics quality`
 
 				const b64Icons = await generateIcon(finalPrompt)
 				const createdIcons = await Promise.all(
